@@ -1164,7 +1164,7 @@
 <XPD:REF name="Associations[4]">WShw8kOg+0qrYrl36iIU+gAA</XPD:REF>
 <XPD:REF name="Associations[5]">WBJHyfDshEWRkadN05VQXQAA</XPD:REF>
 <XPD:REF name="Associations[6]">8N78h95Oi0alvsRZUSXQdAAA</XPD:REF>
-<XPD:ATTR name="#Attributes" type="integer">10</XPD:ATTR>
+<XPD:ATTR name="#Attributes" type="integer">9</XPD:ATTR>
 <XPD:OBJ name="Attributes[0]" type="UMLAttribute" guid="OxQOq2PbBUeCG9b0yuWIqgAA">
 <XPD:ATTR name="Name" type="string">nombre</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
@@ -1185,7 +1185,7 @@
 <XPD:REF name="Owner">49/QCBK2OkiV6iG2PJ7dZAAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="Attributes[3]" type="UMLAttribute" guid="hYu+1HYZaEqXwkgTkECMOgAA">
-<XPD:ATTR name="Name" type="string">Precio</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">Costo</XPD:ATTR>
 <XPD:ATTR name="StereotypeName" type="string">virtual</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkProtected</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">double</XPD:ATTR>
@@ -1213,11 +1213,6 @@
 <XPD:OBJ name="Attributes[8]" type="UMLAttribute" guid="cR0fYKYv7UaV5PDCGdznFQAA">
 <XPD:ATTR name="Name" type="string">camas</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">list&lt;int&gt;</XPD:ATTR>
-<XPD:REF name="Owner">49/QCBK2OkiV6iG2PJ7dZAAA</XPD:REF>
-</XPD:OBJ>
-<XPD:OBJ name="Attributes[9]" type="UMLAttribute" guid="J3I+Txb3ZE+tMiOym//O+wAA">
-<XPD:ATTR name="Name" type="string">Costo</XPD:ATTR>
-<XPD:ATTR name="StereotypeName" type="string">readonly</XPD:ATTR>
 <XPD:REF name="Owner">49/QCBK2OkiV6iG2PJ7dZAAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
@@ -1266,7 +1261,7 @@
 <XPD:REF name="Owner">JyR3onWg9UaDgWJ7eDa5FgAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="Attributes[2]" type="UMLAttribute" guid="rG6QYILVFkSThOWPQjyFhgAA">
-<XPD:ATTR name="Name" type="string">Precio</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">Costo</XPD:ATTR>
 <XPD:ATTR name="StereotypeName" type="string">override</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">double</XPD:ATTR>
 <XPD:REF name="Owner">JyR3onWg9UaDgWJ7eDa5FgAA</XPD:REF>
@@ -1352,16 +1347,10 @@
 <XPD:REF name="BehavioralFeature">Hne09QZYM0ur4z8u3Q29ZgAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
-<XPD:ATTR name="#Attributes" type="integer">2</XPD:ATTR>
+<XPD:ATTR name="#Attributes" type="integer">1</XPD:ATTR>
 <XPD:OBJ name="Attributes[0]" type="UMLAttribute" guid="BI89wZMrykGcSKqhqdUvcQAA">
 <XPD:ATTR name="Name" type="string">minDias</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
-<XPD:REF name="Owner">bVOZl2diHEOQz8Kj4CnZXQAA</XPD:REF>
-</XPD:OBJ>
-<XPD:OBJ name="Attributes[1]" type="UMLAttribute" guid="OSmdQmtvXkuYeXMZ/aY8/gAA">
-<XPD:ATTR name="Name" type="string">Precio</XPD:ATTR>
-<XPD:ATTR name="StereotypeName" type="string">override</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">double</XPD:ATTR>
 <XPD:REF name="Owner">bVOZl2diHEOQz8Kj4CnZXQAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
