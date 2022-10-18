@@ -31,5 +31,23 @@ namespace TPreservas
         public string Mail {get { return mail; } }
 
         public string Celular { get { return celular; } }
+        public string CodigoA { get { return codigoA; } }
+
+        public bool ModificarCliente(string nombre, string apellido, string mail, string codArea, string celular)
+        {
+            try
+            {
+                this.nombre = nombre;
+                this.apellido = apellido;
+                this.mail = mail;
+                this.codigoA = codArea;
+                this.celular = celular;
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error al actualizar cliente " + e.Message);
+            }
+        }
     }
 }

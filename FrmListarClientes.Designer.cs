@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cbfiltro = new System.Windows.Forms.ComboBox();
             this.txtBuscar = new System.Windows.Forms.TextBox();
@@ -39,8 +41,8 @@
             this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.apellido = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.email = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ver = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.editar = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ver = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.editar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgLista)).BeginInit();
             this.SuspendLayout();
@@ -89,13 +91,14 @@
             // 
             // btnActualizar
             // 
-            this.btnActualizar.Location = new System.Drawing.Point(12, 13);
+            this.btnActualizar.Location = new System.Drawing.Point(12, 8);
             this.btnActualizar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnActualizar.Name = "btnActualizar";
             this.btnActualizar.Size = new System.Drawing.Size(104, 79);
             this.btnActualizar.TabIndex = 8;
             this.btnActualizar.Text = "Actualizar";
             this.btnActualizar.UseVisualStyleBackColor = true;
+            this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
             // 
             // dgLista
             // 
@@ -135,10 +138,12 @@
             this.dgLista.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgLista.Size = new System.Drawing.Size(887, 508);
             this.dgLista.TabIndex = 7;
+            this.dgLista.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgLista_CellMouseClick);
             // 
             // dni
             // 
             this.dni.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dni.DataPropertyName = "Dni";
             this.dni.FillWeight = 64.04803F;
             this.dni.HeaderText = "DNI";
             this.dni.MinimumWidth = 120;
@@ -149,6 +154,7 @@
             // nombre
             // 
             this.nombre.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.nombre.DataPropertyName = "Nombre";
             this.nombre.FillWeight = 64.04803F;
             this.nombre.HeaderText = "Nombre";
             this.nombre.MinimumWidth = 6;
@@ -158,6 +164,7 @@
             // apellido
             // 
             this.apellido.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.apellido.DataPropertyName = "Apellido";
             this.apellido.FillWeight = 64.04803F;
             this.apellido.HeaderText = "Apellido";
             this.apellido.MinimumWidth = 6;
@@ -168,6 +175,7 @@
             // email
             // 
             this.email.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.email.DataPropertyName = "Mail";
             this.email.FillWeight = 64.04803F;
             this.email.HeaderText = "email";
             this.email.MinimumWidth = 6;
@@ -178,24 +186,46 @@
             // ver
             // 
             this.ver.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.IndianRed;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Arial Narrow", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.SaddleBrown;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.WhiteSmoke;
+            this.ver.DefaultCellStyle = dataGridViewCellStyle2;
             this.ver.FillWeight = 151.2945F;
+            this.ver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ver.HeaderText = "Ver";
             this.ver.MinimumWidth = 50;
             this.ver.Name = "ver";
             this.ver.ReadOnly = true;
             this.ver.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ver.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.ver.Text = "VER";
+            this.ver.UseColumnTextForButtonValue = true;
             this.ver.Width = 50;
             // 
             // editar
             // 
             this.editar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Tomato;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial Narrow", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.LightSalmon;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
+            this.editar.DefaultCellStyle = dataGridViewCellStyle3;
             this.editar.FillWeight = 192.5134F;
+            this.editar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.editar.HeaderText = "Editar";
-            this.editar.MinimumWidth = 50;
+            this.editar.MinimumWidth = 80;
             this.editar.Name = "editar";
             this.editar.ReadOnly = true;
             this.editar.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.editar.Width = 50;
+            this.editar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.editar.Text = "EDITAR";
+            this.editar.UseColumnTextForButtonValue = true;
+            this.editar.Width = 80;
             // 
             // FrmListarClientes
             // 
@@ -227,7 +257,7 @@
         private DataGridViewTextBoxColumn nombre;
         private DataGridViewTextBoxColumn apellido;
         private DataGridViewTextBoxColumn email;
-        private DataGridViewTextBoxColumn ver;
-        private DataGridViewTextBoxColumn editar;
+        private DataGridViewButtonColumn ver;
+        private DataGridViewButtonColumn editar;
     }
 }

@@ -12,7 +12,7 @@ namespace TPreservas
     abstract internal class Alojamiento : ICloneable, IComparable<Alojamiento>
     {
         private static int ids = 0;
-        private protected string id;
+        protected string id;
         private string nombre;
         private string direccion;
         protected double costo;
@@ -43,19 +43,16 @@ namespace TPreservas
         public string ID
         {
             get { return id; }
-            set { id = value; }
         }
 
         public string Nombre
         {
             get { return nombre; }
-            set { nombre = value; }
         }
 
         public string Direccion
         {
             get { return direccion; }
-            set { direccion = value; }
         }
 
         public int Huesped
@@ -72,7 +69,6 @@ namespace TPreservas
         public double Costo
         {
             get { return costo; }
-            set { costo = value; }
         }
 
         
@@ -108,6 +104,16 @@ namespace TPreservas
         #endregion
 
         #region Metodos propios
+
+        public bool Modificar(string nombre, string direccion, int huesped, double costo)
+        {
+            this.nombre = nombre;
+            this.direccion = direccion;
+            this.huesped = huesped;
+            this.costo = costo;
+            return true;
+        }
+
         public void AgregarCamas(int[] camas)
         {
             this.camas.AddRange(camas);

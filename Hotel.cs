@@ -61,6 +61,15 @@ namespace TPreservas
             //throw new Exception("Error al calcular precio");
         }
 
+        public bool Modificar(string nombre, string direccion, int huesped, double costo, int estrellas, int nHab)
+        {
+            bool temp = base.Modificar(nombre, direccion, huesped, costo);
+            if (!temp) return temp;
+            this.estrellas = estrellas;
+            this.nHabitacion = nHab;
+            return true;
+        }
+
         public override string ToString()
         {
             return base.ToString() + ";"+ Costo;

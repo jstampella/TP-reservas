@@ -32,6 +32,14 @@ namespace TPreservas
             get { return ETipo.CASA; }
         }
 
+        public bool Modificar(string nombre, string direccion, int huesped, double costo, int minD)
+        {
+            bool temp = base.Modificar(nombre, direccion, huesped, costo);
+            if (!temp) return temp;
+            this.mindias = minD;
+            return true;
+        }
+
         public override string ToString()
         {
             return base.ToString() + ";" + Costo;

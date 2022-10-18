@@ -17,7 +17,6 @@ namespace TPreservas
 {
     public partial class FormPrincipal : Form,ITrasladarInfo
     {
-        private int childFormNumber = 0;
         private Empresa empresa = new Empresa();
         string file = Application.StartupPath + "/data.dat";
 
@@ -114,14 +113,9 @@ namespace TPreservas
 
         private void crearToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            FormAlojamiento formAl = new FormAlojamiento(this);
+            FormAlojamiento formAl = new FormAlojamiento();
             formAl.MdiParent = this;
             formAl.Show();
-        }
-
-        void ITrasladarInfo.Alojamiento(Alojamiento alojamiento)
-        {
-            empresa.AgregarAlojamiento(alojamiento);
         }
 
         List<Alojamiento> ITrasladarInfo.ListarAlojamiento(ETipo tipo, EBuscar buscar,string valor)
@@ -133,15 +127,8 @@ namespace TPreservas
         {
         }
 
-        void ITrasladarInfo.ModificarAlojamiento(Alojamiento alojamiento)
-        {
-           empresa.ModificarAlojamiento(alojamiento);
-        }
-
         private void buscarToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            Alojamiento nAlo =  empresa.BuscarAlojamiento(EBuscar.ID, "1");
-            MessageBox.Show(nAlo.ToString());
         }
 
         private void listarToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -242,14 +229,18 @@ namespace TPreservas
             GuardarStage();
         }
 
-        public bool CrearCliente(string nombre, string apellido, float dni, string mail, string codArea, string celular)
+
+        #region SECTOR CLIENTE
+        private void buscarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           return empresa.CrearCliente(nombre,apellido,dni,mail,codArea,celular);
+            FrmListarClientes fmcliente = new FrmListarClientes();
+            fmcliente.MdiParent = this;
+            fmcliente.Show();
         }
 
         bool ITrasladarInfo.CrearCliente(string nombre, string apellido, float dni, string mail, string codArea, string celular)
         {
-            throw new NotImplementedException();
+            return empresa.CrearCliente(nombre, apellido, dni, mail, codArea, celular);
         }
 
         List<Cliente> ITrasladarInfo.ListarClientes()
@@ -257,11 +248,47 @@ namespace TPreservas
             return empresa.ListarClientes();
         }
 
-        private void buscarToolStripMenuItem_Click(object sender, EventArgs e)
+        public bool ModificarCliente(string nombre, string apellido, float dni, string mail, string codArea, string celular)
         {
-            FrmListarClientes fmcliente = new FrmListarClientes();
-            fmcliente.MdiParent = this;
-            fmcliente.Show();
+            return empresa.ModificarCliente(nombre, apellido,dni, mail, codArea, celular);
+        }
+
+        #endregion
+
+
+        public string CrearAlojamiento(string nombre, string direccion, int huesped, double costo, int minD)
+        {
+            return empresa.CrearAlojamiento(nombre, direccion, huesped, costo, minD);
+        }
+
+        public string CrearAlojamiento(string nombre, string direccion, int huesped, double costo, int estrellas, int nHab)
+        {
+            return empresa.CrearAlojamiento(nombre, direccion, huesped, costo, estrellas, nHab);
+        }
+
+        public bool ModificarAlojamiento(string ID, string nombre, string direccion, int huesped, double costo, int estrellas, int nHab)
+        {
+            return empresa.ModificarAlojamiento(ID, nombre, direccion, huesped, costo, estrellas,nHab);
+        }
+
+        public bool ModificarAlojamiento(string ID, string nombre, string direccion, int huesped, double costo, int minD)
+        {
+            return empresa.ModificarAlojamiento(ID, nombre, direccion, huesped, costo, minD);
+        }
+
+        public bool ModificarEstadoAlojamiento(string ID, EEstado estado)
+        {
+            return empresa.ModificarEstadoAlojamiento(ID, estado);
+        }
+
+        public bool AgregarCaracteristicas(string ID, string[] caracteristicas)
+        {
+            return empresa.AgregarCaracteristicas(ID, caracteristicas);
+        }
+
+        public bool AgregarImagenes(string ID, string[] imagenes)
+        {
+            return empresa.AgregarImagenes(ID, imagenes);
         }
     }
 }

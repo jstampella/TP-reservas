@@ -52,7 +52,7 @@ namespace TPreservas
 
 
                 }
-                CargarEnDataGrid(nAlojamiento);
+                CargarEnDataGrid();
                 if (nAlojamiento.Count == 0)
                 {
                     MessageBox.Show("No se encontro");
@@ -65,7 +65,7 @@ namespace TPreservas
             if (interfaz != null)
             {
                 nAlojamiento = interfaz.ListarAlojamiento();
-                CargarEnDataGrid(nAlojamiento);
+                CargarEnDataGrid();
             }
         }
 
@@ -83,7 +83,7 @@ namespace TPreservas
             {
                 interfaz = md;
                 nAlojamiento = interfaz.ListarAlojamiento();
-                CargarEnDataGrid(nAlojamiento);
+                CargarEnDataGrid();
                 CargarfiltrosSelect();
             }
             else
@@ -92,14 +92,11 @@ namespace TPreservas
             }
         }
 
-        private void CargarEnDataGrid(List<Alojamiento> lista)
+        private void CargarEnDataGrid()
         {
-            dgLista.Rows.Clear();
-            foreach (Alojamiento item in lista)
-            {
-                string[] rw = { item.ID.ToString(), item.Nombre, item.Direccion, item.Huesped.ToString(), item.Precio.ToString(), item.Estado.ToString(), item.Tipo.ToString(), "EDITAR", "VER" };
-                dgLista.Rows.Add(rw);
-            }
+            dgLista.AutoGenerateColumns = false;
+            dgLista.DataSource = null;
+            dgLista.DataSource = nAlojamiento;
         }
 
         private ETipo checkTipo()
@@ -118,89 +115,28 @@ namespace TPreservas
             cbfiltro.SelectedIndex = 0;
         }
 
-        private void dgLista_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex > -1 && e.ColumnIndex > -1)
-            {
-                string arg = dgLista.Columns[e.ColumnIndex].Name;
-                if (arg == "editar")
-                {
-                    string? nro = dgLista.Rows[e.RowIndex].Cells[0].Value.ToString();
-                    if (nro != null)
-                    {
-                        Alojamiento? al1 = nAlojamiento.Find(x => x.ID == nro);
-                        if (al1 != null)
-                        {
-                            FormAlojamiento formAl = new FormAlojamiento((ITrasladarInfo)this.MdiParent, al1);
-                            //FormAlojamiento formAl = new FormAlojamiento((ITrasladarInfo)this.MdiParent, nro);
-                            formAl.MdiParent = this.MdiParent;
-                            formAl.Show();
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("error");
-                    }
-
-                }
-                else if (arg == "ver")
-                {
-                    string? nro = dgLista.Rows[e.RowIndex].Cells[0].Value.ToString();
-                    if (nro != null)
-                    {
-                        Alojamiento? al1 = nAlojamiento.Find(x => x.ID == nro);
-                        if (al1 != null)
-                        {
-                            FormAlojamiento formAl = new FormAlojamiento((ITrasladarInfo)this.MdiParent, al1);
-                            //FormAlojamiento formAl = new FormAlojamiento((ITrasladarInfo)this.MdiParent, nro);
-                            formAl.MdiParent = this.MdiParent;
-                            formAl.Modifier = false;
-                            formAl.Show();
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("error");
-                    }
-
-                }
-            }
-
-        }
-
-        private void dgLista_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        #region Cell mouse Click
+        private void dgLista_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             string arg = dgLista.Columns[e.ColumnIndex].Name;
             if (arg == "editar" || arg == "ver")
             {
-                this.Cursor = Cursors.Hand;
-            }
-            else
-            {
-                this.Cursor = Cursors.Default;
-            }
+                string? nro = dgLista.Rows[e.RowIndex].Cells[0].Value.ToString();
+                if (nro != null)
+                {
+                    Alojamiento? al1 = nAlojamiento.Find(x => x.ID == nro);
 
-        }
+                    if (al1 != null)
+                    {
+                        FormAlojamiento frmAloja = new FormAlojamiento(al1);
+                        if (arg == "ver") frmAloja.Modifier = false;
+                        frmAloja.MdiParent = this.MdiParent;
+                        frmAloja.Show();
+                    }
+                }
 
-        private void dgLista_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
-        {
-            dgLista.Cursor = Cursors.Default;
-        }
-
-        private void dgLista_CellMouseMove(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            //Skip the Column and Row headers
-            if (e.ColumnIndex < 0 || e.RowIndex < 0)
-            {
-                return;
             }
-            //Check the condition as per the requirement casting the cell value to the appropriate type
-            string arg = dgLista.Columns[e.ColumnIndex].Name;
-            if (arg == "editar" || arg == "ver")
-            
-                dgLista.Cursor = Cursors.Hand;
-            else
-                dgLista.Cursor = Cursors.Default;
         }
+        #endregion
     }
 }

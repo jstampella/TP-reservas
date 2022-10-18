@@ -11,14 +11,29 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace TPreservas
 {
-    public partial class FormCliente : Form
+    internal partial class FormCliente : Form
     {
+        private bool modifier = true;
+        private Cliente? cliente;
         private ITrasladarInfo? interfaz = null;
+
+        #region Constructor
         public FormCliente()
         {
             InitializeComponent();
         }
 
+        public FormCliente(Cliente cc):this()
+        {
+            cliente = cc;
+            btnAceptar.Text = "Modificar";
+            textBox3.Enabled = false;
+        }
+        #endregion
+
+        public bool Modifier { get { return modifier; }set { modifier = value; } }
+
+        #region KeyPress
         private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (char.IsNumber(e.KeyChar) || char.IsControl(e.KeyChar))
@@ -62,6 +77,9 @@ namespace TPreservas
                 e.Handled = false;
         }
 
+        #endregion
+
+        #region btn Aceptar
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             bool resultado= false;
@@ -72,7 +90,10 @@ namespace TPreservas
             string codArea = textBox5.Text;
             string celular = textBox6.Text;
             if (interfaz != null)
-                resultado = interfaz.CrearCliente(nombre, apellido, dni, mail, codArea, celular);
+                if (btnAceptar.Text == "Modificar")
+                    resultado = interfaz.ModificarCliente(nombre, apellido, dni, mail, codArea, celular);
+                else
+                    resultado = interfaz.CrearCliente(nombre, apellido, dni, mail, codArea, celular);
 
             if (resultado) this.Close();
             else
@@ -80,6 +101,9 @@ namespace TPreservas
                 MessageBox.Show("Ocurrio un error al guardar el cliente");
             }
         }
+        #endregion
+
+        #region Form load
 
         private void FormCliente_Load(object sender, EventArgs e)
         {
@@ -91,6 +115,18 @@ namespace TPreservas
             {
                 MessageBox.Show("Error al cargar componente.");
             }
+
+            if (cliente != null)
+            {
+                textBox1.Text = cliente.Nombre;
+                textBox2.Text = cliente.Apellido;
+                textBox3.Text = cliente.Dni.ToString(); 
+                textBox4.Text = cliente.Mail;
+                textBox5.Text = cliente.CodigoA;
+                textBox6.Text = cliente.Celular;
+            }
+            if (!modifier) btnAceptar.Enabled = false;
         }
+        #endregion
     }
 }

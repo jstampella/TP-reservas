@@ -14,14 +14,16 @@ namespace TPreservas
     internal partial class FormAlojamiento : Form
     {
         private bool modifier = true;
+        private string codigo="";
         private List<string> caracteristicas_list = new List<string>();
         private Alojamiento? alojamiento;
-        private readonly ITrasladarInfo interfaz;
+        private ITrasladarInfo? interfaz;
         List<string> filesImagenes = new List<string>();
-        public FormAlojamiento(ITrasladarInfo padre)
+
+        #region Constructores
+        public FormAlojamiento()
         {
             InitializeComponent();
-            interfaz = padre;
             btnCrear.Text = "Crear";
             cmbEstrellas.SelectedIndex = 0;
             caracteristicas_list.AddRange(new string[6] { "Cochera", "Pileta", "WI FI", "Servicio de limpieza", "Desayuno", "Posibilidad de mascotas" });
@@ -29,6 +31,17 @@ namespace TPreservas
             cbEstado.Items.AddRange(ListaEstado().ToArray());
             cbEstado.SelectedIndex = 0;
         }
+        public FormAlojamiento(string codigo) : this()
+        {
+            this.codigo = codigo;
+        }
+        public FormAlojamiento(Alojamiento alojamiento) : this()
+        {
+            this.alojamiento = alojamiento;
+            filesImagenes.AddRange(alojamiento.Imagenes);
+            CargarAlojamiento(alojamiento);
+        }
+        #endregion
 
         private List<string> ListaEstado()
         {
@@ -40,18 +53,7 @@ namespace TPreservas
             return list;
         }
 
-        public FormAlojamiento(ITrasladarInfo padre, string codigo):this(padre)
-        {
-            alojamiento = interfaz.ListarAlojamiento(ETipo.TODOS, EBuscar.ID, codigo)[0];
-            filesImagenes.AddRange(alojamiento.Imagenes);
-            CargarAlojamiento(alojamiento);
-        }
-        public FormAlojamiento(ITrasladarInfo padre, Alojamiento alojamiento) : this(padre)
-        {
-            this.alojamiento = alojamiento;
-            filesImagenes.AddRange(alojamiento.Imagenes);
-            CargarAlojamiento(alojamiento);
-        }
+        
 
         public bool Modifier
         {
@@ -89,56 +91,54 @@ namespace TPreservas
 
         private void btnCrear_Click(object sender, EventArgs e)
         {
-            string nombre = txtNombre.Text;
-            string direccion = txtDireccion.Text;
-            int huesped = Convert.ToInt32(txtCanPersona.Text);
-            double precio = Convert.ToDouble(txtPrecioXdia.Text);
-
-
-            if(btnCrear.Text == "Crear")
+            if (interfaz != null)
             {
-                if (rbCasa.Checked)
+                string nombre = txtNombre.Text;
+                string direccion = txtDireccion.Text;
+                int huesped = Convert.ToInt32(txtCanPersona.Text);
+                double precio = Convert.ToDouble(txtPrecioXdia.Text);
+                string id_alojamiento;
+
+                if (btnCrear.Text == "Crear")
                 {
-                    int minDias = Convert.ToInt32(txtMinDias.Text);
-                    alojamiento = new Casa(nombre, direccion, huesped, precio, minDias);
-                }
-                else
-                {
-                    int estrella = Convert.ToInt32(cmbEstrellas.SelectedItem);
-                    int numeroHab = Convert.ToInt32(txtNroHab.Text);
-                    alojamiento = new Hotel(nombre, direccion, huesped, precio, estrella, numeroHab);
-                }
-                alojamiento.Estado = (EEstado)cbEstado.SelectedIndex;
-                alojamiento.AgregarCaracteristicas(ObtenerCaracteristicas());
-                alojamiento.AgregarImagenes(filesImagenes.ToArray());
-                interfaz.Alojamiento(alojamiento);
-            }
-            else
-            {
-                if (alojamiento != null)
-                {
-                    alojamiento.Nombre = nombre;
-                    alojamiento.Direccion = direccion;
-                    alojamiento.Huesped = huesped;
-                    alojamiento.Costo = precio;
-                    if (alojamiento is Casa cs)
+                    if (rbCasa.Checked)
                     {
                         int minDias = Convert.ToInt32(txtMinDias.Text);
-                        cs.Mindias = minDias;
+                        id_alojamiento = interfaz.CrearAlojamiento(nombre, direccion, huesped, precio, minDias);
                     }
-                    if(alojamiento is Hotel hs)
+                    else
                     {
                         int estrella = Convert.ToInt32(cmbEstrellas.SelectedItem);
                         int numeroHab = Convert.ToInt32(txtNroHab.Text);
-                        hs.Estrella = estrella;
-                        hs.NHabitacion = numeroHab;
+                        id_alojamiento = interfaz.CrearAlojamiento(nombre, direccion, huesped, precio, estrella, numeroHab);
                     }
-                    alojamiento.Estado = (EEstado)cbEstado.SelectedIndex;
-                    alojamiento.AgregarImagenes(filesImagenes.ToArray());
-                    interfaz.ModificarAlojamiento(alojamiento);
+                    interfaz.ModificarEstadoAlojamiento(id_alojamiento, (EEstado)cbEstado.SelectedIndex);
+                    interfaz.AgregarCaracteristicas(id_alojamiento, ObtenerCaracteristicas());
+                    interfaz.AgregarImagenes(id_alojamiento, filesImagenes.ToArray());
                 }
+                else
+                {
+                    if (alojamiento != null)
+                    {
+                        if (alojamiento is Casa cs)
+                        {
+                            int minDias = Convert.ToInt32(txtMinDias.Text);
+                            interfaz.ModificarAlojamiento(alojamiento.ID, nombre, direccion, huesped, precio, minDias);
+                        }
+                        if (alojamiento is Hotel hs)
+                        {
+                            int estrella = Convert.ToInt32(cmbEstrellas.SelectedItem);
+                            int numeroHab = Convert.ToInt32(txtNroHab.Text);
+                            interfaz.ModificarAlojamiento(alojamiento.ID, nombre, direccion, huesped, precio, estrella, numeroHab);
+                        }
+                        interfaz.ModificarEstadoAlojamiento(alojamiento.ID, (EEstado)cbEstado.SelectedIndex);
+                        interfaz.AgregarCaracteristicas(alojamiento.ID, ObtenerCaracteristicas());
+                        interfaz.AgregarImagenes(alojamiento.ID, filesImagenes.ToArray());
+                    }
+                }
+                this.Close();
             }
-            this.Close();
+            else MessageBox.Show("error en el modulo");
         }
 
         private void rbCasa_CheckedChanged(object sender, EventArgs e)
@@ -174,8 +174,23 @@ namespace TPreservas
 
         private void FormAlojamiento_Load(object sender, EventArgs e)
         {
+            if (this.MdiParent is ITrasladarInfo md)
+            {
+                interfaz = md;
+                
+            }
+            else
+            {
+                MessageBox.Show("Error al cargar componente.");
+            }
             btnCrear.Enabled = Modifier;
             CargarCaracteristicas();
+            if (codigo != "" && interfaz!=null)
+            {
+                alojamiento = interfaz.ListarAlojamiento(ETipo.TODOS, EBuscar.ID, codigo)[0];
+                filesImagenes.AddRange(alojamiento.Imagenes);
+                CargarAlojamiento(alojamiento);
+            }
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,62 +11,164 @@ namespace TPreservas
     [Serializable]
     internal class Empresa
     {
-        private List<Alojamiento> alojamientos;
-        private List<Reserva> reservas;
+        private List<Alojamiento> alojamientos = new List<Alojamiento>();
+        private List<Reserva> reservas = new List<Reserva>();
         private List<Cliente> clientes = new List<Cliente>();
 
-        public Empresa()
+        public Empresa(){}
+
+
+        #region AREA ALOJAMIENTO
+
+        public string CrearAlojamiento(string nombre, string direccion, int huesped, double costo, int minD)
         {
-            
-            alojamientos = new List<Alojamiento>();
-            this.alojamientos.Add(new Casa("San carlos","Cordoba",2,8500,4));
-            this.alojamientos.Add(new Casa("Espinillo", "Parana", 8, 12500, 7));
-            this.alojamientos.Add(new Casa("San rafael", "Santa fe", 4, 8000, 4));
-            this.alojamientos.Add(new Casa("Don pepe", "Cordoba", 6, 9500, 5));
-            this.alojamientos.Add(new Hotel("Maran", "Cordoba", 6, 9500,3,555));
-            this.alojamientos.Add(new Hotel("Maran", "Parana", 6, 9500, 2, 450));
-
-            this.reservas = new List<Reserva>();
-            this.reservas.Add(new Reserva(alojamientos[0], clientes, DateTime.Now, DateTime.Now, 2500, DateTime.Now, 2));
-        }
-
-
-        public void AgregarAlojamiento(Alojamiento alojamiento)
-        {
-            this.alojamientos.Add(alojamiento);
-        }
-
-        public Alojamiento BuscarAlojamiento(EBuscar buscar, string valor)
-        {
-            int id = -1;
-            Alojamiento alojamiento = new Casa("", "", 0, 0, 0);
-            switch (buscar)
+            try
             {
-                case EBuscar.DNI:
-                    break;
-                case EBuscar.APELLIDO:
-                    break;
-                case EBuscar.NOMBRE:
-                    alojamiento.Nombre = valor;
-                    break;
-                case EBuscar.PERSONAS:
-                    alojamiento.Huesped = Convert.ToInt32(valor);
-                    break;
-                case EBuscar.ID:
-                    alojamiento.ID = valor;
-                    break;
-                default:
-                    break;
+                Alojamiento nuevoAlojamiento = new Casa(nombre, direccion, huesped, costo, minD);
+                alojamientos.Add(nuevoAlojamiento);
+                return nuevoAlojamiento.ID;
             }
-            //Alojamiento alo = (Alojamiento)alojamientos[id].Clone();
-            id = alojamientos.BinarySearch(alojamiento, new Alojamiento_Sort(buscar));
-            return alojamientos[id];
-        } 
+            catch (Exception e)
+            {
 
-        public void ModificarAlojamiento(Alojamiento alojamiento)
+                throw new Exception("Ocurrio un error al crear alojamiento " + e.Message);
+            }
+        }
+
+        public bool ModificarAlojamiento(string ID,string nombre, string direccion, int huesped, double costo, int minD)
         {
-            int indice = alojamientos.BinarySearch(alojamiento, new Alojamiento_Sort(EBuscar.ID));
-            //this.alojamientos[indice] = alojamiento;
+            try
+            {
+                bool resultado = false;
+                Alojamiento? alojamiento = alojamientos.Find(x => x.ID == ID);
+                if (alojamiento != null)
+                {
+                    if(alojamiento is Casa cc)
+                    {
+                        resultado =  cc.Modificar(nombre, direccion, huesped, costo, minD);
+                    }
+                }
+                else
+                {
+                    throw new Exception("Error al buscar alojamiento");
+                }
+                return resultado;
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception("Ocurrio un error al actualizar " + e.Message);
+            }
+        }
+
+        public bool ModificarAlojamiento(string ID, string nombre, string direccion, int huesped, double costo, int estrellas, int nHab)
+        {
+            try
+            {
+                bool resultado = false;
+                Alojamiento? alojamiento = alojamientos.Find(x => x.ID == ID);
+                if (alojamiento != null)
+                {
+                    if (alojamiento is Hotel cc)
+                    {
+                        resultado = cc.Modificar(nombre, direccion,huesped,costo,estrellas,nHab);
+                    }
+                }
+                else
+                {
+                    throw new Exception("Error al buscar alojamiento");
+                }
+                return resultado;
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception("Ocurrio un error al actualizar " + e.Message);
+            }
+        }
+
+        public bool ModificarEstadoAlojamiento(string ID,EEstado estado)
+        {
+            try
+            {
+                bool resultado = false;
+                Alojamiento? alojamiento = alojamientos.Find(x => x.ID == ID);
+                if (alojamiento != null)
+                {
+                    alojamiento.Estado = estado;
+                }
+                else
+                {
+                    throw new Exception("Error al buscar alojamiento");
+                }
+                return resultado;
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception("Ocurrio un error al actualizar " + e.Message);
+            }
+        }
+
+        public bool AgregarCaracteristicas(string ID, string[] caracteristicas)
+        {
+            try
+            {
+                bool resultado = false;
+                Alojamiento? alojamiento = alojamientos.Find(x => x.ID == ID);
+                if (alojamiento != null)
+                {
+                    alojamiento.AgregarCaracteristicas(caracteristicas);
+                }
+                else
+                {
+                    throw new Exception("Error al agregar caract. alojamiento");
+                }
+                return resultado;
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception("Ocurrio un error al agregar " + e.Message);
+            }
+        }
+
+        public bool AgregarImagenes(string ID, string[] imagenes)
+        {
+            try
+            {
+                bool resultado = false;
+                Alojamiento? alojamiento = alojamientos.Find(x => x.ID == ID);
+                if (alojamiento != null)
+                {
+                    alojamiento.AgregarImagenes(imagenes);
+                }
+                else
+                {
+                    throw new Exception("Error al agregar imagenes. alojamiento");
+                }
+                return resultado;
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception("Ocurrio un error al agregar " + e.Message);
+            }
+        }
+
+        public string CrearAlojamiento(string nombre, string direccion, int huesped, double costo, int estrellas, int nHab)
+        {
+            try
+            {
+                Alojamiento nuevoAlojamiento = new Hotel(nombre, direccion, huesped, costo, estrellas,nHab);
+                alojamientos.Add(nuevoAlojamiento);
+                return nuevoAlojamiento.ID;
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception("Ocurrio un error al crear alojamiento " + e.Message);
+            }
         }
 
         public List<Alojamiento> ListarAlojamientos(ETipo tipo= ETipo.TODOS, EBuscar parametro =EBuscar.ALL, string valor="")
@@ -140,7 +243,10 @@ namespace TPreservas
             }
             return lista;
         }
+        #endregion
 
+
+        #region AREA RESERVA
         public List<Reserva> ListarReservas()
         {
             return reservas;
@@ -151,7 +257,10 @@ namespace TPreservas
             Reserva nuevaReserva = new Reserva(alojamiento, cliente, checkin, checkout, costoXdia, fechaReserva, huesped);
             reservas.Add(nuevaReserva);
         }
+        #endregion
 
+
+        #region AREA CLIENTE
 
         public bool CrearCliente(string nombre, string apellido, float dni, string mail, string codArea, string celular)
         {
@@ -170,9 +279,29 @@ namespace TPreservas
             
         }
 
+        public bool ModificarCliente(string nombre, string apellido,float dni, string mail, string codArea, string celular)
+        {
+            try
+            {
+                Cliente? nn = clientes.Find(x => x.Dni == dni);
+                if(nn == null) return false;
+                else
+                {
+                    nn.ModificarCliente(nombre, apellido, mail, codArea, celular);
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
+
         public List<Cliente> ListarClientes()
         {
             return clientes;
         }
+        #endregion
     }
 }
