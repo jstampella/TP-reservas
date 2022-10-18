@@ -52,7 +52,7 @@ namespace TPreservas
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (char.IsNumber(e.KeyChar) || char.IsSymbol(e.KeyChar))
+            if (char.IsNumber(e.KeyChar))
             {
                 e.Handled = true;
             }
