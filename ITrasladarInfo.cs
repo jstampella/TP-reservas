@@ -20,5 +20,9 @@ namespace TPreservas
         List<Reserva> ListarReservas();
 
         void CrearReserva(Alojamiento alojamiento, List<Cliente> cliente, DateTime checkin, DateTime checkout, double costoXdia, DateTime fechaReserva, int huesped);
+
+        bool CrearCliente(string nombre, string apellido, float dni, string mail, string codArea, string celular);
+
+        List<Cliente> ListarClientes();
     }
 }

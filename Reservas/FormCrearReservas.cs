@@ -44,7 +44,7 @@ namespace TPreservas.Reservas
 
         private void btnCrear_Click(object sender, EventArgs e)
         {
-            Cliente nCliente = new Cliente("Carlos");
+            Cliente nCliente = new Cliente("jose", "Perez", 37080465, "jona.stam@gmail.com", "0343", "455858228");
             List<Cliente> listaClientes = new List<Cliente>();
             listaClientes.Add(nCliente);
 

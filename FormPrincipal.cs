@@ -108,7 +108,7 @@ namespace TPreservas
         {
             FormCliente childForm = new FormCliente();
             childForm.MdiParent = this;
-            childForm.Text = "Usuario - Ventana " + childFormNumber++;
+            childForm.Text = "Crear Usuario";
             childForm.Show();
         }
 
@@ -240,6 +240,28 @@ namespace TPreservas
         private void FormPrincipal_FormClosing(object sender, FormClosingEventArgs e)
         {
             GuardarStage();
+        }
+
+        public bool CrearCliente(string nombre, string apellido, float dni, string mail, string codArea, string celular)
+        {
+           return empresa.CrearCliente(nombre,apellido,dni,mail,codArea,celular);
+        }
+
+        bool ITrasladarInfo.CrearCliente(string nombre, string apellido, float dni, string mail, string codArea, string celular)
+        {
+            throw new NotImplementedException();
+        }
+
+        List<Cliente> ITrasladarInfo.ListarClientes()
+        {
+            return empresa.ListarClientes();
+        }
+
+        private void buscarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmListarClientes fmcliente = new FrmListarClientes();
+            fmcliente.MdiParent = this;
+            fmcliente.Show();
         }
     }
 }

@@ -12,12 +12,11 @@ namespace TPreservas
     {
         private List<Alojamiento> alojamientos;
         private List<Reserva> reservas;
+        private List<Cliente> clientes = new List<Cliente>();
 
         public Empresa()
         {
-            Cliente cliente = new Cliente("jose");
-            List<Cliente> clientes = new List<Cliente>();
-            clientes.Add(cliente);
+            
             alojamientos = new List<Alojamiento>();
             this.alojamientos.Add(new Casa("San carlos","Cordoba",2,8500,4));
             this.alojamientos.Add(new Casa("Espinillo", "Parana", 8, 12500, 7));
@@ -151,6 +150,29 @@ namespace TPreservas
         {
             Reserva nuevaReserva = new Reserva(alojamiento, cliente, checkin, checkout, costoXdia, fechaReserva, huesped);
             reservas.Add(nuevaReserva);
+        }
+
+
+        public bool CrearCliente(string nombre, string apellido, float dni, string mail, string codArea, string celular)
+        {
+            try
+            {
+                Cliente cliente = new Cliente(nombre, apellido, dni, mail, codArea, celular);
+                if (clientes == null) clientes = new List<Cliente>();
+                clientes.Add(cliente);
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            
+        }
+
+        public List<Cliente> ListarClientes()
+        {
+            return clientes;
         }
     }
 }
