@@ -35,9 +35,9 @@ namespace TPreservas
             }
             else
                 e.Handled = true;
-            if (textBox5.Text.Trim().Length != 11)
+            if (textBox5.Text.Trim().Length != 5)
             {
-                MessageBox.Show("El Teléfono debe tener 11 dígitos");
+                MessageBox.Show("El codigo de area no puede ser mayor de 5");
                 return; //Salimos
             }
         }
@@ -50,6 +50,21 @@ namespace TPreservas
         private void label7_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+        }
+
+        private void textBox6_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsNumber(e.KeyChar) || char.IsControl(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+                e.Handled = true;
         }
     }
 }
