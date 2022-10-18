@@ -160,16 +160,17 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(240, 260);
+            this.label7.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.label7.Location = new System.Drawing.Point(231, 260);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(25, 20);
+            this.label7.Size = new System.Drawing.Size(31, 20);
             this.label7.TabIndex = 14;
-            this.label7.Text = "15";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
+            this.label7.Text = "-15";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.SystemColors.ControlDark;
             this.label6.Location = new System.Drawing.Point(141, 260);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(17, 20);

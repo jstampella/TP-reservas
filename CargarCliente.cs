@@ -35,27 +35,10 @@ namespace TPreservas
             }
             else
                 e.Handled = true;
-            if (textBox5.Text.Trim().Length != 5)
-            {
-                MessageBox.Show("El codigo de area no puede ser mayor de 5");
-                return; //Salimos
-            }
+           
         }
 
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label7_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
-        }
+       
 
         private void textBox6_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -65,6 +48,16 @@ namespace TPreservas
             }
             else
                 e.Handled = true;
+        }
+
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsNumber(e.KeyChar) || char.IsSymbol(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else
+                e.Handled = false;
         }
     }
 }
