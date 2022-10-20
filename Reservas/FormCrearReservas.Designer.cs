@@ -56,6 +56,7 @@
             this.dtFecha.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtFecha.Location = new System.Drawing.Point(14, 17);
             this.dtFecha.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtFecha.MinDate = new System.DateTime(2022, 10, 20, 0, 0, 0, 0);
             this.dtFecha.Name = "dtFecha";
             this.dtFecha.Size = new System.Drawing.Size(181, 27);
             this.dtFecha.TabIndex = 0;

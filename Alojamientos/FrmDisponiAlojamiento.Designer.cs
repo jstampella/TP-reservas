@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmDisponiAlojamiento));
             this.dtCheckout = new System.Windows.Forms.DateTimePicker();
             this.dtCheckin = new System.Windows.Forms.DateTimePicker();
             this.btnBuscar = new System.Windows.Forms.Button();
@@ -36,10 +37,12 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.calendarCustom1 = new TPreservas.controles.CalendarCustom();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.btnRecargar = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.pbImagen = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbImagen)).BeginInit();
             this.SuspendLayout();
             // 
             // dtCheckout
@@ -47,6 +50,7 @@
             this.dtCheckout.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtCheckout.Location = new System.Drawing.Point(151, 29);
             this.dtCheckout.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtCheckout.MinDate = new System.DateTime(2022, 10, 20, 0, 0, 0, 0);
             this.dtCheckout.Name = "dtCheckout";
             this.dtCheckout.Size = new System.Drawing.Size(129, 27);
             this.dtCheckout.TabIndex = 4;
@@ -56,6 +60,7 @@
             this.dtCheckin.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtCheckin.Location = new System.Drawing.Point(11, 29);
             this.dtCheckin.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtCheckin.MinDate = new System.DateTime(2022, 10, 20, 0, 0, 0, 0);
             this.dtCheckin.Name = "dtCheckin";
             this.dtCheckin.Size = new System.Drawing.Size(134, 27);
             this.dtCheckin.TabIndex = 5;
@@ -102,7 +107,7 @@
             this.listBox1.Location = new System.Drawing.Point(12, 117);
             this.listBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(250, 324);
+            this.listBox1.Size = new System.Drawing.Size(250, 164);
             this.listBox1.TabIndex = 8;
             // 
             // calendarCustom1
@@ -127,15 +132,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Alojamiento";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(71, 93);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(131, 20);
-            this.label1.TabIndex = 11;
-            this.label1.Text = "Fechas Reservadas";
-            // 
             // btnRecargar
             // 
             this.btnRecargar.Location = new System.Drawing.Point(196, 26);
@@ -146,11 +142,33 @@
             this.btnRecargar.UseVisualStyleBackColor = true;
             this.btnRecargar.Click += new System.EventHandler(this.btnRecargar_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(71, 93);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(131, 20);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "Fechas Reservadas";
+            // 
+            // pbImagen
+            // 
+            this.pbImagen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pbImagen.ErrorImage = global::TPreservas.Properties.Resources.images;
+            this.pbImagen.InitialImage = ((System.Drawing.Image)(resources.GetObject("pbImagen.InitialImage")));
+            this.pbImagen.Location = new System.Drawing.Point(12, 288);
+            this.pbImagen.Name = "pbImagen";
+            this.pbImagen.Size = new System.Drawing.Size(250, 149);
+            this.pbImagen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbImagen.TabIndex = 12;
+            this.pbImagen.TabStop = false;
+            // 
             // FrmDisponiAlojamiento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(666, 453);
+            this.ClientSize = new System.Drawing.Size(675, 449);
+            this.Controls.Add(this.pbImagen);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.calendarCustom1);
@@ -162,6 +180,7 @@
             this.Load += new System.EventHandler(this.FrmDisponiAlojamiento_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbImagen)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -178,5 +197,6 @@
         private GroupBox groupBox2;
         private Label label1;
         private Button btnRecargar;
+        private PictureBox pbImagen;
     }
 }

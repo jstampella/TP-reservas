@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TPreservas.Properties;
 
 namespace TPreservas.Alojamientos
 {
@@ -72,6 +73,9 @@ namespace TPreservas.Alojamientos
             listBox1.DataSource = null;
             listBox1.DataSource = fechas;
             calendarCustom1.AgregarOcupado(fechas);
+            if (alojamientoSelec.Imagenes.Count > 0)
+                pbImagen.Image = new Bitmap(alojamientoSelec.Imagenes[0]);
+            else pbImagen.Image = Resources.images;
         }
 
         private void btnRecargar_Click(object sender, EventArgs e)

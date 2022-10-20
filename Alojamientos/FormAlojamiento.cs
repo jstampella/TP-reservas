@@ -175,11 +175,11 @@ namespace TPreservas
                     {
                         Bitmap myBitmap = new Bitmap(item);
                         string extension = item.Split(".")[1];
-                        if (!Directory.Exists(path + "images"))
+                        if (!Directory.Exists(path + "Resource"))
                         {
-                            Directory.CreateDirectory(path + "images");
+                            Directory.CreateDirectory(path + "Resource");
                         }
-                        string nuevoDest = path + "images" + separador + id + "-" + i + "." + extension;
+                        string nuevoDest = path + "Resource" + separador + id + "-" + i + "." + extension;
                         if (!File.Exists(nuevoDest))
                         {
                             File.Copy(item, nuevoDest);
