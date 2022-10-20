@@ -65,8 +65,9 @@ namespace TPreservas.Alojamientos
             {
                 cbAlojamiento2.Items.Add(item.Nombre);
             }
-            if(cbAlojamiento2 != null)
-                cbAlojamiento2.SelectedIndex = 0;
+            if(cbAlojamiento2.Items.Count>0)
+                    cbAlojamiento2.SelectedIndex = 0;
+               
         }
 
         private void cbAlojamiento2_SelectedIndexChanged(object sender, EventArgs e)
