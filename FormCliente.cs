@@ -89,6 +89,7 @@ namespace TPreservas
                 bool resultado = false;
                 string nombre = textBox1.Text;
                 string apellido = textBox2.Text;
+                if (nombre == "" || apellido == "" || textBox3.Text == "") { throw new MiException("error en los parametros"); }
                 float dni = float.Parse(textBox3.Text);
                 string mail = textBox4.Text;
                 string codArea = textBox5.Text;
@@ -142,5 +143,10 @@ namespace TPreservas
             if (!modifier) btnAceptar.Enabled = false;
         }
         #endregion
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
