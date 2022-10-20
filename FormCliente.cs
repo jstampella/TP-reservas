@@ -84,23 +84,34 @@ namespace TPreservas
         #region btn Aceptar
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            bool resultado= false;
-            string nombre = textBox1.Text;
-            string apellido = textBox2.Text;
-            float dni = float.Parse(textBox3.Text);
-            string mail = textBox4.Text;
-            string codArea = textBox5.Text;
-            string celular = textBox6.Text;
-            if (interfaz != null)
-                if (btnAceptar.Text == "Modificar")
-                    resultado = interfaz.ModificarCliente(nombre, apellido, dni, mail, codArea, celular);
-                else
-                    resultado = interfaz.CrearCliente(nombre, apellido, dni, mail, codArea, celular);
-
-            if (resultado) this.Close();
-            else
+            try
             {
-                MessageBox.Show("Ocurrio un error al guardar el cliente");
+                bool resultado = false;
+                string nombre = textBox1.Text;
+                string apellido = textBox2.Text;
+                float dni = float.Parse(textBox3.Text);
+                string mail = textBox4.Text;
+                string codArea = textBox5.Text;
+                string celular = textBox6.Text;
+                if (interfaz != null)
+                    if (btnAceptar.Text == "Modificar")
+                        resultado = interfaz.ModificarCliente(nombre, apellido, dni, mail, codArea, celular);
+                    else
+                        resultado = interfaz.CrearCliente(nombre, apellido, dni, mail, codArea, celular);
+
+                if (resultado) this.Close();
+                else
+                {
+                    MessageBox.Show("Ocurrio un error al guardar el cliente");
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null)
+                {
+                    MessageBox.Show(ex.InnerException.Message);
+                }
+                else MessageBox.Show("Ocurrio un error ("+ex.Message+")");
             }
         }
         #endregion
