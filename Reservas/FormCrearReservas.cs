@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,6 +15,7 @@ namespace TPreservas.Reservas
     {
         private ITrasladarInfo? interfaz = null;
         List<Alojamiento> nAlojamiento = new List<Alojamiento>();
+        List<Cliente> usuarios = new List<Cliente>();
         public FormCrearReservas()
         {
             InitializeComponent();
@@ -25,7 +27,9 @@ namespace TPreservas.Reservas
             {
                 interfaz = md;
                 nAlojamiento = interfaz.ListarAlojamiento();
-                CargarAlojamiento(nAlojamiento);
+                usuarios = interfaz.ListarClientes();
+                CargarAlojamiento();
+                CargarUsuario();
             }
             else
             {
@@ -33,29 +37,71 @@ namespace TPreservas.Reservas
             }
         }
 
-        private void CargarAlojamiento(List<Alojamiento> alojamientos)
+        private void CargarUsuario()
         {
-            cbAlojamientos.Items.Clear();
-            foreach (Alojamiento item in alojamientos)
+            cbUsuario.Items.Clear();
+            foreach (Cliente item in usuarios)
             {
-                cbAlojamientos.Items.Add(item.Nombre);
+                cbUsuario.Items.Add(item.Nombre);
+            }
+        }
+
+        private void CargarAlojamiento()
+        {
+            cbUsuario.Items.Clear();
+            foreach (Alojamiento item in nAlojamiento)
+            {
+                cbUsuario.Items.Add(item.Nombre);
             }
         }
 
         private void btnCrear_Click(object sender, EventArgs e)
         {
-            Cliente nCliente = new Cliente("jose", "Perez", 37080465, "jona.stam@gmail.com", "0343", "455858228");
-            List<Cliente> listaClientes = new List<Cliente>();
-            listaClientes.Add(nCliente);
+            try
+            {
+                List<Cliente> listaClientes = new List<Cliente>();
+                listaClientes.Add(usuarios[cbUsuario.SelectedIndex]);
 
-            int indAlojamiento = cbAlojamientos.SelectedIndex;
-            Alojamiento alojamiento = nAlojamiento[indAlojamiento];
+                int indAlojamiento = lbAlojamiento.SelectedIndex;
+                Alojamiento alojamiento = nAlojamiento[indAlojamiento];
+                DateTime checkIn = dtFecha.Value.Date;
+                DateTime checkOut = checkIn.AddDays(Convert.ToInt32(numericDay.Value));
+                int huesped = Convert.ToInt32(numericHuesped.Value);
+                if (interfaz != null)
+                    interfaz.CrearReserva(alojamiento, listaClientes, checkIn, checkOut, alojamiento.Costo, DateTime.Now, huesped);
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null)
+                    MessageBox.Show(ex.Message);
+                else
+                    MessageBox.Show(ex.InnerException.Message);
+            }
+        }
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
             DateTime checkIn = dtFecha.Value.Date;
             DateTime checkOut = checkIn.AddDays(Convert.ToInt32(numericDay.Value));
             int huesped = Convert.ToInt32(numericHuesped.Value);
-            if(interfaz!=null)
-                interfaz.CrearReserva(alojamiento, listaClientes, checkIn, checkOut, alojamiento.Costo,DateTime.Now,huesped);
-            this.Close();
+            List<Alojamiento> listadoAlojamiento = new List<Alojamiento>();
+            if (interfaz != null)
+                listadoAlojamiento = interfaz.AlojamientosDisponibles(checkIn, checkOut,huesped);
+            lbAlojamiento.Items.Clear();
+            foreach (Alojamiento item in listadoAlojamiento)
+            {
+                lbAlojamiento.Items.Add(item.Nombre);
+            }
+        }
+
+        private void lbAlojamiento_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Alojamiento alojamientoSelec = nAlojamiento[lbAlojamiento.SelectedIndex];
+            List<DateTime> fechas = new List<DateTime>();
+            if (interfaz != null)
+                fechas = interfaz.FechaOcupadas(alojamientoSelec);
+            calendarCustom1.AgregarOcupado(fechas);
         }
     }
 }

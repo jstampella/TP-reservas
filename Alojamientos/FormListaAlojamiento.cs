@@ -22,6 +22,10 @@ namespace TPreservas
             InitializeComponent();
         }
 
+        #region Ordenamiento
+        #endregion
+
+        #region Btn Buscar
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             if (interfaz != null)
@@ -59,7 +63,10 @@ namespace TPreservas
                 }
             }
         }
+        #endregion
 
+
+        #region btn Actualizar
         private void btnActualizar_Click(object sender, EventArgs e)
         {
             if (interfaz != null)
@@ -68,7 +75,9 @@ namespace TPreservas
                 CargarEnDataGrid();
             }
         }
+        #endregion
 
+        #region btn Buscar event key
         private void txtBuscar_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)13)
@@ -76,7 +85,10 @@ namespace TPreservas
                 btnBuscar.PerformClick();
             }
         }
+        #endregion
 
+
+        #region load
         private void FormLista_Load(object sender, EventArgs e)
         {
             if (this.MdiParent is ITrasladarInfo md)
@@ -91,12 +103,15 @@ namespace TPreservas
                 MessageBox.Show("Error al cargar componente.");
             }
         }
+        #endregion
 
         private void CargarEnDataGrid()
         {
             dgLista.AutoGenerateColumns = false;
             dgLista.DataSource = null;
-            dgLista.DataSource = nAlojamiento;
+            dgLista.DataSource = new BindingList<Alojamiento>(nAlojamiento);
+
+            
         }
 
         private ETipo checkTipo()
@@ -115,28 +130,104 @@ namespace TPreservas
             cbfiltro.SelectedIndex = 0;
         }
 
+
+
+        private void dgLista_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            DataGridView grid = (DataGridView)sender;
+            SortOrder so = SortOrder.None;
+            if (grid.Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection == SortOrder.None ||
+                grid.Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection == SortOrder.Ascending)
+            {
+                so = SortOrder.Descending;
+            }
+            else
+            {
+                so = SortOrder.Ascending;
+            }
+            //set SortGlyphDirection after databinding otherwise will always be none 
+            Sort(grid.Columns[e.ColumnIndex].Name, so);
+            foreach (DataGridViewColumn item in grid.Columns)
+            {
+                item.HeaderCell.SortGlyphDirection = SortOrder.None;
+            }
+            grid.Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection = so;
+
+        }
+        private void Sort(string column, SortOrder sortOrder)
+        {
+            switch (column)
+            {
+                case "IDs":
+                    {
+                        if (sortOrder == SortOrder.Ascending)
+                        {
+                            dgLista.DataSource = null;
+                            dgLista.DataSource = nAlojamiento.OrderBy(x => x.ID).ToList();
+                        }
+                        else
+                        {
+                            dgLista.DataSource = nAlojamiento.OrderByDescending(x => x.ID).ToList();
+                        }
+                        break;
+                    }
+                case "nombre":
+                    {
+                        if (sortOrder == SortOrder.Ascending)
+                        {
+                            dgLista.DataSource = nAlojamiento.OrderBy(x => x.Nombre).ToList();
+                        }
+                        else
+                        {
+                            dgLista.DataSource = nAlojamiento.OrderByDescending(x => x.Nombre).ToList();
+                        }
+                        break;
+                    }
+                case "direccion":
+                    {
+                        if (sortOrder == SortOrder.Ascending)
+                        {
+                            dgLista.DataSource = nAlojamiento.OrderBy(x => x.Direccion).ToList();
+                        }
+                        else
+                        {
+                            dgLista.DataSource = nAlojamiento.OrderByDescending(x => x.Direccion).ToList();
+                        }
+                        break;
+                    }
+            }
+
+        }
+
         #region Cell mouse Click
         private void dgLista_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            string arg = dgLista.Columns[e.ColumnIndex].Name;
-            if (arg == "editar" || arg == "ver")
+            if (e.RowIndex > -1)
             {
-                string? nro = dgLista.Rows[e.RowIndex].Cells[0].Value.ToString();
-                if (nro != null)
+                string arg = dgLista.Columns[e.ColumnIndex].Name;
+                if (arg == "editar" || arg == "ver")
                 {
-                    Alojamiento? al1 = nAlojamiento.Find(x => x.ID == nro);
-
-                    if (al1 != null)
+                    string? nro = dgLista.Rows[e.RowIndex].Cells[0].Value.ToString();
+                    if (nro != null)
                     {
-                        FormAlojamiento frmAloja = new FormAlojamiento(al1);
-                        if (arg == "ver") frmAloja.Modifier = false;
-                        frmAloja.MdiParent = this.MdiParent;
-                        frmAloja.Show();
-                    }
-                }
+                        Alojamiento? al1 = nAlojamiento.Find(x => x.IDs == nro);
 
+                        if (al1 != null)
+                        {
+                            this.Cursor = Cursors.WaitCursor;
+                            FormAlojamiento frmAloja = new FormAlojamiento(al1);
+                            if (arg == "ver") frmAloja.Modifier = false;
+                            frmAloja.MdiParent = this.MdiParent;
+                            this.Cursor = Cursors.Default;
+                            frmAloja.Show();
+                        }
+                    }
+
+                }
             }
+            
         }
+
         #endregion
     }
 }

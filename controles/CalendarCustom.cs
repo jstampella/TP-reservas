@@ -173,7 +173,10 @@ namespace TPreservas.controles
                 int mes = cbMes.SelectedIndex + 1;
                 int anio = Convert.ToInt32(cbAnio.SelectedItem);
                 if (mes != 0 && anio != 0)
+                {
                     CargarValores(anio, mes);
+                    AgregarOcupado();
+                }
             }
         }
 

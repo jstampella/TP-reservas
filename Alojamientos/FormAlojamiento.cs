@@ -8,6 +8,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TPreservas.controles;
+using static System.Net.Mime.MediaTypeNames;
+using Application = System.Windows.Forms.Application;
 
 namespace TPreservas
 {
@@ -85,6 +88,8 @@ namespace TPreservas
             txtCanPersona.Text = alojamiento.Huesped.ToString();
             txtPrecioXdia.Text = alojamiento.Costo.ToString();
             cbEstado.SelectedItem = alojamiento.Estado.ToString();
+            checkHourMin1.TiempoCompleto = alojamiento.CheckIn;
+            checkHourMin2.TiempoCompleto = alojamiento.CheckOut;
             btnCrear.Text = "Modificar";
             gbTipos.Enabled = false;
         }
@@ -93,52 +98,98 @@ namespace TPreservas
         {
             if (interfaz != null)
             {
-                string nombre = txtNombre.Text;
-                string direccion = txtDireccion.Text;
-                int huesped = Convert.ToInt32(txtCanPersona.Text);
-                double precio = Convert.ToDouble(txtPrecioXdia.Text);
-                string id_alojamiento;
+                try
+                {
+                    string nombre = txtNombre.Text;
+                    string direccion = txtDireccion.Text;
+                    int huesped = Convert.ToInt32(txtCanPersona.Text);
+                    double precio = Convert.ToDouble(txtPrecioXdia.Text);
+                    string id_alojamiento;
 
-                if (btnCrear.Text == "Crear")
-                {
-                    if (rbCasa.Checked)
+                    if (btnCrear.Text == "Crear")
                     {
-                        int minDias = Convert.ToInt32(txtMinDias.Text);
-                        id_alojamiento = interfaz.CrearAlojamiento(nombre, direccion, huesped, precio, minDias);
-                    }
-                    else
-                    {
-                        int estrella = Convert.ToInt32(cmbEstrellas.SelectedItem);
-                        int numeroHab = Convert.ToInt32(txtNroHab.Text);
-                        id_alojamiento = interfaz.CrearAlojamiento(nombre, direccion, huesped, precio, estrella, numeroHab);
-                    }
-                    interfaz.ModificarEstadoAlojamiento(id_alojamiento, (EEstado)cbEstado.SelectedIndex);
-                    interfaz.AgregarCaracteristicas(id_alojamiento, ObtenerCaracteristicas());
-                    interfaz.AgregarImagenes(id_alojamiento, filesImagenes.ToArray());
-                }
-                else
-                {
-                    if (alojamiento != null)
-                    {
-                        if (alojamiento is Casa cs)
+                        if (rbCasa.Checked)
                         {
                             int minDias = Convert.ToInt32(txtMinDias.Text);
-                            interfaz.ModificarAlojamiento(alojamiento.ID, nombre, direccion, huesped, precio, minDias);
+                            id_alojamiento = interfaz.CrearAlojamiento(nombre, direccion, huesped, precio, minDias);
                         }
-                        if (alojamiento is Hotel hs)
+                        else
                         {
                             int estrella = Convert.ToInt32(cmbEstrellas.SelectedItem);
                             int numeroHab = Convert.ToInt32(txtNroHab.Text);
-                            interfaz.ModificarAlojamiento(alojamiento.ID, nombre, direccion, huesped, precio, estrella, numeroHab);
+                            id_alojamiento = interfaz.CrearAlojamiento(nombre, direccion, huesped, precio, estrella, numeroHab);
                         }
-                        interfaz.ModificarEstadoAlojamiento(alojamiento.ID, (EEstado)cbEstado.SelectedIndex);
-                        interfaz.AgregarCaracteristicas(alojamiento.ID, ObtenerCaracteristicas());
-                        interfaz.AgregarImagenes(alojamiento.ID, filesImagenes.ToArray());
+                        interfaz.ModificarEstadoAlojamiento(id_alojamiento, (EEstado)cbEstado.SelectedIndex);
+                        interfaz.AgregarCaracteristicas(id_alojamiento, ObtenerCaracteristicas());
+                        interfaz.AgregarImagenes(id_alojamiento, filesImagenes.ToArray());
                     }
+                    else
+                    {
+                        if (alojamiento != null)
+                        {
+                            if (alojamiento is Casa cs)
+                            {
+                                int minDias = Convert.ToInt32(txtMinDias.Text);
+                                interfaz.ModificarAlojamiento(alojamiento.IDs, nombre, direccion, huesped, precio, minDias);
+                            }
+                            if (alojamiento is Hotel hs)
+                            {
+                                int estrella = Convert.ToInt32(cmbEstrellas.SelectedItem);
+                                int numeroHab = Convert.ToInt32(txtNroHab.Text);
+                                interfaz.ModificarAlojamiento(alojamiento.IDs, nombre, direccion, huesped, precio, estrella, numeroHab);
+                            }
+                            interfaz.ModificarEstadoAlojamiento(alojamiento.IDs, (EEstado)cbEstado.SelectedIndex);
+                            interfaz.AgregarCaracteristicas(alojamiento.IDs, ObtenerCaracteristicas());
+                            interfaz.AgregarImagenes(alojamiento.IDs, GuardarCopiaImagenes(alojamiento.IDs));
+                            interfaz.ModificarAlojamiento(alojamiento.IDs, checkHourMin1.TiempoCompleto, checkHourMin2.TiempoCompleto);
+
+                        }
+                    }
+                    this.Close();
                 }
-                this.Close();
+                catch (ArgumentException ee)
+                {
+                    MessageBox.Show("Error en la imagen cargada ("+ ee.Message+")");
+                }
+                catch (Exception ex)
+                {
+                    if (ex.InnerException != null)
+                        MessageBox.Show(ex.InnerException.Message);
+                    else MessageBox.Show(ex.Message);
+                }
             }
             else MessageBox.Show("error en el modulo");
+        }
+
+        private string[] GuardarCopiaImagenes(string id)
+        {
+            string[] filesnuevos = new string[filesImagenes.Count];
+            int i = 0;
+            char separador = Path.DirectorySeparatorChar;
+            foreach (string item in filesImagenes)
+            {
+                if (item != null)
+                {
+                    string path = Application.StartupPath;
+                    if (!item.Contains(path))
+                    {
+                        Bitmap myBitmap = new Bitmap(item);
+                        string extension = item.Split(".")[1];
+                        if (!Directory.Exists(path + "images"))
+                        {
+                            Directory.CreateDirectory(path + "images");
+                        }
+                        string nuevoDest = path + "images" + separador + id + "-" + i + "." + extension;
+                        if (!File.Exists(nuevoDest))
+                        {
+                            File.Copy(item, nuevoDest);
+                        }
+                        filesnuevos[i] = nuevoDest;
+                        i++;
+                    }
+                }
+            }
+            return filesnuevos;
         }
 
         private void rbCasa_CheckedChanged(object sender, EventArgs e)
@@ -159,7 +210,9 @@ namespace TPreservas
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Multiselect = true;
-            if(openFileDialog.ShowDialog()== DialogResult.OK)
+            openFileDialog.Filter = "images files (*.jpg)|*.jpeg|All files (*.*)|*.*";
+            openFileDialog.FilterIndex = 2;
+            if (openFileDialog.ShowDialog()== DialogResult.OK)
             {
                 filesImagenes.AddRange(openFileDialog.FileNames);
             }
@@ -169,7 +222,9 @@ namespace TPreservas
         {
             FormImagenes formImagenes = new FormImagenes();
             formImagenes.CargarImagenes(filesImagenes.ToArray());
-            formImagenes.ShowDialog();
+            if(formImagenes.ShowDialog() == DialogResult.OK){
+                filesImagenes = formImagenes.imagenes;
+            }
         }
 
         private void FormAlojamiento_Load(object sender, EventArgs e)
@@ -208,8 +263,8 @@ namespace TPreservas
             for (int i = 0; i < caracteristicas_list.Count; i++)
             {
                 CheckBox cb = new CheckBox();
-                    cb.Name = i.ToString();
-                
+                cb.Name = i.ToString();
+                cb.AutoSize = true;
                 cb.Text = caracteristicas_list[i].ToString();
                 cb.Checked = lsit.Exists(x => x == cb.Text);
                 gbCaracteristicas.Controls.Add(cb);

@@ -40,8 +40,14 @@ namespace TPreservas
         private void CargarLista()
         {
             dgLista.AutoGenerateColumns = false;
-            dgLista.DataSource = null;
-            dgLista.DataSource = listacliente;
+            BindingSource bindingSource1 = new BindingSource();
+            bindingSource1.DataSource = listacliente;
+            dgLista.DataSource = bindingSource1;
+            foreach (DataGridViewColumn column in dgLista.Columns)
+            {
+
+                column.SortMode = DataGridViewColumnSortMode.Automatic;
+            }
         }
 
         #endregion
@@ -50,23 +56,26 @@ namespace TPreservas
         #region Cell mouse Click
         private void dgLista_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            string arg = dgLista.Columns[e.ColumnIndex].Name;
-            if (arg == "editar" || arg == "ver")
+            if (e.RowIndex > -1 && e.ColumnIndex > -1)
             {
-                string? nro = dgLista.Rows[e.RowIndex].Cells[0].Value.ToString();
-                if (nro != null)
+                string arg = dgLista.Columns[e.ColumnIndex].Name;
+                if (arg == "editar" || arg == "ver")
                 {
-                    Cliente? al1 = listacliente.Find(x => x.Dni == Convert.ToDouble(nro));
-
-                    if (al1 != null)
+                    string? nro = dgLista.Rows[e.RowIndex].Cells[0].Value.ToString();
+                    if (nro != null)
                     {
-                        FormCliente frmCliente = new FormCliente(al1);
-                        if (arg == "ver") frmCliente.Modifier = false;
-                        frmCliente.MdiParent = this.MdiParent;
-                        frmCliente.Show();
+                        Cliente? al1 = listacliente.Find(x => x.Dni == Convert.ToDouble(nro));
+
+                        if (al1 != null)
+                        {
+                            FormCliente frmCliente = new FormCliente(al1);
+                            if (arg == "ver") frmCliente.Modifier = false;
+                            frmCliente.MdiParent = this.MdiParent;
+                            frmCliente.Show();
+                        }
                     }
+
                 }
-                    
             }
         }
         #endregion

@@ -25,9 +25,7 @@ namespace TPreservas.Reservas
             {
                 interfaz = md;
                 reservas = interfaz.ListarReservas();
-                dgLista.DataSource= reservas;
-                //CargarEnDataGrid(nAlojamiento);
-                //CargarfiltrosSelect();
+                CargarDats();
             }
             else
             {
@@ -39,8 +37,58 @@ namespace TPreservas.Reservas
         {
             if(interfaz!=null)
                 reservas = interfaz.ListarReservas();
-            dgLista.DataSource = null;
-            dgLista.DataSource = reservas;
+            CargarDats();
         }
+
+        private void CargarDats()
+        {
+            dgLista.AutoGenerateColumns = false;
+            dgLista.DataSource = null;
+            dgLista.DataSource = new BindingList<Reserva>(reservas);
+        }
+
+
+        #region Cell mouse Click
+        private void dgLista_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex > -1)
+            {
+                string arg = dgLista.Columns[e.ColumnIndex].Name;
+                if (arg == "editar" || arg == "ver")
+                {
+                    int? nro = Convert.ToInt32(dgLista.Rows[e.RowIndex].Cells[0].Value);
+                    if (nro != null)
+                    {
+                        Reserva? al1 = reservas.Find(x => x.Id == nro);
+
+                        if (al1 != null)
+                        {
+                            if (arg == "ver")
+                            {
+                                ComprobanteReserva comprobante = new ComprobanteReserva(al1);
+                                comprobante.MdiParent = this.MdiParent;
+                                comprobante.Show();
+                            }
+                            else
+                            {
+                                ModificarReserva mReser = new ModificarReserva(al1);
+                                mReser.MdiParent = this.MdiParent;
+                                mReser.Show();
+                            }
+
+                            //FormAlojamiento frmAloja = new FormAlojamiento(al1);
+                            //if (arg == "ver") frmAloja.Modifier = false;
+                            //frmAloja.MdiParent = this.MdiParent;
+                            //frmAloja.Show();
+                        }
+                    }
+
+                }
+            }
+
+        }
+
+        #endregion
     }
+
 }

@@ -49,5 +49,10 @@ namespace TPreservas
                 throw new Exception("Error al actualizar cliente " + e.Message);
             }
         }
+
+        public override string ToString()
+        {
+            return this.nombre +" "+ this.apellido;
+        }
     }
 }

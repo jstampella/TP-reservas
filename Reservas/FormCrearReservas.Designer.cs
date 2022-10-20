@@ -30,69 +30,208 @@
         {
             this.dtFecha = new System.Windows.Forms.DateTimePicker();
             this.numericDay = new System.Windows.Forms.NumericUpDown();
-            this.cbAlojamientos = new System.Windows.Forms.ComboBox();
+            this.cbUsuario = new System.Windows.Forms.ComboBox();
             this.numericHuesped = new System.Windows.Forms.NumericUpDown();
             this.btnCrear = new System.Windows.Forms.Button();
+            this.lbAlojamiento = new System.Windows.Forms.ListBox();
+            this.btnBuscar = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.calendarCustom1 = new TPreservas.controles.CalendarCustom();
             ((System.ComponentModel.ISupportInitialize)(this.numericDay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericHuesped)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // dtFecha
             // 
-            this.dtFecha.Location = new System.Drawing.Point(12, 12);
+            this.dtFecha.CustomFormat = "dd/MM/yyyy";
+            this.dtFecha.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtFecha.Location = new System.Drawing.Point(14, 17);
+            this.dtFecha.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dtFecha.Name = "dtFecha";
-            this.dtFecha.Size = new System.Drawing.Size(200, 23);
+            this.dtFecha.Size = new System.Drawing.Size(181, 27);
             this.dtFecha.TabIndex = 0;
             // 
             // numericDay
             // 
-            this.numericDay.Location = new System.Drawing.Point(237, 12);
+            this.numericDay.Location = new System.Drawing.Point(302, 19);
+            this.numericDay.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.numericDay.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numericDay.Name = "numericDay";
-            this.numericDay.Size = new System.Drawing.Size(120, 23);
+            this.numericDay.Size = new System.Drawing.Size(53, 27);
             this.numericDay.TabIndex = 1;
+            this.numericDay.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
-            // cbAlojamientos
+            // cbUsuario
             // 
-            this.cbAlojamientos.FormattingEnabled = true;
-            this.cbAlojamientos.Location = new System.Drawing.Point(387, 11);
-            this.cbAlojamientos.Name = "cbAlojamientos";
-            this.cbAlojamientos.Size = new System.Drawing.Size(121, 23);
-            this.cbAlojamientos.TabIndex = 2;
+            this.cbUsuario.FormattingEnabled = true;
+            this.cbUsuario.Location = new System.Drawing.Point(6, 27);
+            this.cbUsuario.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cbUsuario.Name = "cbUsuario";
+            this.cbUsuario.Size = new System.Drawing.Size(261, 28);
+            this.cbUsuario.TabIndex = 2;
             // 
             // numericHuesped
             // 
-            this.numericHuesped.Location = new System.Drawing.Point(12, 51);
+            this.numericHuesped.Location = new System.Drawing.Point(457, 19);
+            this.numericHuesped.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.numericHuesped.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numericHuesped.Name = "numericHuesped";
-            this.numericHuesped.Size = new System.Drawing.Size(75, 23);
+            this.numericHuesped.Size = new System.Drawing.Size(56, 27);
             this.numericHuesped.TabIndex = 3;
+            this.numericHuesped.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // btnCrear
             // 
-            this.btnCrear.Location = new System.Drawing.Point(433, 176);
+            this.btnCrear.Location = new System.Drawing.Point(428, 398);
+            this.btnCrear.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCrear.Name = "btnCrear";
-            this.btnCrear.Size = new System.Drawing.Size(75, 23);
+            this.btnCrear.Size = new System.Drawing.Size(377, 31);
             this.btnCrear.TabIndex = 4;
             this.btnCrear.Text = "Reservar";
             this.btnCrear.UseVisualStyleBackColor = true;
             this.btnCrear.Click += new System.EventHandler(this.btnCrear_Click);
             // 
+            // lbAlojamiento
+            // 
+            this.lbAlojamiento.FormattingEnabled = true;
+            this.lbAlojamiento.ItemHeight = 20;
+            this.lbAlojamiento.Location = new System.Drawing.Point(6, 38);
+            this.lbAlojamiento.Name = "lbAlojamiento";
+            this.lbAlojamiento.Size = new System.Drawing.Size(365, 184);
+            this.lbAlojamiento.TabIndex = 5;
+            this.lbAlojamiento.SelectedIndexChanged += new System.EventHandler(this.lbAlojamiento_SelectedIndexChanged);
+            // 
+            // btnBuscar
+            // 
+            this.btnBuscar.Location = new System.Drawing.Point(648, 17);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Size = new System.Drawing.Size(157, 29);
+            this.btnBuscar.TabIndex = 6;
+            this.btnBuscar.Text = "Buscar";
+            this.btnBuscar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(255, 22);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(41, 20);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Dias:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(380, 21);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(71, 20);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Huesped:";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.lbAlojamiento);
+            this.groupBox1.Location = new System.Drawing.Point(428, 70);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(377, 230);
+            this.groupBox1.TabIndex = 10;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Alojamiento Disponible";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.button1);
+            this.groupBox2.Controls.Add(this.cbUsuario);
+            this.groupBox2.Location = new System.Drawing.Point(428, 306);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(377, 71);
+            this.groupBox2.TabIndex = 11;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Cliente";
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(277, 26);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(94, 29);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Crear";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.calendarCustom1);
+            this.groupBox3.Location = new System.Drawing.Point(14, 70);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(389, 362);
+            this.groupBox3.TabIndex = 12;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Verificar Alojamiento";
+            // 
+            // calendarCustom1
+            // 
+            this.calendarCustom1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.calendarCustom1.Location = new System.Drawing.Point(22, 25);
+            this.calendarCustom1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.calendarCustom1.MaximumSize = new System.Drawing.Size(350, 329);
+            this.calendarCustom1.MinimumSize = new System.Drawing.Size(350, 329);
+            this.calendarCustom1.Name = "calendarCustom1";
+            this.calendarCustom1.Size = new System.Drawing.Size(350, 329);
+            this.calendarCustom1.TabIndex = 13;
+            // 
             // FormCrearReservas
             // 
             this.AcceptButton = this.btnCrear;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(523, 211);
+            this.ClientSize = new System.Drawing.Size(820, 437);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.btnCrear);
             this.Controls.Add(this.numericHuesped);
-            this.Controls.Add(this.cbAlojamientos);
             this.Controls.Add(this.numericDay);
             this.Controls.Add(this.dtFecha);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FormCrearReservas";
-            this.Text = "FormCrearReservas";
+            this.Text = "Crear Reserva";
             this.Load += new System.EventHandler(this.FormCrearReservas_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericDay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericHuesped)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -100,8 +239,17 @@
 
         private DateTimePicker dtFecha;
         private NumericUpDown numericDay;
-        private ComboBox cbAlojamientos;
+        private ComboBox cbUsuario;
         private NumericUpDown numericHuesped;
         private Button btnCrear;
+        private ListBox lbAlojamiento;
+        private Button btnBuscar;
+        private Label label1;
+        private Label label2;
+        private GroupBox groupBox1;
+        private GroupBox groupBox2;
+        private Button button1;
+        private GroupBox groupBox3;
+        private controles.CalendarCustom calendarCustom1;
     }
 }

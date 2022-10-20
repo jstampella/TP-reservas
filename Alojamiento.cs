@@ -9,10 +9,9 @@ using System.Threading.Tasks;
 namespace TPreservas
 {
     [Serializable]
-    abstract internal class Alojamiento : ICloneable, IComparable<Alojamiento>
+    abstract internal class Alojamiento : IComparable<Alojamiento>
     {
-        private static int ids = 0;
-        protected string id;
+        protected int id;
         private string nombre;
         private string direccion;
         protected double costo;
@@ -25,11 +24,10 @@ namespace TPreservas
         private TimeSpan checkOut;
 
         #region Constructores
-        public Alojamiento(string nombre, string direccion, int huesped, double costo)
+        public Alojamiento(int id, string nombre, string direccion, int huesped, double costo)
         {
-            ids++;
             this.nombre = nombre;
-            this.id = ids.ToString();
+            this.id = id;
             this.direccion = direccion;
             this.costo = costo;
             this.huesped = huesped;
@@ -40,10 +38,12 @@ namespace TPreservas
 
         #region Propiedades
 
-        public string ID
+        public int ID
         {
             get { return id; }
         }
+
+        abstract public string IDs { get; }
 
         public string Nombre
         {
@@ -84,11 +84,13 @@ namespace TPreservas
         public TimeSpan CheckIn
         {
             get { return checkIn; }
+            set { checkIn = value; }
         }
 
         public TimeSpan CheckOut
         {
             get { return checkOut; }
+            set { checkOut = value; }
         }
 
         public List<string> Imagenes
@@ -114,6 +116,7 @@ namespace TPreservas
             return true;
         }
 
+
         public void AgregarCamas(int[] camas)
         {
             this.camas.AddRange(camas);
@@ -121,7 +124,11 @@ namespace TPreservas
 
         public void AgregarImagenes(string[] img)
         {
-            imagenes.AddRange(img);
+            imagenes.Clear();
+            foreach (string item in img)
+            {
+                if (item != null) imagenes.Add(item);
+            }
         }
 
         public void AgregarCaracteristicas(string[] strr)
@@ -137,17 +144,11 @@ namespace TPreservas
                 this.camas.RemoveAt(camas[i]);
             }
         }
-
-        public object Clone()
-        {
-            Alojamiento nuevo = (Alojamiento)this.MemberwiseClone();
-            return nuevo;
-        }
         #endregion
 
         public override string ToString()
         {
-            return this.id+";"+this.nombre + ";" + this.huesped + ";" + this.direccion+";"+camas.Count.ToString()+";"+ estado;
+            return this.nombre;
         }
 
         public int CompareTo(Alojamiento? other)
@@ -181,7 +182,7 @@ namespace TPreservas
                     index = x.Huesped.CompareTo(y.Huesped);
                     break;
                 case EBuscar.ID:
-                    index = x.ID.ToString().CompareTo(y.ID.ToString());
+                    index = x.ID.CompareTo(y.ID);
                     break;
                 case EBuscar.DNI:
                     index = -1;

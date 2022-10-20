@@ -36,18 +36,24 @@
             this.flowPanel.AutoScroll = true;
             this.flowPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowPanel.Location = new System.Drawing.Point(0, 0);
+            this.flowPanel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.flowPanel.Name = "flowPanel";
-            this.flowPanel.Size = new System.Drawing.Size(792, 450);
+            this.flowPanel.Size = new System.Drawing.Size(1129, 505);
             this.flowPanel.TabIndex = 1;
+            this.flowPanel.WrapContents = false;
             // 
             // FormImagenes
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(792, 450);
+            this.ClientSize = new System.Drawing.Size(1129, 505);
             this.Controls.Add(this.flowPanel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FormImagenes";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Imagenes";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormImagenes_FormClosing);
             this.ResumeLayout(false);
 
         }

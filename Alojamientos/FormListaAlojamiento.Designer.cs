@@ -41,13 +41,13 @@
             this.rbAll = new System.Windows.Forms.RadioButton();
             this.rbCasa = new System.Windows.Forms.RadioButton();
             this.dgLista = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.direccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.personas = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.precio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ver = new System.Windows.Forms.DataGridViewButtonColumn();
             this.editar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox1.SuspendLayout();
@@ -180,13 +180,13 @@
             this.dgLista.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgLista.ColumnHeadersHeight = 40;
             this.dgLista.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3,
+            this.id,
+            this.nombre,
+            this.direccion,
             this.personas,
-            this.dataGridViewTextBoxColumn4,
-            this.dataGridViewTextBoxColumn5,
-            this.dataGridViewTextBoxColumn6,
+            this.precio,
+            this.estado,
+            this.tipo,
             this.ver,
             this.editar});
             this.dgLista.Location = new System.Drawing.Point(15, 108);
@@ -201,32 +201,33 @@
             this.dgLista.Size = new System.Drawing.Size(887, 479);
             this.dgLista.TabIndex = 9;
             this.dgLista.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgLista_CellMouseClick);
+            this.dgLista.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgLista_ColumnHeaderMouseClick);
             // 
-            // dataGridViewTextBoxColumn1
+            // id
             // 
-            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "ID";
-            this.dataGridViewTextBoxColumn1.HeaderText = "ID";
-            this.dataGridViewTextBoxColumn1.MinimumWidth = 40;
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.Width = 40;
+            this.id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.id.DataPropertyName = "IDs";
+            this.id.HeaderText = "ID";
+            this.id.MinimumWidth = 40;
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            this.id.Width = 40;
             // 
-            // dataGridViewTextBoxColumn2
+            // nombre
             // 
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "Nombre";
-            this.dataGridViewTextBoxColumn2.HeaderText = "Nombre";
-            this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            this.nombre.DataPropertyName = "Nombre";
+            this.nombre.HeaderText = "Nombre";
+            this.nombre.MinimumWidth = 6;
+            this.nombre.Name = "nombre";
+            this.nombre.ReadOnly = true;
             // 
-            // dataGridViewTextBoxColumn3
+            // direccion
             // 
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "Direccion";
-            this.dataGridViewTextBoxColumn3.HeaderText = "Direccion";
-            this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            this.direccion.DataPropertyName = "Direccion";
+            this.direccion.HeaderText = "Direccion";
+            this.direccion.MinimumWidth = 6;
+            this.direccion.Name = "direccion";
+            this.direccion.ReadOnly = true;
             // 
             // personas
             // 
@@ -236,29 +237,29 @@
             this.personas.Name = "personas";
             this.personas.ReadOnly = true;
             // 
-            // dataGridViewTextBoxColumn4
+            // precio
             // 
-            this.dataGridViewTextBoxColumn4.DataPropertyName = "Precio";
-            this.dataGridViewTextBoxColumn4.HeaderText = "Precio x Dia";
-            this.dataGridViewTextBoxColumn4.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.ReadOnly = true;
+            this.precio.DataPropertyName = "Precio";
+            this.precio.HeaderText = "Precio x Dia";
+            this.precio.MinimumWidth = 6;
+            this.precio.Name = "precio";
+            this.precio.ReadOnly = true;
             // 
-            // dataGridViewTextBoxColumn5
+            // estado
             // 
-            this.dataGridViewTextBoxColumn5.DataPropertyName = "Estado";
-            this.dataGridViewTextBoxColumn5.HeaderText = "estado";
-            this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.ReadOnly = true;
+            this.estado.DataPropertyName = "Estado";
+            this.estado.HeaderText = "estado";
+            this.estado.MinimumWidth = 6;
+            this.estado.Name = "estado";
+            this.estado.ReadOnly = true;
             // 
-            // dataGridViewTextBoxColumn6
+            // tipo
             // 
-            this.dataGridViewTextBoxColumn6.DataPropertyName = "Tipo";
-            this.dataGridViewTextBoxColumn6.HeaderText = "Tipo";
-            this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.ReadOnly = true;
+            this.tipo.DataPropertyName = "Tipo";
+            this.tipo.HeaderText = "Tipo";
+            this.tipo.MinimumWidth = 6;
+            this.tipo.Name = "tipo";
+            this.tipo.ReadOnly = true;
             // 
             // ver
             // 
@@ -308,7 +309,6 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(914, 600);
             this.Controls.Add(this.dgLista);
             this.Controls.Add(this.groupBox2);
@@ -316,7 +316,7 @@
             this.Controls.Add(this.btnActualizar);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FormListaAlojamiento";
-            this.Text = "FormLista";
+            this.Text = "Listado de Alojamiento";
             this.Load += new System.EventHandler(this.FormLista_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -338,13 +338,13 @@
         private RadioButton rbCasa;
         private RadioButton rbAll;
         private DataGridView dgLista;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private DataGridViewTextBoxColumn id;
+        private DataGridViewTextBoxColumn nombre;
+        private DataGridViewTextBoxColumn direccion;
         private DataGridViewTextBoxColumn personas;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private DataGridViewTextBoxColumn precio;
+        private DataGridViewTextBoxColumn estado;
+        private DataGridViewTextBoxColumn tipo;
         private DataGridViewButtonColumn ver;
         private DataGridViewButtonColumn editar;
     }

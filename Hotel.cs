@@ -11,12 +11,13 @@ namespace TPreservas
     {
         private int estrellas;
         private int nHabitacion;
-        public Hotel(string nombre,string direccion,int huesped,double costo,int estrellas,int nHab):base(nombre,direccion,huesped,costo)
+        public Hotel(int id,string nombre,string direccion,int huesped,double costo,int estrellas,int nHab):base(id,nombre,direccion,huesped,costo)
         {
             this.estrellas = estrellas;
             this.nHabitacion = nHab;
-            this.id = "H" + id;
         }
+
+        public override string IDs { get { return "H" + id; } }
 
         public int Estrella
         {
@@ -53,7 +54,7 @@ namespace TPreservas
             {
                 precio = precio * 1.5 + precio;
             }
-            if (estrellas == 3)
+            if (estrellas >= 3)
             {
                 precio = precio * 0.4 + precio;
             }
@@ -72,7 +73,7 @@ namespace TPreservas
 
         public override string ToString()
         {
-            return base.ToString() + ";"+ Costo;
+            return base.ToString() + "-Nro Hab:"+ NHabitacion;
         }
     }
 }

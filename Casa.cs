@@ -10,11 +10,12 @@ namespace TPreservas
     internal class Casa:Alojamiento
     {
         private int mindias;
-        public Casa(string nombre,string direccion, int huesped, double costo,int minD) : base(nombre, direccion, huesped, costo)
+        public Casa(int id, string nombre,string direccion, int huesped, double costo,int minD) : base(id,nombre, direccion, huesped, costo)
         {
             this.mindias = minD;
-            this.id = "C"+id;
         }
+
+        public override string IDs { get { return "C" + base.id; } }
 
         public int Mindias
         {
@@ -42,7 +43,7 @@ namespace TPreservas
 
         public override string ToString()
         {
-            return base.ToString() + ";" + Costo;
+            return base.ToString() + "-" + mindias;
         }
     }
 }

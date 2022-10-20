@@ -9,7 +9,6 @@ namespace TPreservas
     [Serializable]
     internal class Reserva:IComparable<Reserva>
     {
-        static int ids = 0;
         private int id;
         private Alojamiento alojamiento;
         private List<Cliente> cliente = new List<Cliente>();
@@ -22,10 +21,9 @@ namespace TPreservas
         private string nota = "";
 
 
-        public Reserva(Alojamiento alojamiento, List<Cliente> cliente, DateTime checkin, DateTime checkout, double costoXdia, DateTime fechaReserva, int huesped)
+        public Reserva(int id,Alojamiento alojamiento, List<Cliente> cliente, DateTime checkin, DateTime checkout, double costoXdia, DateTime fechaReserva, int huesped)
         {
-            ids++;
-            this.id = ids;
+            this.id = id;
             this.alojamiento = alojamiento;
             this.cliente.AddRange(cliente);
             this.checkin = checkin;
@@ -39,7 +37,12 @@ namespace TPreservas
         public int Id { get => id; }
         public Alojamiento Alojamiento { get => alojamiento; }
 
-        public List<Cliente> Cliente
+        public Cliente Cliente
+        {
+            get { return cliente[0]; }
+        }
+
+        public List<Cliente> Clientes
         {
             get { return cliente; }
         }
@@ -47,16 +50,41 @@ namespace TPreservas
         public DateTime Checkin
         {
             get { return checkin; }
+            set
+            {
+                checkin = value;
+            }
         }
 
         public DateTime CheckOut
         {
             get { return checkout; }
+            set { checkout = value; }
         }
 
         public double CostoXdia
         {
             get => costoXdia; 
+        }
+
+        public double PrecioFinal
+        {
+            get
+            {
+
+                TimeSpan difFechas = checkout - checkin;
+                return costoXdia * difFechas.Days;
+            }
+        }
+
+        public int Dias
+        {
+            get
+            {
+
+                TimeSpan difFechas = checkout - checkin;
+                return difFechas.Days;
+            }
         }
 
         public DateTime FechaReserva
@@ -67,11 +95,16 @@ namespace TPreservas
         public int Huesped
         {
             get { return huesped; }
+            set
+            {
+                huesped = value;
+            }
         }
 
         public EEstadoReserva Estado
         {
             get { return estado; }
+            set { estado = value; }
         }
 
         public string Nota
@@ -90,7 +123,7 @@ namespace TPreservas
         public int CompareTo(Reserva? other)
         {
             if (other == null) return -1;
-            return this.alojamiento.CompareTo(other.alojamiento);
+            return this.id.CompareTo(other.id);
         }
     }
 }

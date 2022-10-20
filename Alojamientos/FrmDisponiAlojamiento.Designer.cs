@@ -43,30 +43,36 @@
             // cbAlojamientos
             // 
             this.cbAlojamientos.FormattingEnabled = true;
-            this.cbAlojamientos.Location = new System.Drawing.Point(20, 51);
+            this.cbAlojamientos.Location = new System.Drawing.Point(646, 92);
+            this.cbAlojamientos.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cbAlojamientos.Name = "cbAlojamientos";
-            this.cbAlojamientos.Size = new System.Drawing.Size(537, 23);
+            this.cbAlojamientos.Size = new System.Drawing.Size(389, 28);
             this.cbAlojamientos.TabIndex = 3;
             // 
             // dtCheckout
             // 
-            this.dtCheckout.Location = new System.Drawing.Point(249, 22);
+            this.dtCheckout.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtCheckout.Location = new System.Drawing.Point(151, 29);
+            this.dtCheckout.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dtCheckout.Name = "dtCheckout";
-            this.dtCheckout.Size = new System.Drawing.Size(200, 23);
+            this.dtCheckout.Size = new System.Drawing.Size(129, 27);
             this.dtCheckout.TabIndex = 4;
             // 
             // dtCheckin
             // 
-            this.dtCheckin.Location = new System.Drawing.Point(20, 22);
+            this.dtCheckin.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtCheckin.Location = new System.Drawing.Point(11, 29);
+            this.dtCheckin.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dtCheckin.Name = "dtCheckin";
-            this.dtCheckin.Size = new System.Drawing.Size(200, 23);
+            this.dtCheckin.Size = new System.Drawing.Size(134, 27);
             this.dtCheckin.TabIndex = 5;
             // 
             // btnBuscar
             // 
-            this.btnBuscar.Location = new System.Drawing.Point(482, 22);
+            this.btnBuscar.Location = new System.Drawing.Point(286, 28);
+            this.btnBuscar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(75, 23);
+            this.btnBuscar.Size = new System.Drawing.Size(86, 31);
             this.btnBuscar.TabIndex = 6;
             this.btnBuscar.Text = "buscar";
             this.btnBuscar.UseVisualStyleBackColor = true;
@@ -76,28 +82,31 @@
             // 
             this.groupBox1.Controls.Add(this.dtCheckin);
             this.groupBox1.Controls.Add(this.btnBuscar);
-            this.groupBox1.Controls.Add(this.cbAlojamientos);
             this.groupBox1.Controls.Add(this.dtCheckout);
-            this.groupBox1.Location = new System.Drawing.Point(10, 9);
+            this.groupBox1.Location = new System.Drawing.Point(646, 13);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(574, 84);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.groupBox1.Size = new System.Drawing.Size(389, 71);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
+            this.groupBox1.Text = "Alojamiento";
             // 
             // cbAlojamiento2
             // 
             this.cbAlojamiento2.FormattingEnabled = true;
-            this.cbAlojamiento2.Location = new System.Drawing.Point(10, 104);
+            this.cbAlojamiento2.Location = new System.Drawing.Point(12, 163);
+            this.cbAlojamiento2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cbAlojamiento2.Name = "cbAlojamiento2";
-            this.cbAlojamiento2.Size = new System.Drawing.Size(220, 23);
+            this.cbAlojamiento2.Size = new System.Drawing.Size(250, 28);
             this.cbAlojamiento2.TabIndex = 7;
             // 
             // btnBuscar2
             // 
-            this.btnBuscar2.Location = new System.Drawing.Point(10, 149);
+            this.btnBuscar2.Location = new System.Drawing.Point(11, 199);
+            this.btnBuscar2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnBuscar2.Name = "btnBuscar2";
-            this.btnBuscar2.Size = new System.Drawing.Size(220, 23);
+            this.btnBuscar2.Size = new System.Drawing.Size(251, 31);
             this.btnBuscar2.TabIndex = 7;
             this.btnBuscar2.Text = "buscar";
             this.btnBuscar2.UseVisualStyleBackColor = true;
@@ -106,33 +115,36 @@
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 15;
-            this.listBox1.Location = new System.Drawing.Point(10, 178);
+            this.listBox1.ItemHeight = 20;
+            this.listBox1.Location = new System.Drawing.Point(11, 237);
+            this.listBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(220, 244);
+            this.listBox1.Size = new System.Drawing.Size(251, 324);
             this.listBox1.TabIndex = 8;
             // 
             // calendarCustom1
             // 
             this.calendarCustom1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.calendarCustom1.Location = new System.Drawing.Point(236, 98);
+            this.calendarCustom1.Location = new System.Drawing.Point(637, 131);
             this.calendarCustom1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.calendarCustom1.MaximumSize = new System.Drawing.Size(348, 329);
-            this.calendarCustom1.MinimumSize = new System.Drawing.Size(348, 329);
+            this.calendarCustom1.MaximumSize = new System.Drawing.Size(398, 439);
+            this.calendarCustom1.MinimumSize = new System.Drawing.Size(398, 439);
             this.calendarCustom1.Name = "calendarCustom1";
-            this.calendarCustom1.Size = new System.Drawing.Size(348, 329);
+            this.calendarCustom1.Size = new System.Drawing.Size(398, 439);
             this.calendarCustom1.TabIndex = 9;
             // 
             // FrmDisponiAlojamiento
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(592, 433);
+            this.ClientSize = new System.Drawing.Size(1047, 577);
             this.Controls.Add(this.calendarCustom1);
             this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.cbAlojamientos);
             this.Controls.Add(this.btnBuscar2);
             this.Controls.Add(this.cbAlojamiento2);
             this.Controls.Add(this.groupBox1);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FrmDisponiAlojamiento";
             this.Text = "Disponibilidad Alojamientos";
             this.Load += new System.EventHandler(this.FrmDisponiAlojamiento_Load);

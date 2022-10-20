@@ -167,6 +167,11 @@ namespace TPreservas
             return empresa.AlojamientosDisponibles(checkIn, checkOut);
         }
 
+        List<Alojamiento> ITrasladarInfo.AlojamientosDisponibles(DateTime checkIn, DateTime checkOut,int huesped)
+        {
+            return empresa.AlojamientosDisponibles(checkIn, checkOut,huesped);
+        }
+
         private void disponibilidadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Alojamientos.FrmDisponiAlojamiento frmDisp = new Alojamientos.FrmDisponiAlojamiento();
@@ -197,6 +202,8 @@ namespace TPreservas
                 catch (SerializationException e)
                 {
                     MessageBox.Show("Fallo al cargar los datos de la aplicacion: " + e.Message);
+                    fs.Close();
+                    File.Delete(file);
                 }
                 finally
                 {
@@ -256,6 +263,11 @@ namespace TPreservas
         #endregion
 
 
+        public void ModificarReserva(int reserva, DateTime Checkin, DateTime CheckOut, EEstadoReserva estado, int huesped)
+        {
+            empresa.ModificarReserva(reserva, Checkin, CheckOut,estado, huesped);
+        }
+
         public string CrearAlojamiento(string nombre, string direccion, int huesped, double costo, int minD)
         {
             return empresa.CrearAlojamiento(nombre, direccion, huesped, costo, minD);
@@ -289,6 +301,11 @@ namespace TPreservas
         public bool AgregarImagenes(string ID, string[] imagenes)
         {
             return empresa.AgregarImagenes(ID, imagenes);
+        }
+
+        public void ModificarAlojamiento(string ID, TimeSpan checkin, TimeSpan checkout)
+        {
+            empresa.ModificarAlojamiento(ID, checkin, checkout);
         }
     }
 }
