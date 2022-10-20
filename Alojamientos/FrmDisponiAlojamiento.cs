@@ -25,12 +25,18 @@ namespace TPreservas.Alojamientos
 
         private void CargarAlojamiento(List<Alojamiento> alojamientos)
         {
-            cbAlojamiento2.Items.Clear();
-            foreach (Alojamiento item in alojamientos)
+            try
             {
-                cbAlojamiento2.Items.Add(item.Nombre);
+                cbAlojamiento2.Items.Clear();
+                foreach (Alojamiento item in alojamientos)
+                {
+                    cbAlojamiento2.Items.Add(item.Nombre);
+                }
+                cbAlojamiento2.SelectedIndex = 0;
+            }catch(Exception ex)
+            {
+                MessageBox.Show("sin alojamiento");
             }
-            cbAlojamiento2.SelectedIndex = 0;
         }
 
         private void FrmDisponiAlojamiento_Load(object sender, EventArgs e)
@@ -59,6 +65,8 @@ namespace TPreservas.Alojamientos
             {
                 cbAlojamiento2.Items.Add(item.Nombre);
             }
+            if(cbAlojamiento2 != null)
+
             cbAlojamiento2.SelectedIndex = 0;
         }
 
