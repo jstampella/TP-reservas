@@ -390,7 +390,9 @@ namespace TPreservas
             {
                 if (nombre == "" || apellido == "") throw new MiException("Error en los paramentros");
                 Cliente? nn = clientes.Find(x => x.Dni == dni);
-                if(nn == null) return false;
+                Cliente? Exiscli = clientes.Find(x => x.Dni == dni);
+                if (Exiscli != null && Exiscli!=nn) throw new MiException("El dni ya se encuentra registrado.");
+                if (nn == null) return false;
                 else
                 {
                     nn.ModificarCliente(nombre, apellido, mail, codArea, celular);
