@@ -29,6 +29,7 @@ namespace TPreservas.Alojamientos
             {
                 cbAlojamiento2.Items.Add(item.Nombre);
             }
+            cbAlojamiento2.SelectedIndex = 0;
         }
 
         private void FrmDisponiAlojamiento_Load(object sender, EventArgs e)
@@ -52,24 +53,35 @@ namespace TPreservas.Alojamientos
             List<Alojamiento> listadoAlojamiento = new List<Alojamiento>();
             if (interfaz!=null)
                 listadoAlojamiento = interfaz.AlojamientosDisponibles(checkIn, checkOut);
-            cbAlojamientos.Items.Clear();
+            cbAlojamiento2.Items.Clear();
             foreach (Alojamiento item in listadoAlojamiento)
             {
-                cbAlojamientos.Items.Add(item.Nombre);
+                cbAlojamiento2.Items.Add(item.Nombre);
             }
+            cbAlojamiento2.SelectedIndex = 0;
         }
 
-        private void btnBuscar2_Click(object sender, EventArgs e)
+        private void cbAlojamiento2_SelectedIndexChanged(object sender, EventArgs e)
         {
             int index = cbAlojamiento2.SelectedIndex;
             Alojamiento alojamientoSelec = nAlojamiento[index];
             List<DateTime> fechas = new List<DateTime>();
-            if (interfaz !=null)
-                fechas =  interfaz.FechaOcupadas(alojamientoSelec);
+            if (interfaz != null)
+                fechas = interfaz.FechaOcupadas(alojamientoSelec);
 
             listBox1.DataSource = null;
             listBox1.DataSource = fechas;
             calendarCustom1.AgregarOcupado(fechas);
+        }
+
+        private void btnRecargar_Click(object sender, EventArgs e)
+        {
+            if (this.MdiParent is ITrasladarInfo md)
+            {
+                interfaz = md;
+                nAlojamiento = interfaz.ListarAlojamiento();
+                CargarAlojamiento(nAlojamiento);
+            }
         }
     }
 }

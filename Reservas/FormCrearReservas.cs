@@ -19,6 +19,23 @@ namespace TPreservas.Reservas
         public FormCrearReservas()
         {
             InitializeComponent();
+            btnCrear.Enabled = false;
+            btnPrecio.Enabled = false;
+        }
+
+
+        private void HabilitarBtnCrear()
+        {
+            if (cbUsuario.SelectedIndex > -1 && lbAlojamiento.SelectedIndex > -1)
+            {
+                btnCrear.Enabled = true;
+                btnPrecio.Enabled = true;
+            }
+            else
+            {
+                btnCrear.Enabled = false;
+                btnPrecio.Enabled = false;
+            }
         }
 
         private void FormCrearReservas_Load(object sender, EventArgs e)
@@ -91,17 +108,49 @@ namespace TPreservas.Reservas
             lbAlojamiento.Items.Clear();
             foreach (Alojamiento item in listadoAlojamiento)
             {
-                lbAlojamiento.Items.Add(item.Nombre);
+                lbAlojamiento.Items.Add(item.ToString());
             }
         }
 
         private void lbAlojamiento_SelectedIndexChanged(object sender, EventArgs e)
         {
+            HabilitarBtnCrear();
             Alojamiento alojamientoSelec = nAlojamiento[lbAlojamiento.SelectedIndex];
             List<DateTime> fechas = new List<DateTime>();
             if (interfaz != null)
                 fechas = interfaz.FechaOcupadas(alojamientoSelec);
             calendarCustom1.AgregarOcupado(fechas);
+        }
+
+        private void cbUsuario_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            HabilitarBtnCrear();
+        }
+
+        private void btnCrearU_Click(object sender, EventArgs e)
+        {
+            if(this.MdiParent is ITrasladarInfo it)
+            {
+                FormCliente ncliente = new FormCliente();
+                ncliente.Interfaz = it;
+                if (ncliente.ShowDialog() == DialogResult.OK)
+                {
+                    CargarUsuario();
+                }
+            }
+
+        }
+
+        private void btnPrecio_Click(object sender, EventArgs e)
+        {
+            Alojamiento alojamientoSelec = nAlojamiento[lbAlojamiento.SelectedIndex];
+            DateTime checkIn = dtFecha.Value.Date;
+            DateTime checkOut = checkIn.AddDays(Convert.ToInt32(numericDay.Value));
+            int huesped = Convert.ToInt32(numericHuesped.Value);
+            Cliente nn = usuarios[cbUsuario.SelectedIndex];
+            ComprobanteReserva comprobante = new ComprobanteReserva(alojamientoSelec, checkIn, checkOut,nn);
+            comprobante.Text = "Comprobante no valido como factura";
+            comprobante.ShowDialog();
         }
     }
 }

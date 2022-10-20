@@ -218,21 +218,21 @@
             // btnCrearUsuario
             // 
             this.btnCrearUsuario.Name = "btnCrearUsuario";
-            this.btnCrearUsuario.Size = new System.Drawing.Size(224, 26);
+            this.btnCrearUsuario.Size = new System.Drawing.Size(148, 26);
             this.btnCrearUsuario.Text = "Crear";
             this.btnCrearUsuario.Click += new System.EventHandler(this.btnCrearUsuario_Click);
             // 
             // buscarToolStripMenuItem
             // 
             this.buscarToolStripMenuItem.Name = "buscarToolStripMenuItem";
-            this.buscarToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.buscarToolStripMenuItem.Size = new System.Drawing.Size(148, 26);
             this.buscarToolStripMenuItem.Text = "Listar";
             this.buscarToolStripMenuItem.Click += new System.EventHandler(this.buscarToolStripMenuItem_Click);
             // 
             // listarToolStripMenuItem
             // 
             this.listarToolStripMenuItem.Name = "listarToolStripMenuItem";
-            this.listarToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.listarToolStripMenuItem.Size = new System.Drawing.Size(148, 26);
             this.listarToolStripMenuItem.Text = "Exportar";
             // 
             // reservasToolStripMenuItem
@@ -474,6 +474,7 @@
             this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.Name = "FormPrincipal";
             this.Text = "Sistema de Reservas";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormPrincipal_FormClosing);
             this.Load += new System.EventHandler(this.FormPrincipal_Load);
             this.menuStrip.ResumeLayout(false);

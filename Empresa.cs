@@ -269,15 +269,7 @@ namespace TPreservas
 
         public List<Alojamiento> AlojamientosDisponibles(DateTime checkIn, DateTime checkOut,int huesped)
         {
-            List<string> alojaminentoOcup = new List<string>();
-            foreach (Reserva x in reservas)
-            {
-                if (FuncionComparacionFechas(x, checkIn, checkOut))
-                    alojaminentoOcup.Add(x.Alojamiento.IDs);
-            }
-
-            List<Alojamiento> alojamientosDisp = alojamientos.FindAll(x => !alojaminentoOcup.Contains(x.IDs));
-
+            List<Alojamiento> alojamientosDisp = AlojamientosDisponibles(checkIn, checkOut);
             alojamientosDisp = alojamientosDisp.FindAll(x=> x.Huesped>=huesped);
 
             return alojamientosDisp;

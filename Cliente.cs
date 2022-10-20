@@ -25,6 +25,8 @@ namespace TPreservas
             this.dni = dni;
 
         }
+
+        #region Propiedades
         public string Nombre { get { return nombre; } }
         public string Apellido { get { return apellido; } }
         public float Dni { get { return dni; } }
@@ -32,7 +34,9 @@ namespace TPreservas
 
         public string Celular { get { return celular; } }
         public string CodigoA { get { return codigoA; } }
+        #endregion
 
+        #region Metodos
         public bool ModificarCliente(string nombre, string apellido, string mail, string codArea, string celular)
         {
             try
@@ -54,5 +58,6 @@ namespace TPreservas
         {
             return this.nombre +" "+ this.apellido;
         }
+        #endregion
     }
 }

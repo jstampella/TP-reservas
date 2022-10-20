@@ -17,6 +17,24 @@ namespace TPreservas.Reservas
             InitializeComponent();
         }
 
+        public ComprobanteReserva(Alojamiento alojamiento,DateTime Checkin,DateTime CheckOut,Cliente cliente) : this()
+        {
+            TimeSpan difFechas = CheckOut - Checkin;
+            double PrecioFinal =  alojamiento.Precio * difFechas.Days;
+
+            labelDireccion.Text = alojamiento.Direccion;
+            labelExtraDirec.Text = alojamiento.ToString();
+            labelTitulo.Text = alojamiento.Nombre;
+            lblcheckout.Text = CheckOut.ToString();
+            lbcheckin.Text = Checkin.ToString();
+            lblDni.Text = cliente.Dni.ToString();
+            lblCliente.Text = cliente.Nombre.ToString();
+            lblTotal.Text = PrecioFinal.ToString("C2");
+            lblXdia.Text = alojamiento.Precio.ToString("C2");
+            lblDiasReserv.Text = difFechas.ToString();
+            lblReservaF.Text = DateTime.Now.ToString();
+        }
+
         public ComprobanteReserva(Reserva reserva):this()
         {
             labelDireccion.Text = reserva.Alojamiento.Direccion;

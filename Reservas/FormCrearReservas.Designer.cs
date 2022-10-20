@@ -39,9 +39,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnCrearU = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.calendarCustom1 = new TPreservas.controles.CalendarCustom();
+            this.btnPrecio = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericDay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericHuesped)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -85,6 +86,7 @@
             this.cbUsuario.Name = "cbUsuario";
             this.cbUsuario.Size = new System.Drawing.Size(261, 28);
             this.cbUsuario.TabIndex = 2;
+            this.cbUsuario.SelectedIndexChanged += new System.EventHandler(this.cbUsuario_SelectedIndexChanged);
             // 
             // numericHuesped
             // 
@@ -106,10 +108,10 @@
             // 
             // btnCrear
             // 
-            this.btnCrear.Location = new System.Drawing.Point(428, 398);
+            this.btnCrear.Location = new System.Drawing.Point(638, 398);
             this.btnCrear.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCrear.Name = "btnCrear";
-            this.btnCrear.Size = new System.Drawing.Size(377, 31);
+            this.btnCrear.Size = new System.Drawing.Size(167, 31);
             this.btnCrear.TabIndex = 4;
             this.btnCrear.Text = "Reservar";
             this.btnCrear.UseVisualStyleBackColor = true;
@@ -165,7 +167,7 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.button1);
+            this.groupBox2.Controls.Add(this.btnCrearU);
             this.groupBox2.Controls.Add(this.cbUsuario);
             this.groupBox2.Location = new System.Drawing.Point(428, 306);
             this.groupBox2.Name = "groupBox2";
@@ -174,15 +176,16 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Cliente";
             // 
-            // button1
+            // btnCrearU
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(277, 26);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(94, 29);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Crear";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnCrearU.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCrearU.Location = new System.Drawing.Point(277, 26);
+            this.btnCrearU.Name = "btnCrearU";
+            this.btnCrearU.Size = new System.Drawing.Size(94, 29);
+            this.btnCrearU.TabIndex = 3;
+            this.btnCrearU.Text = "Crear";
+            this.btnCrearU.UseVisualStyleBackColor = true;
+            this.btnCrearU.Click += new System.EventHandler(this.btnCrearU_Click);
             // 
             // groupBox3
             // 
@@ -205,12 +208,24 @@
             this.calendarCustom1.Size = new System.Drawing.Size(350, 329);
             this.calendarCustom1.TabIndex = 13;
             // 
+            // btnPrecio
+            // 
+            this.btnPrecio.Location = new System.Drawing.Point(457, 398);
+            this.btnPrecio.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnPrecio.Name = "btnPrecio";
+            this.btnPrecio.Size = new System.Drawing.Size(167, 31);
+            this.btnPrecio.TabIndex = 13;
+            this.btnPrecio.Text = "Precio";
+            this.btnPrecio.UseVisualStyleBackColor = true;
+            this.btnPrecio.Click += new System.EventHandler(this.btnPrecio_Click);
+            // 
             // FormCrearReservas
             // 
             this.AcceptButton = this.btnCrear;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(820, 437);
+            this.Controls.Add(this.btnPrecio);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -248,8 +263,9 @@
         private Label label2;
         private GroupBox groupBox1;
         private GroupBox groupBox2;
-        private Button button1;
+        private Button btnCrearU;
         private GroupBox groupBox3;
         private controles.CalendarCustom calendarCustom1;
+        private Button btnPrecio;
     }
 }

@@ -17,6 +17,8 @@ namespace TPreservas
         private Cliente? cliente;
         private ITrasladarInfo? interfaz = null;
 
+        public ITrasladarInfo? Interfaz { get { return interfaz; } set { interfaz = value; } }
+
         #region Constructor
         public FormCliente()
         {
@@ -111,7 +113,8 @@ namespace TPreservas
             {
                 interfaz = md;
             }
-            else
+            else if(interfaz == null)
+            
             {
                 MessageBox.Show("Error al cargar componente.");
             }

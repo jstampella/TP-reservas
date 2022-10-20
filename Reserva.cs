@@ -34,6 +34,8 @@ namespace TPreservas
             this.estado = EEstadoReserva.Activa;
         }
 
+        #region Propiedades
+
         public int Id { get => id; }
         public Alojamiento Alojamiento { get => alojamiento; }
 
@@ -112,7 +114,10 @@ namespace TPreservas
             get { return nota; }
         }
 
+        #endregion
 
+
+        #region Metodos
         public void CancelarReserva(string nota)
         {
             //validar si tiene algun recargo cancelar 
@@ -125,5 +130,6 @@ namespace TPreservas
             if (other == null) return -1;
             return this.id.CompareTo(other.id);
         }
+        #endregion
     }
 }
