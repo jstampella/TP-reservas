@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace TPreservas
 {
@@ -12,7 +13,7 @@ namespace TPreservas
     internal class Empresa
     {
         private List<Alojamiento> alojamientos = new List<Alojamiento>();
-        private List<Reserva> reservas = new List<Reserva>();
+        private int cantidadReservas = 1;
         private List<Cliente> clientes = new List<Cliente>();
 
         public Empresa(){}
@@ -255,29 +256,27 @@ namespace TPreservas
 
         public List<Alojamiento> AlojamientosDisponibles(DateTime checkIn, DateTime checkOut)
         {
-            List<string> alojaminentoOcup = new List<string>();
-            foreach (Reserva x in reservas)
+            List<Alojamiento> alojaminentoDispo = new List<Alojamiento>();
+            foreach (Alojamiento item in alojamientos)
             {
-                if (FuncionComparacionFechas(x,checkIn,checkOut))
-                    alojaminentoOcup.Add(x.Alojamiento.IDs);
+                if (item.Estado != EEstado.Activo) continue;
+                if (!item.ReservadoenFecha(checkIn, checkOut)) alojaminentoDispo.Add(item);
             }
-
-            List<Alojamiento> alojamientosDisp = alojamientos.FindAll(x => !alojaminentoOcup.Contains(x.IDs));
-            
-            return alojamientosDisp;
+            return alojaminentoDispo;
         }
 
-        public List<Alojamiento> AlojamientosDisponibles(DateTime checkIn, DateTime checkOut,int huesped)
+        public List<Alojamiento> AlojamientosDisponibles(DateTime checkIn, DateTime checkOut, int huesped)
         {
             List<Alojamiento> alojamientosDisp = AlojamientosDisponibles(checkIn, checkOut);
-            alojamientosDisp = alojamientosDisp.FindAll(x=> x.Huesped>=huesped);
+            alojamientosDisp = alojamientosDisp.FindAll(x => x.Huesped >= huesped);
 
             return alojamientosDisp;
         }
 
         public List<DateTime> FechaOcupadas(Alojamiento alojamiento)
         {
-            List<Reserva> res =  reservas.FindAll(x => x.Alojamiento == alojamiento);
+
+            List<Reserva> res = alojamiento.ListarReservas();
             List<DateTime> lista = new List<DateTime>();
             foreach (Reserva item in res)
             {
@@ -293,14 +292,38 @@ namespace TPreservas
             return lista;
         }
 
-        private Reserva? FechaOcupadas(Alojamiento alojamiento,DateTime checkIn,DateTime checkOut)
+        public string ImportarAlojamiento(ETipo tipo,string path)
         {
-            foreach (Reserva x in reservas)
+            string errores = "";
+            FileStream fs = new FileStream(path, FileMode.Open);
+            StreamReader rm = new StreamReader(fs);
+            int ln = 0;
+            while (!rm.EndOfStream)
             {
-                if (FuncionComparacionFechas(x, checkIn, checkOut))
-                    if (x.Alojamiento== alojamiento)return x;
+                string? ll = rm.ReadLine();
+                if (ln != 0)
+                {
+                    if (ll != null)
+                    {
+                        string[] linea = ll.Split(';');
+                        try
+                        {
+                            int huesped = Convert.ToInt32(linea[2]);
+                            double costo = Convert.ToDouble(linea[3]);
+                            int minDias = Convert.ToInt32(linea[4]);
+                            CrearAlojamiento(linea[0], linea[1], huesped, costo, minDias);
+                        }
+                        catch (Exception)
+                        {
+                            errores += ln + ",";
+                        }
+                    }
+                }
+                ln++;
             }
-            return null;
+            rm.Close();
+            fs.Close();
+            return errores;
         }
         #endregion
 
@@ -308,37 +331,20 @@ namespace TPreservas
         #region AREA RESERVA
         public List<Reserva> ListarReservas()
         {
-            return reservas;
-        }
-
-        public int ObtenerUltimoIDReserva()
-        {
-            if (reservas.Count > 0)
+            List<Reserva> lista = new List<Reserva>();
+            foreach (Alojamiento item in alojamientos)
             {
-                reservas.Sort();
-                return reservas.Last().Id;
+                lista.AddRange(item.ListarReservas());
             }
-            else return 0;
-
+            return lista;
         }
 
-        public void CrearReserva(Alojamiento alojamiento, List<Cliente> cliente, DateTime checkin, DateTime checkout, double costoXdia, DateTime fechaReserva, int huesped)
+        public void CrearReserva(Alojamiento alojamiento, List<Cliente> cliente, DateTime checkin, DateTime checkout, DateTime fechaReserva, int huesped)
         {
             try
             {
-                if (huesped > alojamiento.Huesped) throw new MiException("Limite maximo de huesped: " + alojamiento.Huesped);
-                if (alojamiento.Estado != EEstado.Activo) throw new MiException("El alojamiento esta " + alojamiento.Estado);
-
-                foreach (Reserva x in reservas)
-                {
-                    if (FuncionComparacionFechas(x, checkin, checkout))
-                        if (x.Alojamiento.ID == alojamiento.ID) throw new MiException("Alojamiento ocupado en ese fecha");
-                }
-                int id = ObtenerUltimoIDReserva();
-                id++;
-                Reserva nuevaReserva = new Reserva(id,alojamiento, cliente, checkin, checkout, costoXdia, fechaReserva, huesped);
-                reservas.Add(nuevaReserva);
-
+                alojamiento.CrearReserva(cantidadReservas,cliente, checkin, checkout, huesped);
+                cantidadReservas++;
             }
             catch (Exception ex)
             {
@@ -346,19 +352,18 @@ namespace TPreservas
             }
         }
 
-        public void ModificarReserva(int reserva, DateTime Checkin, DateTime CheckOut, EEstadoReserva estado, int huesped)
+        public void ModificarReserva(int idAloj,int reserva, DateTime Checkin, DateTime CheckOut, EEstadoReserva estado, int huesped)
         {
-            Reserva? res = reservas.Find(x => x.Id == reserva);
-            if (res == null) throw new MiException("Error al actualizar reserva");
-
-            Reserva? rrOcupada = FechaOcupadas(res.Alojamiento, Checkin, CheckOut);
-            if (rrOcupada != null && rrOcupada.Id != res.Id) throw new MiException("Fecha Ocupada en ese rango");
-            if (huesped > res.Alojamiento.Huesped) throw new MiException("Excede la capacidad permitida "+res.Alojamiento.Huesped);
-
-            res.Estado = estado;
-            res.Checkin = Checkin;
-            res.CheckOut = CheckOut;
-            res.Huesped = huesped;
+            try
+            {
+                Alojamiento? alojamiento = alojamientos.Find(x => x.ID == idAloj);
+                if (alojamiento == null) throw new MiException("No se encontro alojamiento");
+                alojamiento.ModificarReserva(reserva, Checkin, CheckOut, estado, huesped);
+            }
+            catch (MiException ex)
+            {
+                throw new MiException("Ocurrio un error al actualizar la reserva", ex);
+            }
         }
         #endregion
 
@@ -399,14 +404,14 @@ namespace TPreservas
                     return true;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                return false;
+                throw new MiException("Ocurrio un error" + ex.Message);
             }
         }
 
-        public List<Cliente> ListarClientes()
+        public IEnumerable<Cliente> ListarClientes()
         {
             return clientes;
         }

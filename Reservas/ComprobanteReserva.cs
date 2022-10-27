@@ -31,7 +31,7 @@ namespace TPreservas.Reservas
             lblCliente.Text = cliente.Nombre.ToString();
             lblTotal.Text = PrecioFinal.ToString("C2");
             lblXdia.Text = alojamiento.Precio.ToString("C2");
-            lblDiasReserv.Text = difFechas.ToString();
+            lblDiasReserv.Text = difFechas.Days.ToString();
             lblReservaF.Text = DateTime.Now.ToString();
         }
 

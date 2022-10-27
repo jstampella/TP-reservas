@@ -22,6 +22,7 @@ namespace TPreservas.Reservas
 
         public ModificarReserva(Reserva miReserva) : this()
         {
+            lblIdAloja.Text = miReserva.Alojamiento.ID.ToString();
             dtcheckin.Value = miReserva.Checkin;
             dtCheckOut.Value = miReserva.CheckOut;
             numericHuesped.Value = miReserva.Huesped;
@@ -49,7 +50,9 @@ namespace TPreservas.Reservas
                     EEstadoReserva ee = (EEstadoReserva)cbEstado.SelectedIndex;
                     if (ee != EEstadoReserva.Cancelada || ee != EEstadoReserva.Activa) ee = EEstadoReserva.Modificada;
                     int hue = Convert.ToInt32(numericHuesped.Value);
-                    interfaz.ModificarReserva(Convert.ToInt32(lblId.Text), dtcheckin.Value, dtCheckOut.Value, ee, hue);
+                    int idReserva = Convert.ToInt32(lblId.Text);
+                    int idAlojamiento = Convert.ToInt32(lblIdAloja.Text);
+                    interfaz.ModificarReserva(idAlojamiento, idReserva, dtcheckin.Value, dtCheckOut.Value, ee, hue);
                     this.Close();
                 }
             }

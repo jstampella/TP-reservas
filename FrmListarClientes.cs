@@ -13,7 +13,7 @@ namespace TPreservas
     public partial class FrmListarClientes : Form
     {
         ITrasladarInfo? interfaz;
-        List<Cliente> listacliente = new List<Cliente>();
+        IEnumerable<Cliente> listacliente = new List<Cliente>();
         public FrmListarClientes()
         {
             InitializeComponent();
@@ -64,7 +64,7 @@ namespace TPreservas
                     string? nro = dgLista.Rows[e.RowIndex].Cells[0].Value.ToString();
                     if (nro != null)
                     {
-                        Cliente? al1 = listacliente.Find(x => x.Dni == Convert.ToDouble(nro));
+                        Cliente? al1 = listacliente.FirstOrDefault(x => x.Dni == Convert.ToDouble(nro));
 
                         if (al1 != null)
                         {

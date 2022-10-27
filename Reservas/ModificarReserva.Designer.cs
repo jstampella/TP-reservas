@@ -39,6 +39,7 @@
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.lblId = new System.Windows.Forms.Label();
+            this.lblIdAloja = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericHuesped)).BeginInit();
             this.SuspendLayout();
             // 
@@ -145,11 +146,21 @@
             this.lblId.TabIndex = 14;
             this.lblId.Text = "0";
             // 
+            // lblIdAloja
+            // 
+            this.lblIdAloja.AutoSize = true;
+            this.lblIdAloja.Location = new System.Drawing.Point(321, 9);
+            this.lblIdAloja.Name = "lblIdAloja";
+            this.lblIdAloja.Size = new System.Drawing.Size(17, 20);
+            this.lblIdAloja.TabIndex = 15;
+            this.lblIdAloja.Text = "0";
+            // 
             // ModificarReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(350, 233);
+            this.Controls.Add(this.lblIdAloja);
             this.Controls.Add(this.lblId);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnAceptar);
@@ -185,5 +196,6 @@
         private Button btnCancelar;
         private Button btnAceptar;
         private Label lblId;
+        private Label lblIdAloja;
     }
 }

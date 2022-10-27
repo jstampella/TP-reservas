@@ -31,19 +31,20 @@ namespace TPreservas
 
         List<Alojamiento> AlojamientosDisponibles(DateTime checkIn, DateTime checkOut,int huesped);
 
+
         List<DateTime> FechaOcupadas(Alojamiento alojamiento);
 
 
         List<Reserva> ListarReservas();
 
-        void CrearReserva(Alojamiento alojamiento, List<Cliente> cliente, DateTime checkin, DateTime checkout, double costoXdia, DateTime fechaReserva, int huesped);
+        void CrearReserva(Alojamiento alojamiento, List<Cliente> cliente, DateTime checkin, DateTime checkout, DateTime fechaReserva, int huesped);
 
-        void ModificarReserva(int reserva, DateTime Checkin, DateTime CheckOut,EEstadoReserva estado,int huesped);
+        void ModificarReserva(int alojamiento,int reserva, DateTime Checkin, DateTime CheckOut,EEstadoReserva estado,int huesped);
 
         bool CrearCliente(string nombre, string apellido, float dni, string mail, string codArea, string celular);
 
         bool ModificarCliente(string nombre, string apellido,float dni, string mail, string codArea, string celular);
 
-        List<Cliente> ListarClientes();
+        IEnumerable<Cliente> ListarClientes();
     }
 }

@@ -20,6 +20,7 @@ namespace TPreservas
         private EEstado estado;
         private List<string> caracteristicas = new List<string>();
         private List<string> imagenes = new List<string>();
+        private List<Reserva> reservas = new List<Reserva>();
         private TimeSpan checkIn;
         private TimeSpan checkOut;
 
@@ -156,6 +157,70 @@ namespace TPreservas
             if (other == null) return -1;
             return this.nombre.CompareTo(other.nombre);
         }
+
+
+        #region AREA RESERVA
+        public List<Reserva> ListarReservas()
+        {
+            return reservas;
+        }
+
+        public bool ReservadoenFecha(DateTime checkIn,DateTime checkOut)
+        {
+            foreach (Reserva x in reservas)
+            {
+                if (FuncionComparacionFechas(x, checkIn, checkOut)) return true;
+            }
+            return false;
+        }
+
+        public void CrearReserva(int idReserva,List<Cliente> cliente, DateTime checkin, DateTime checkout, int huesped)
+        {
+            try
+            {
+                if (huesped > this.huesped) throw new MiException("Limite maximo de huesped: " + this.huesped);
+                if (this.estado != EEstado.Activo) throw new MiException("El alojamiento esta " + this.estado);
+
+                foreach (Reserva x in reservas)
+                {
+                    if (FuncionComparacionFechas(x, checkin, checkout)) throw new MiException("Alojamiento ocupado en ese fecha");
+                }
+                DateTime fechaReserva = DateTime.Now;
+                Reserva nuevaReserva = new Reserva(idReserva, this, cliente, checkin, checkout, this.Precio, fechaReserva, huesped);
+                reservas.Add(nuevaReserva);
+
+            }
+            catch (Exception ex)
+            {
+                throw new MiException(ex.Message);
+            }
+        }
+
+        public void ModificarReserva(int reserva, DateTime Checkin, DateTime CheckOut, EEstadoReserva estado, int huesped)
+        {
+            Reserva? res = reservas.Find(x => x.Id == reserva);
+            if (res == null) throw new MiException("No se encontro reserva");
+
+            foreach (Reserva x in reservas)
+            {
+                if(res.Id!=x.Id)
+                    if (FuncionComparacionFechas(x, Checkin, CheckOut)) throw new MiException("Fecha Ocupada en ese rango");
+            }
+
+            if (huesped > this.huesped) throw new MiException("Excede la capacidad permitida " + this.huesped);
+
+            res.Estado = estado;
+            res.Checkin = Checkin;
+            res.CheckOut = CheckOut;
+            res.Huesped = huesped;
+        }
+
+        private bool FuncionComparacionFechas(Reserva x, DateTime checkIn, DateTime checkOut)
+        {
+            return ((checkIn >= x.Checkin && checkOut <= x.CheckOut) || (checkOut >= x.Checkin && checkOut <= x.CheckOut) || (checkIn <= x.CheckOut && checkOut >= x.CheckOut));
+        }
+
+        #endregion
     }
 
     #region IComparer para ordenar

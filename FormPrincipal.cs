@@ -157,9 +157,9 @@ namespace TPreservas
             return empresa.ListarReservas();
         }
 
-        void ITrasladarInfo.CrearReserva(Alojamiento alojamiento, List<Cliente> cliente, DateTime checkin, DateTime checkout, double costoXdia, DateTime fechaReserva, int huesped)
+        void ITrasladarInfo.CrearReserva(Alojamiento alojamiento, List<Cliente> cliente, DateTime checkin, DateTime checkout, DateTime fechaReserva, int huesped)
         {
-            empresa.CrearReserva(alojamiento, cliente, checkin, checkout, costoXdia, fechaReserva, huesped);
+            empresa.CrearReserva(alojamiento, cliente, checkin, checkout, fechaReserva, huesped);
         }
 
         List<Alojamiento> ITrasladarInfo.AlojamientosDisponibles(DateTime checkIn, DateTime checkOut)
@@ -250,7 +250,7 @@ namespace TPreservas
             return empresa.CrearCliente(nombre, apellido, dni, mail, codArea, celular);
         }
 
-        List<Cliente> ITrasladarInfo.ListarClientes()
+        IEnumerable<Cliente> ITrasladarInfo.ListarClientes()
         {
             return empresa.ListarClientes();
         }
@@ -263,9 +263,9 @@ namespace TPreservas
         #endregion
 
 
-        public void ModificarReserva(int reserva, DateTime Checkin, DateTime CheckOut, EEstadoReserva estado, int huesped)
+        public void ModificarReserva(int alojamiento,int reserva, DateTime Checkin, DateTime CheckOut, EEstadoReserva estado, int huesped)
         {
-            empresa.ModificarReserva(reserva, Checkin, CheckOut,estado, huesped);
+            empresa.ModificarReserva(alojamiento,reserva, Checkin, CheckOut,estado, huesped);
         }
 
         public string CrearAlojamiento(string nombre, string direccion, int huesped, double costo, int minD)
@@ -306,6 +306,65 @@ namespace TPreservas
         public void ModificarAlojamiento(string ID, TimeSpan checkin, TimeSpan checkout)
         {
             empresa.ModificarAlojamiento(ID, checkin, checkout);
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFile = new SaveFileDialog();
+            saveFile.Filter = "dato | *.dat";
+            if(saveFile.ShowDialog()== DialogResult.OK)
+            {
+                FileStream fl = new FileStream(saveFile.FileName,FileMode.Create);
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(fl, empresa);
+                fl.Close();
+            }
+        }
+
+        private void listarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SaveFileDialog fileSave = new SaveFileDialog();
+                fileSave.Filter = "Archivo csv | *.csv";
+                fileSave.FileName = "Clientes";
+                if (fileSave.ShowDialog() == DialogResult.OK)
+                {
+                    FileStream fileStream = new FileStream(fileSave.FileName, FileMode.OpenOrCreate,FileAccess.ReadWrite);
+                    StreamWriter streamWriter = new StreamWriter(fileStream);
+                    IEnumerable<Cliente> clientes = empresa.ListarClientes();
+                    streamWriter.WriteLine("Nombre;Apellido;Email;CodArea;Telefono");
+                    foreach (Cliente cliente in clientes)
+                    {
+                        string line = cliente.Nombre + ";" + cliente.Apellido + ";" + cliente.Mail+";"+cliente.CodigoA+";"+cliente.Celular;
+                        streamWriter.WriteLine(line);
+                    }
+                    streamWriter.Close();
+                    fileStream.Close();
+                }
+
+
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error al guardar");
+            }
+        }
+
+
+        private void importarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "archivo csv |*.csv";
+            if(openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string errores =empresa.ImportarAlojamiento(ETipo.CASA, openFileDialog.FileName);
+                if (errores != "")
+                {
+                    MessageBox.Show("Errores en la lineas:" + errores);
+                }
+            }
         }
     }
 }

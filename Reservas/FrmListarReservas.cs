@@ -75,11 +75,6 @@ namespace TPreservas.Reservas
                                 mReser.MdiParent = this.MdiParent;
                                 mReser.Show();
                             }
-
-                            //FormAlojamiento frmAloja = new FormAlojamiento(al1);
-                            //if (arg == "ver") frmAloja.Modifier = false;
-                            //frmAloja.MdiParent = this.MdiParent;
-                            //frmAloja.Show();
                         }
                     }
 

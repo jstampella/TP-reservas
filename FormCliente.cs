@@ -106,6 +106,10 @@ namespace TPreservas
                     MessageBox.Show("Ocurrio un error al guardar el cliente");
                 }
             }
+            catch (MiException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             catch (Exception ex)
             {
                 if (ex.InnerException != null)

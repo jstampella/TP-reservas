@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TPreservas
 {
-    internal class MiException : ApplicationException
+    internal class MiException : Exception
     {
         public MiException() : base() {
         }
