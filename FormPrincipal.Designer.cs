@@ -55,6 +55,8 @@
             this.crearToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.listarToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.disponibilidadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.toolBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -77,8 +79,7 @@
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.exportarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.precioBaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -301,6 +302,19 @@
             this.disponibilidadToolStripMenuItem.Text = "Disponibilidad";
             this.disponibilidadToolStripMenuItem.Click += new System.EventHandler(this.disponibilidadToolStripMenuItem_Click);
             // 
+            // exportarToolStripMenuItem
+            // 
+            this.exportarToolStripMenuItem.Name = "exportarToolStripMenuItem";
+            this.exportarToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.exportarToolStripMenuItem.Text = "Exportar";
+            // 
+            // importarToolStripMenuItem
+            // 
+            this.importarToolStripMenuItem.Name = "importarToolStripMenuItem";
+            this.importarToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.importarToolStripMenuItem.Text = "Importar";
+            this.importarToolStripMenuItem.Click += new System.EventHandler(this.importarToolStripMenuItem_Click);
+            // 
             // viewMenu
             // 
             this.viewMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -332,7 +346,8 @@
             // toolsMenu
             // 
             this.toolsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.optionsToolStripMenuItem});
+            this.optionsToolStripMenuItem,
+            this.precioBaseToolStripMenuItem});
             this.toolsMenu.Name = "toolsMenu";
             this.toolsMenu.Size = new System.Drawing.Size(112, 24);
             this.toolsMenu.Text = "&Herramientas";
@@ -340,7 +355,7 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.optionsToolStripMenuItem.Text = "&Opciones";
             // 
             // windowsMenu
@@ -467,18 +482,12 @@
             this.toolStripProgressBar1.Name = "toolStripProgressBar1";
             this.toolStripProgressBar1.Size = new System.Drawing.Size(114, 19);
             // 
-            // exportarToolStripMenuItem
+            // precioBaseToolStripMenuItem
             // 
-            this.exportarToolStripMenuItem.Name = "exportarToolStripMenuItem";
-            this.exportarToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.exportarToolStripMenuItem.Text = "Exportar";
-            // 
-            // importarToolStripMenuItem
-            // 
-            this.importarToolStripMenuItem.Name = "importarToolStripMenuItem";
-            this.importarToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.importarToolStripMenuItem.Text = "Importar";
-            this.importarToolStripMenuItem.Click += new System.EventHandler(this.importarToolStripMenuItem_Click);
+            this.precioBaseToolStripMenuItem.Name = "precioBaseToolStripMenuItem";
+            this.precioBaseToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.precioBaseToolStripMenuItem.Text = "Precio base";
+            this.precioBaseToolStripMenuItem.Click += new System.EventHandler(this.precioBaseToolStripMenuItem_Click);
             // 
             // FormPrincipal
             // 
@@ -555,6 +564,7 @@
         private ToolStripMenuItem disponibilidadToolStripMenuItem;
         private ToolStripMenuItem exportarToolStripMenuItem;
         private ToolStripMenuItem importarToolStripMenuItem;
+        private ToolStripMenuItem precioBaseToolStripMenuItem;
     }
 }
 

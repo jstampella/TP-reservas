@@ -18,16 +18,19 @@ namespace TPreservas.controles
         List<Point> diasGris = new List<Point>();
         List<Point> diasMes = new List<Point>();
         List<DateTime> diasOcupados = new List<DateTime>();
+        List<DateTime> diasSeleccionados = new List<DateTime>();
         List<DateTime> calendario = new List<DateTime>();
-        Color[] colores = new Color[3];
+        Color[] colores = new Color[4];
         public CalendarCustom()
         {
             InitializeComponent();
             colores[0] = Color.Red;
             colores[1] = Color.AliceBlue;
             colores[2] = Color.DarkGray;
+            colores[3] = Color.Green;
         }
 
+        #region Cargar Valores (anio,mes)
         private void CargarValores(int anio,int mes)
         {
             diasGris.Clear();
@@ -98,7 +101,9 @@ namespace TPreservas.controles
                 };
             }
         }
+        #endregion
 
+        #region Agregar Ocupado
         private void AgregarOcupado()
         {
             foreach (DateTime fe in diasOcupados)
@@ -118,7 +123,9 @@ namespace TPreservas.controles
             }
                 
         }
+        #endregion
 
+        #region Agregar Ocupado (List<DateTime>
         public void AgregarOcupado(List<DateTime> fechas)
         {
             bandera = false;
@@ -141,11 +148,65 @@ namespace TPreservas.controles
             {
                 CambiarColor(item.X, item.Y, colores[1]);
             }
+
             AgregarOcupado();
+            AgregarSeleccionados();
             bandera = true;
         }
+        #endregion
 
 
+        #region Agregar Seleccionados (List<DateTime>
+        public void AgregarSeleccionados(List<DateTime> fechas)
+        {
+            bandera = false;
+            diasSeleccionados.Clear();
+            diasSeleccionados = fechas;
+            if (diasSeleccionados.Count > 0)
+            {
+                if (diasSeleccionados[0].Year.ToString() != cbAnio.SelectedItem.ToString() || diasSeleccionados[0].Month.ToString() != cbMes.SelectedItem.ToString())
+                {
+                    cbMes.SelectedIndex = diasSeleccionados[0].Month - 1;
+                    cbAnio.SelectedItem = diasSeleccionados[0].Year.ToString();
+                    CargarValores(diasSeleccionados[0].Year, diasSeleccionados[0].Month);
+                }
+            }
+            foreach (Point item in diasGris)
+            {
+                CambiarColor(item.X, item.Y, colores[2]);
+            }
+            foreach (Point item in diasMes)
+            {
+                CambiarColor(item.X, item.Y, colores[1]);
+            }
+            AgregarSeleccionados();
+            bandera = true;
+        }
+        #endregion
+
+        #region Agregar Seleccionados
+        private void AgregarSeleccionados()
+        {
+            foreach (DateTime fe in diasSeleccionados)
+            {
+                DateTime nDate = new DateTime(fe.Year, fe.Month, fe.Day);
+                int posicion = calendario.FindIndex(f => f == nDate);
+                if (posicion != -1)
+                {
+                    int posX = posicion % 7;
+                    int posY = posicion / 7;
+                    Panel item = (Panel)TableCalendar.GetControlFromPosition(posX, posY);
+                    if (item != null)
+                    {
+                        item.BackColor = colores[3];
+                    }
+                }
+            }
+
+        }
+        #endregion
+
+        #region Cambiar Color el panel en la posicion X,Y
         private void CambiarColor(int posX, int posY, Color colors)
         {
             Panel item = (Panel)TableCalendar.GetControlFromPosition(posX, posY);
@@ -154,7 +215,10 @@ namespace TPreservas.controles
                 item.BackColor = colors;
             }
         }
+        #endregion
 
+
+        #region Agregrar Elemento (obj,posx,posY,color)
         private void AgregarElemento(Control obj, int posX, int posY,Color colors)
         {
             Panel item = (Panel)TableCalendar.GetControlFromPosition(posX, posY);
@@ -165,7 +229,10 @@ namespace TPreservas.controles
                 item.BackColor = colors;
             }
         }
+        #endregion
 
+
+        #region change Select index
         private void cbAnio_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (bandera)
@@ -179,7 +246,10 @@ namespace TPreservas.controles
                 }
             }
         }
+        #endregion
 
+
+        #region Cargar panel
         private void CargarPanel()
         {
             for (int i = 0; i < TableCalendar.ColumnCount; i++)
@@ -195,7 +265,10 @@ namespace TPreservas.controles
             }
             
         }
+        #endregion
 
+
+        #region Load
         private void CalendarCustom_Load(object sender, EventArgs e)
         {
             int anio = DateTime.Now.Year;
@@ -210,5 +283,6 @@ namespace TPreservas.controles
 
 
         }
+        #endregion
     }
 }

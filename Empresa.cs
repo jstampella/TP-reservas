@@ -12,15 +12,19 @@ namespace TPreservas
     [Serializable]
     internal class Empresa
     {
+        private double precioHotel = 1;
         private List<Alojamiento> alojamientos = new List<Alojamiento>();
         private int cantidadReservas = 1;
         private List<Cliente> clientes = new List<Cliente>();
 
         public Empresa(){}
 
+        public Double PrecioHotel { get { return precioHotel; } }
 
-        #region AREA ALOJAMIENTO
 
+    #region AREA ALOJAMIENTO
+
+        #region Obtener Ultimo ID de Alojamiento
         private int ObtenerUltimoID()
         {
             if (alojamientos.Count > 0)
@@ -31,8 +35,9 @@ namespace TPreservas
             else return 0; 
 
         }
+        #endregion
 
-
+        #region Crear Alojamiento Casa
         public string CrearAlojamiento(string nombre, string direccion, int huesped, double costo, int minD)
         {
             try
@@ -49,7 +54,28 @@ namespace TPreservas
                 throw new MiException("Ocurrio un error al crear alojamiento " + e.Message);
             }
         }
+        #endregion
 
+        #region Crear Alojamiento Hotel
+        public string CrearAlojamiento(string nombre, string direccion, int huesped, double costo, int estrellas, int nHab)
+        {
+            try
+            {
+                int ids = ObtenerUltimoID();
+                ids++;
+                Alojamiento nuevoAlojamiento = new Hotel(ids, nombre, direccion, huesped,ref precioHotel, estrellas, nHab);
+                alojamientos.Add(nuevoAlojamiento);
+                return nuevoAlojamiento.IDs;
+            }
+            catch (Exception e)
+            {
+
+                throw new MiException("Ocurrio un error al crear alojamiento " + e.Message);
+            }
+        }
+        #endregion
+
+        #region Modificar Alojamiento Casa
         public bool ModificarAlojamiento(string ID,string nombre, string direccion, int huesped, double costo, int minD)
         {
             try
@@ -75,7 +101,9 @@ namespace TPreservas
                 throw new MiException("Ocurrio un error al actualizar " + e.Message);
             }
         }
+        #endregion
 
+        #region Modificar Alojamiento (id, checkin, checkout)
         public void ModificarAlojamiento(string ID,TimeSpan checkin,TimeSpan checkout) {
             try
             {
@@ -96,7 +124,9 @@ namespace TPreservas
                 throw new MiException("Ocurrio un error al actualizar " + e.Message);
             }
         }
+        #endregion
 
+        #region Modificar Alojamiento Hotel
         public bool ModificarAlojamiento(string ID, string nombre, string direccion, int huesped, double costo, int estrellas, int nHab)
         {
             try
@@ -122,7 +152,9 @@ namespace TPreservas
                 throw new MiException("Ocurrio un error al actualizar " + e.Message);
             }
         }
+        #endregion
 
+        #region Modificar Alojamiento el estado
         public bool ModificarEstadoAlojamiento(string ID,EEstado estado)
         {
             try
@@ -145,7 +177,9 @@ namespace TPreservas
                 throw new MiException("Ocurrio un error al actualizar " + e.Message);
             }
         }
+        #endregion
 
+        #region Agregar Caracteristicas al Alojamiento
         public bool AgregarCaracteristicas(string ID, string[] caracteristicas)
         {
             try
@@ -168,7 +202,9 @@ namespace TPreservas
                 throw new MiException("Ocurrio un error al agregar " + e.Message);
             }
         }
+        #endregion
 
+        #region Agregar Imagenes al Alojamiento
         public bool AgregarImagenes(string ID, string[] imagenes)
         {
             try
@@ -191,24 +227,9 @@ namespace TPreservas
                 throw new MiException("Ocurrio un error al agregar " + e.Message);
             }
         }
+        #endregion
 
-        public string CrearAlojamiento(string nombre, string direccion, int huesped, double costo, int estrellas, int nHab)
-        {
-            try
-            {
-                int ids = ObtenerUltimoID();
-                ids++;
-                Alojamiento nuevoAlojamiento = new Hotel(ids,nombre, direccion, huesped, costo, estrellas,nHab);
-                alojamientos.Add(nuevoAlojamiento);
-                return nuevoAlojamiento.IDs;
-            }
-            catch (Exception e)
-            {
-
-                throw new MiException("Ocurrio un error al crear alojamiento " + e.Message);
-            }
-        }
-
+        #region Listar Alojamiento (ETipo,EBuscar,String)
         public List<Alojamiento> ListarAlojamientos(ETipo tipo= ETipo.TODOS, EBuscar parametro =EBuscar.ALL, string valor="")
         {
             List<Alojamiento> listaFiltrada = new List<Alojamiento>();
@@ -247,32 +268,56 @@ namespace TPreservas
             }
             return listaFiltrada;
         }
+        #endregion
 
-        private bool FuncionComparacionFechas(Reserva x, DateTime checkIn, DateTime checkOut)
-        {
-            return ((checkIn >= x.Checkin && checkOut <= x.CheckOut) ||(checkOut>=x.Checkin && checkOut<=x.CheckOut) ||(checkIn<=x.CheckOut && checkOut>=x.CheckOut));
-            //return ((checkIn >= x.Checkin &&  checkOut<= x.CheckOut) || ( checkIn>= x.Checkin && checkOut>= x.CheckOut) || ( checkIn<= x.Checkin &&  checkOut>= x.CheckOut) || (checkIn <= x.Checkin && checkOut <= x.CheckOut)) ;
-        }
-
-        public List<Alojamiento> AlojamientosDisponibles(DateTime checkIn, DateTime checkOut)
+        #region Alojamientos Disponibles (DateTime,DateTime,ETipo)
+        public List<Alojamiento> AlojamientosDisponibles(DateTime checkIn, DateTime checkOut,ETipo tipo=ETipo.TODOS)
         {
             List<Alojamiento> alojaminentoDispo = new List<Alojamiento>();
             foreach (Alojamiento item in alojamientos)
             {
+                if (item.Tipo != tipo && tipo != ETipo.TODOS) continue;
                 if (item.Estado != EEstado.Activo) continue;
                 if (!item.ReservadoenFecha(checkIn, checkOut)) alojaminentoDispo.Add(item);
             }
             return alojaminentoDispo;
         }
+        #endregion
 
-        public List<Alojamiento> AlojamientosDisponibles(DateTime checkIn, DateTime checkOut, int huesped)
+        #region Alojamientos Disponibles (DateTime,DateTime,ETipo,INT)
+        public List<Alojamiento> AlojamientosDisponibles(DateTime checkIn, DateTime checkOut,ETipo tipo, int huesped)
         {
-            List<Alojamiento> alojamientosDisp = AlojamientosDisponibles(checkIn, checkOut);
+            List<Alojamiento> alojamientosDisp = AlojamientosDisponibles(checkIn, checkOut,tipo);
             alojamientosDisp = alojamientosDisp.FindAll(x => x.Huesped >= huesped);
 
             return alojamientosDisp;
         }
+        #endregion
 
+        #region Alojamientos Disponibles (DateTime,DateTime,ETipo,INT,EBuscar,STRING)
+        public List<Alojamiento> AlojamientosDisponibles(DateTime checkIn, DateTime checkOut, ETipo tipo, int huesped, EBuscar buscar,string valor)
+        {
+            List<Alojamiento> alojamientosDisp = AlojamientosDisponibles(checkIn, checkOut, tipo, huesped);
+
+            switch (buscar)
+            {
+                case EBuscar.NOMBRE:
+                    alojamientosDisp = alojamientosDisp.FindAll(emp => emp.Nombre.ToUpper().Contains(valor.ToUpper())).ToList();
+                    break;
+                case EBuscar.ID:
+                    alojamientosDisp = alojamientosDisp.FindAll(x => x.ID.ToString() == valor);
+                    break;
+                case EBuscar.CIUDAD:
+                    alojamientosDisp = alojamientosDisp.FindAll(emp => emp.Direccion.ToUpper().Contains(valor.ToUpper())).ToList();
+                    break;
+                default:
+                    break;
+            }
+            return alojamientosDisp;
+        }
+        #endregion
+
+        #region Fechas Ocupadas (Alojamiento)
         public List<DateTime> FechaOcupadas(Alojamiento alojamiento)
         {
 
@@ -291,7 +336,9 @@ namespace TPreservas
             lista.Sort();
             return lista;
         }
+        #endregion
 
+        #region Importar Alojamiento CSV (ETipo,string)
         public string ImportarAlojamiento(ETipo tipo,string path)
         {
             string errores = "";
@@ -327,8 +374,41 @@ namespace TPreservas
         }
         #endregion
 
+        #region Actualizar precios hoteles
+        public void ActualizarPrecioHoteles(double precio)
+        {
+            this.precioHotel = precio;
+        }
+        #endregion
+
+        #region Actualizar precios casas
+        public void ActualizarPrecioCasas(double porcentaje)
+        {
+            try
+            {
+                foreach (Alojamiento item in alojamientos)
+                {
+                    if (item is Casa cs)
+                    {
+                        double nuevoPrecio = cs.Precio + ((cs.Precio * porcentaje) / 100);
+
+                        cs.Modificar(cs.Nombre, cs.Direccion, cs.Huesped, nuevoPrecio);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new MiException("Error al actualizar precio Casa >"+ex.Message);
+            }
+        }
+        #endregion
+
+    #endregion
+
 
         #region AREA RESERVA
+
+        #region Listar Reservas
         public List<Reserva> ListarReservas()
         {
             List<Reserva> lista = new List<Reserva>();
@@ -338,11 +418,19 @@ namespace TPreservas
             }
             return lista;
         }
+        #endregion
 
-        public void CrearReserva(Alojamiento alojamiento, List<Cliente> cliente, DateTime checkin, DateTime checkout, DateTime fechaReserva, int huesped)
+        #region Crear Reserva (Alojamiento, List<Cliente>, DateTime, DateTime, INT)
+        public void CrearReserva(Alojamiento alojamiento, List<Cliente> cliente, DateTime checkin, DateTime checkout, int huesped)
         {
             try
             {
+                if(alojamiento is Casa cs)
+                {
+                    TimeSpan difFechas = checkout - checkin;
+                    int dias = difFechas.Days;
+                    if (cs.Mindias > dias) throw new MiException("El alojamiento pide minimo " + cs.Mindias + " dias");
+                }
                 alojamiento.CrearReserva(cantidadReservas,cliente, checkin, checkout, huesped);
                 cantidadReservas++;
             }
@@ -351,7 +439,9 @@ namespace TPreservas
                 throw new MiException("Ocurrio un error al cargar reserva", ex);
             }
         }
+        #endregion
 
+        #region Modificar Reserva (int, int, DateTime, DateTime, EEstadoReserva,int)
         public void ModificarReserva(int idAloj,int reserva, DateTime Checkin, DateTime CheckOut, EEstadoReserva estado, int huesped)
         {
             try
@@ -366,6 +456,7 @@ namespace TPreservas
             }
         }
         #endregion
+    #endregion
 
 
         #region AREA CLIENTE

@@ -67,9 +67,10 @@
             // 
             // titulo
             // 
-            this.titulo.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.titulo.BackColor = System.Drawing.Color.Silver;
             this.titulo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.titulo.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.titulo.ForeColor = System.Drawing.Color.DimGray;
             this.titulo.Location = new System.Drawing.Point(221, 3);
             this.titulo.Margin = new System.Windows.Forms.Padding(0);
             this.titulo.Name = "titulo";

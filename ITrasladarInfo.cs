@@ -27,9 +27,11 @@ namespace TPreservas
         //void ModificarAlojamiento(Alojamiento alojamiento);
         List<Alojamiento> ListarAlojamiento(ETipo tipo=ETipo.TODOS, EBuscar buscar=EBuscar.ALL,string valor="");
 
-        List<Alojamiento> AlojamientosDisponibles(DateTime checkIn,DateTime checkOut);
+        List<Alojamiento> AlojamientosDisponibles(DateTime checkIn,DateTime checkOut,ETipo tipo);
 
-        List<Alojamiento> AlojamientosDisponibles(DateTime checkIn, DateTime checkOut,int huesped);
+        List<Alojamiento> AlojamientosDisponibles(DateTime checkIn, DateTime checkOut, ETipo tipo, int huesped);
+
+        List<Alojamiento> AlojamientosDisponibles(DateTime checkIn, DateTime checkOut, ETipo tipo, int huesped, EBuscar buscar, string valor);
 
 
         List<DateTime> FechaOcupadas(Alojamiento alojamiento);
@@ -37,7 +39,7 @@ namespace TPreservas
 
         List<Reserva> ListarReservas();
 
-        void CrearReserva(Alojamiento alojamiento, List<Cliente> cliente, DateTime checkin, DateTime checkout, DateTime fechaReserva, int huesped);
+        void CrearReserva(Alojamiento alojamiento, List<Cliente> cliente, DateTime checkin, DateTime checkout, int huesped);
 
         void ModificarReserva(int alojamiento,int reserva, DateTime Checkin, DateTime CheckOut,EEstadoReserva estado,int huesped);
 
@@ -46,5 +48,11 @@ namespace TPreservas
         bool ModificarCliente(string nombre, string apellido,float dni, string mail, string codArea, string celular);
 
         IEnumerable<Cliente> ListarClientes();
+
+        void ActualizarPrecioHoteles(double precio);
+
+        void ActualizarPrecioCasas(double porcentaje);
+
+        Double PrecioHotel { get; }
     }
 }

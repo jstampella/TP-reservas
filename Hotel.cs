@@ -11,11 +11,12 @@ namespace TPreservas
     {
         private int estrellas;
         private int nHabitacion;
-        public Hotel(int id,string nombre,string direccion,int huesped,double costo,int estrellas,int nHab):base(id,nombre,direccion,huesped,costo)
+        public Hotel(int id, string nombre, string direccion, int huesped, ref double costo, int estrellas, int nHab) : base(id, nombre, direccion, huesped, ref costo)
         {
             this.estrellas = estrellas;
             this.nHabitacion = nHab;
         }
+
 
         public override string IDs { get { return "H" + id; } }
 
@@ -48,7 +49,7 @@ namespace TPreservas
             double precio = base.costo;
             if (Huesped==2)
             {
-                precio = precio * 0.8 + precio;
+                precio = precio *  0.8 + precio;
             }
             else if (Huesped >= 3)
             {

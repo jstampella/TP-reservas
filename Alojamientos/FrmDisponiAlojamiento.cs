@@ -35,7 +35,7 @@ namespace TPreservas.Alojamientos
                 cbAlojamiento2.SelectedIndex = 0;
             }catch(Exception ex)
             {
-                MessageBox.Show("sin alojamiento");
+                MessageBox.Show("sin alojamiento"+ex.Message);
             }
         }
 
@@ -59,7 +59,7 @@ namespace TPreservas.Alojamientos
             DateTime checkOut = dtCheckout.Value.Date;
             List<Alojamiento> listadoAlojamiento = new List<Alojamiento>();
             if (interfaz!=null)
-                listadoAlojamiento = interfaz.AlojamientosDisponibles(checkIn, checkOut);
+                listadoAlojamiento = interfaz.AlojamientosDisponibles(checkIn, checkOut,ETipo.TODOS);
             cbAlojamiento2.Items.Clear();
             foreach (Alojamiento item in listadoAlojamiento)
             {

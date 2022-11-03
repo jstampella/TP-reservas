@@ -18,6 +18,7 @@ namespace TPreservas
     {
         private bool modifier = true;
         private string codigo="";
+        private double precioHotel;
         private List<string> caracteristicas_list = new List<string>();
         private Alojamiento? alojamiento;
         private ITrasladarInfo? interfaz;
@@ -28,7 +29,7 @@ namespace TPreservas
         {
             InitializeComponent();
             btnCrear.Text = "Crear";
-            cmbEstrellas.SelectedIndex = 0;
+            //cmbEstrellas.SelectedIndex = 0;
             caracteristicas_list.AddRange(new string[6] { "Cochera", "Pileta", "WI FI", "Servicio de limpieza", "Desayuno", "Posibilidad de mascotas" });
 
             cbEstado.Items.AddRange(ListaEstado().ToArray());
@@ -72,8 +73,10 @@ namespace TPreservas
                 rbCasa.Checked = false;
                 rbHotel.Checked = true;
                 gbHotel.Visible = true;
-                cmbEstrellas.SelectedItem = hs.Estrella.ToString();
-                txtNroHab.Text = hs.NHabitacion.ToString();
+                ItemHotel itemH = (ItemHotel)flowHotel.Controls[0];
+                itemH.Estrella = hs.Estrella;
+                itemH.Habitacion = hs.NHabitacion;
+                itemH.Huesped = hs.Huesped;
             }
             if (alojamiento is Casa cs)
             {
@@ -82,10 +85,10 @@ namespace TPreservas
                 rbCasa.Checked = true;
                 gbHotel.Visible = false;
                 txtMinDias.Text = cs.Mindias.ToString();
+                txtCanPersona.Text = cs.Huesped.ToString();
             }
             txtNombre.Text = alojamiento.Nombre;
             txtDireccion.Text = alojamiento.Direccion;
-            txtCanPersona.Text = alojamiento.Huesped.ToString();
             txtPrecioXdia.Text = alojamiento.Costo.ToString();
             cbEstado.SelectedItem = alojamiento.Estado.ToString();
             checkHourMin1.TiempoCompleto = alojamiento.CheckIn;
@@ -94,6 +97,8 @@ namespace TPreservas
             gbTipos.Enabled = false;
         }
 
+
+        #region boton crear/modificar
         private void btnCrear_Click(object sender, EventArgs e)
         {
             if (interfaz != null)
@@ -102,7 +107,6 @@ namespace TPreservas
                 {
                     string nombre = txtNombre.Text;
                     string direccion = txtDireccion.Text;
-                    int huesped = Convert.ToInt32(txtCanPersona.Text);
                     double precio = Convert.ToDouble(txtPrecioXdia.Text);
                     string id_alojamiento;
 
@@ -110,18 +114,27 @@ namespace TPreservas
                     {
                         if (rbCasa.Checked)
                         {
+                            int huesped = Convert.ToInt32(txtCanPersona.Text);
                             int minDias = Convert.ToInt32(txtMinDias.Text);
                             id_alojamiento = interfaz.CrearAlojamiento(nombre, direccion, huesped, precio, minDias);
+                            interfaz.ModificarEstadoAlojamiento(id_alojamiento, (EEstado)cbEstado.SelectedIndex);
+                            interfaz.AgregarCaracteristicas(id_alojamiento, ObtenerCaracteristicas());
+                            interfaz.AgregarImagenes(id_alojamiento, filesImagenes.ToArray());
                         }
                         else
                         {
-                            int estrella = Convert.ToInt32(cmbEstrellas.SelectedItem);
-                            int numeroHab = Convert.ToInt32(txtNroHab.Text);
-                            id_alojamiento = interfaz.CrearAlojamiento(nombre, direccion, huesped, precio, estrella, numeroHab);
+                            foreach (ItemHotel item in flowHotel.Controls)
+                            {
+                                int estrella = item.Estrella;
+                                int numeroHab = item.Habitacion;
+                                int huesped = item.Huesped;
+                                id_alojamiento = interfaz.CrearAlojamiento(nombre, direccion, huesped, precio, estrella, numeroHab);
+                                interfaz.ModificarEstadoAlojamiento(id_alojamiento, (EEstado)cbEstado.SelectedIndex);
+                                interfaz.AgregarCaracteristicas(id_alojamiento, ObtenerCaracteristicas());
+                                interfaz.AgregarImagenes(id_alojamiento, filesImagenes.ToArray());
+                            }
                         }
-                        interfaz.ModificarEstadoAlojamiento(id_alojamiento, (EEstado)cbEstado.SelectedIndex);
-                        interfaz.AgregarCaracteristicas(id_alojamiento, ObtenerCaracteristicas());
-                        interfaz.AgregarImagenes(id_alojamiento, filesImagenes.ToArray());
+                        
                     }
                     else
                     {
@@ -129,13 +142,16 @@ namespace TPreservas
                         {
                             if (alojamiento is Casa cs)
                             {
+                                int huesped = Convert.ToInt32(txtCanPersona.Text);
                                 int minDias = Convert.ToInt32(txtMinDias.Text);
                                 interfaz.ModificarAlojamiento(alojamiento.IDs, nombre, direccion, huesped, precio, minDias);
                             }
                             if (alojamiento is Hotel hs)
                             {
-                                int estrella = Convert.ToInt32(cmbEstrellas.SelectedItem);
-                                int numeroHab = Convert.ToInt32(txtNroHab.Text);
+                                ItemHotel item = (ItemHotel)flowHotel.Controls[0];
+                                int estrella = item.Estrella;
+                                int numeroHab = item.Habitacion;
+                                int huesped = item.Huesped;
                                 interfaz.ModificarAlojamiento(alojamiento.IDs, nombre, direccion, huesped, precio, estrella, numeroHab);
                             }
                             interfaz.ModificarEstadoAlojamiento(alojamiento.IDs, (EEstado)cbEstado.SelectedIndex);
@@ -161,6 +177,10 @@ namespace TPreservas
             else MessageBox.Show("error en el modulo");
         }
 
+        #endregion
+
+
+        #region Guardar Copia de imagenes [] en el directorio
         private string[] GuardarCopiaImagenes(string id)
         {
             string[] filesnuevos = new string[filesImagenes.Count];
@@ -191,21 +211,30 @@ namespace TPreservas
             }
             return filesnuevos;
         }
+        #endregion
 
+        #region Checked Changed Casa
         private void rbCasa_CheckedChanged(object sender, EventArgs e)
         {
             if (((RadioButton)sender).Checked) {
                 
                 gbCasa.Visible = true;
                 gbHotel.Visible = false;
+                txtPrecioXdia.Enabled = true;
+                txtPrecioXdia.Text = "";
             }
             else
             {
                 gbCasa.Visible = false;
                 gbHotel.Visible = true;
+                txtPrecioXdia.Enabled = false;
+                txtPrecioXdia.Text = precioHotel.ToString();
             }
         }
+        #endregion
 
+
+        #region click Cargar imagnes
         private void btnCargarImagen_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -217,6 +246,7 @@ namespace TPreservas
                 filesImagenes.AddRange(openFileDialog.FileNames);
             }
         }
+        #endregion
 
         private void btnVerImagenes_Click(object sender, EventArgs e)
         {
@@ -232,7 +262,7 @@ namespace TPreservas
             if (this.MdiParent is ITrasladarInfo md)
             {
                 interfaz = md;
-                
+                precioHotel = interfaz.PrecioHotel;
             }
             else
             {
@@ -285,5 +315,24 @@ namespace TPreservas
             
 
         }
+
+        #region Agregar Habitacion
+        private void btnAgregarHab_Click(object sender, EventArgs e)
+        {
+            Padding pad = new Padding(3, 6, 6, 3);
+            int cant = flowHotel.Controls.Count;
+            if (cant == 1)
+            {
+                Control cc = flowHotel.Controls[0];
+                cc.Margin = pad;
+            }
+            ItemHotel item = new ItemHotel();
+            item.Name = "itemHotel" + cant;
+            item.Margin = pad;
+            item.BorderStyle = BorderStyle.FixedSingle;
+            item.Size = new Size(472, 51);
+            flowHotel.Controls.Add(item);
+        }
+        #endregion
     }
 }

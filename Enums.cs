@@ -27,6 +27,7 @@ namespace TPreservas
         NOMBRE,
         PERSONAS,
         ID,
+        CIUDAD,
         ALL
     }
 

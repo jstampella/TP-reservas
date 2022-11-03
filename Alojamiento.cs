@@ -35,6 +35,17 @@ namespace TPreservas
             this.checkIn = new TimeSpan(12, 00, 00);
             this.checkOut = new TimeSpan(10, 00, 00);
         }
+
+        public Alojamiento(int id, string nombre, string direccion, int huesped, ref double costo)
+        {
+            this.nombre = nombre;
+            this.id = id;
+            this.direccion = direccion;
+            this.costo = costo;
+            this.huesped = huesped;
+            this.checkIn = new TimeSpan(12, 00, 00);
+            this.checkOut = new TimeSpan(10, 00, 00);
+        }
         #endregion
 
         #region Propiedades

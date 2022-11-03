@@ -157,19 +157,24 @@ namespace TPreservas
             return empresa.ListarReservas();
         }
 
-        void ITrasladarInfo.CrearReserva(Alojamiento alojamiento, List<Cliente> cliente, DateTime checkin, DateTime checkout, DateTime fechaReserva, int huesped)
+        void ITrasladarInfo.CrearReserva(Alojamiento alojamiento, List<Cliente> cliente, DateTime checkin, DateTime checkout, int huesped)
         {
-            empresa.CrearReserva(alojamiento, cliente, checkin, checkout, fechaReserva, huesped);
+            empresa.CrearReserva(alojamiento, cliente, checkin, checkout, huesped);
         }
 
-        List<Alojamiento> ITrasladarInfo.AlojamientosDisponibles(DateTime checkIn, DateTime checkOut)
+        List<Alojamiento> ITrasladarInfo.AlojamientosDisponibles(DateTime checkIn, DateTime checkOut,ETipo tipo)
         {
-            return empresa.AlojamientosDisponibles(checkIn, checkOut);
+            return empresa.AlojamientosDisponibles(checkIn, checkOut,tipo);
         }
 
-        List<Alojamiento> ITrasladarInfo.AlojamientosDisponibles(DateTime checkIn, DateTime checkOut,int huesped)
+        List<Alojamiento> ITrasladarInfo.AlojamientosDisponibles(DateTime checkIn, DateTime checkOut, ETipo tipo, int huesped)
         {
-            return empresa.AlojamientosDisponibles(checkIn, checkOut,huesped);
+            return empresa.AlojamientosDisponibles(checkIn, checkOut,tipo, huesped);
+        }
+
+        List<Alojamiento> ITrasladarInfo.AlojamientosDisponibles(DateTime checkIn, DateTime checkOut, ETipo tipo, int huesped, EBuscar buscar, string valor)
+        {
+            return empresa.AlojamientosDisponibles(checkIn, checkOut,tipo, huesped, buscar,valor);
         }
 
         private void disponibilidadToolStripMenuItem_Click(object sender, EventArgs e)
@@ -365,6 +370,28 @@ namespace TPreservas
                     MessageBox.Show("Errores en la lineas:" + errores);
                 }
             }
+        }
+
+        private void precioBaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Alojamientos.FormPrecio frmPrecio = new Alojamientos.FormPrecio();
+            frmPrecio.MdiParent = this;
+            frmPrecio.Show();
+        }
+
+        public void ActualizarPrecioHoteles(double precio)
+        {
+            empresa.ActualizarPrecioHoteles(precio);
+        }
+
+        public void ActualizarPrecioCasas(double porcentaje)
+        {
+            empresa.ActualizarPrecioCasas(porcentaje);
+        }
+
+        public Double PrecioHotel
+        {
+            get { return empresa.PrecioHotel; }
         }
     }
 }

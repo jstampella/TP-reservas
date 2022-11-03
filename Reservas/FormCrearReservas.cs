@@ -24,10 +24,21 @@ namespace TPreservas.Reservas
             btnCrear.Enabled = false;
             btnPrecio.Enabled = false;
             this.MaximumSize = new Size(this.Width, int.MaxValue);
+            CargarEnSelect();
         }
 
+        #region Cargar en el select filtro
+        private void CargarEnSelect()
+        {
+            cbfiltro.Items.Clear();
+            cbfiltro.Items.Add(EBuscar.CIUDAD);
+            cbfiltro.Items.Add(EBuscar.NOMBRE);
+            cbfiltro.Items.Add(EBuscar.ID);
+            cbfiltro.SelectedIndex = 0;
+        }
+        #endregion
 
-        #region Habilitar region
+        #region Habilitar Boton crear
         private void HabilitarBtnCrear()
         {
             if (cbUsuario.SelectedIndex > -1 && lblAlojamiento.Text !="-")
@@ -88,7 +99,7 @@ namespace TPreservas.Reservas
                     DateTime checkOut = checkIn.AddDays(Convert.ToInt32(numericDay.Value));
                     int huesped = Convert.ToInt32(numericHuesped.Value);
                     if (interfaz != null)
-                        interfaz.CrearReserva(alojamientoSelec, listaClientes, checkIn, checkOut, DateTime.Now, huesped);
+                        interfaz.CrearReserva(alojamientoSelec, listaClientes, checkIn, checkOut, huesped);
                     this.Close();
                 }
 
@@ -103,45 +114,93 @@ namespace TPreservas.Reservas
         }
         #endregion
 
-        #region Boton Buscar
-        private void btnBuscar_Click(object sender, EventArgs e)
+        #region devuelve el Check seleccionado Tipo 
+        private ETipo checkTipo()
         {
-            if(interfaz!=null)
-                nAlojamiento = interfaz.ListarAlojamiento();
-            DateTime checkIn = dtFecha.Value.Date;
-            DateTime checkOut = checkIn.AddDays(Convert.ToInt32(numericDay.Value));
-            int huesped = Convert.ToInt32(numericHuesped.Value);
-            listadoAlojamiento = new List<Alojamiento>();
-            if (interfaz != null)
-                listadoAlojamiento = interfaz.AlojamientosDisponibles(checkIn, checkOut,huesped);
-            lblAlojamiento.Text = "-";
-            panelContenedorItem.Controls.Clear();
-            foreach (Alojamiento item in listadoAlojamiento)
-            {
-                AgregarItem(item);
-            }
-            AgregarNoDisponible();
+            if (rbCasa.Checked) return ETipo.CASA;
+            if (rbHotel.Checked) return ETipo.HOTEL;
+            return ETipo.TODOS;
         }
         #endregion
 
-        private void AgregarNoDisponible()
-        {
-            List<Alojamiento> alojamientos = nAlojamiento;
-            foreach (Alojamiento item in listadoAlojamiento)
-            {
-                alojamientos = alojamientos.FindAll(x => x.IDs != item.IDs);
-            }
 
-            foreach (Alojamiento item in alojamientos)
+        #region Boton Buscar
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            if (interfaz != null)
             {
-                ItemAlojamiento  mm = AgregarItem(item);
-                if(item.Estado == EEstado.Activo)
-                    mm.seleccionar.Text = "Reservado";
-                else mm.seleccionar.Text = item.Estado.ToString();
-                mm.Bloqueado = true;
+                lblAlojamiento.Text = "-";
+                DateTime checkIn = dtFecha.Value.Date;
+                DateTime checkOut = checkIn.AddDays(Convert.ToInt32(numericDay.Value));
+                int huesped = Convert.ToInt32(numericHuesped.Value);
+                if (txtBuscar.Text == "")
+                {
+                    listadoAlojamiento = interfaz.AlojamientosDisponibles(checkIn, checkOut,checkTipo(), huesped);
+                }
+                else
+                {
+                    EBuscar ebuscar = EBuscar.ALL;
+                    switch (cbfiltro.SelectedItem)
+                    {
+                        case EBuscar.CIUDAD:
+                            ebuscar = EBuscar.CIUDAD;
+                            break;
+                        case EBuscar.NOMBRE:
+                            ebuscar = EBuscar.NOMBRE;
+                            break;
+                        case EBuscar.ID:
+                            ebuscar = EBuscar.ID;
+                            break;
+                        default:
+                            break;
+                    }
+                    listadoAlojamiento = interfaz.AlojamientosDisponibles(checkIn, checkOut, checkTipo(), huesped, ebuscar, txtBuscar.Text);
+                }
+                panelContenedorItem.Controls.Clear();
+                foreach (Alojamiento item in listadoAlojamiento)
+                {
+                    AgregarItem(item);
+                }
+                if (listadoAlojamiento.Count == 0) lblAlojamiento.Text = "Sin Disponibilidad";
+                AgregarNoDisponible();
+
+                List<DateTime> fechas = Enumerable.Range(0, (int)(checkOut - checkIn).TotalDays + 1)
+                      .Select(x => checkIn.AddDays(x))
+                      .ToList();
+                calendarCustom1.AgregarSeleccionados(fechas);
             }
         }
+        #endregion
 
+        #region Agregar No Disponible
+        private void AgregarNoDisponible()
+        {
+            if (interfaz != null)
+            {
+                List<Alojamiento> alojamientos = interfaz.ListarAlojamiento();
+                foreach (Alojamiento item in listadoAlojamiento)
+                {
+                    alojamientos = alojamientos.FindAll(x => x.IDs != item.IDs);
+                }
+
+                foreach (Alojamiento item in alojamientos)
+                {
+                    ItemAlojamiento mm = AgregarItem(item);
+                    if (item.Estado == EEstado.Activo)
+                        mm.seleccionar.Text = "Reservado";
+                    else mm.seleccionar.Text = item.Estado.ToString();
+                    if(item is Casa cs && cs.Mindias > numericHuesped.Value)
+                    {
+                        mm.seleccionar.Text = "Minimo dias Reservas.";
+                    }
+                    mm.Bloqueado = true;
+                }
+            }
+        }
+        #endregion
+
+
+        #region AgregarItem => ItemAlojamiento
         private ItemAlojamiento AgregarItem(Alojamiento alojamiento)
         {
             ItemAlojamiento itemlAlo = new ItemAlojamiento();
@@ -161,7 +220,10 @@ namespace TPreservas.Reservas
             panelContenedorItem.Controls.Add(itemlAlo);
             return itemlAlo;
         }
+        #endregion
 
+
+        #region Cambiar Color Panel
         private void CambiarColoresPanel()
         {
             foreach (Control item in panelContenedorItem.Controls)
@@ -170,7 +232,10 @@ namespace TPreservas.Reservas
                     cc.seleccionar.Enabled = true;
             }
         }
+        #endregion
 
+
+        #region Mouse Click
         public void ItemlAlo_MouseClick(object? sender, EventArgs e)
         {
             if(sender is Control cc)
@@ -190,6 +255,7 @@ namespace TPreservas.Reservas
             }
             
         }
+        #endregion
 
         #region Evento cuando se selecciona usuario
         private void cbUsuario_SelectedIndexChanged(object sender, EventArgs e)

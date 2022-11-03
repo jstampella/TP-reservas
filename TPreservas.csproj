@@ -10,12 +10,15 @@
 
   <ItemGroup>
     <Folder Include="extra\" />
-    <Folder Include="Resource\" />
+    <Folder Include="Resources\" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Alojamientos\FormAlojamiento.cs">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="controles\ItemHotel.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Update="FormCliente.cs">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
@@ -32,6 +35,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resource\loading.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

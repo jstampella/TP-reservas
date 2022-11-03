@@ -16,12 +16,28 @@ namespace TPreservas.controles
         public ItemAlojamiento()
         {
             InitializeComponent();
+            Bloqueado = false; 
         }
 
         public bool Bloqueado
         {
             get { return bloqueado; }
-            set { bloqueado = value; seleccionar.BackColor = Color.Silver; }
+            set { 
+                bloqueado = value;
+                if (bloqueado)
+                {
+                    seleccionar.BackColor = Color.Silver;
+                    titulo.BackColor = Color.Silver;
+                    titulo.ForeColor = Color.DimGray;
+                }
+                else
+                {
+                    seleccionar.BackColor = Color.IndianRed;
+                    titulo.BackColor = Color.SeaGreen;
+                    titulo.ForeColor = Color.White;
+                }
+
+            }
         }
         public double Precio
         {
