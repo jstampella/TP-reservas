@@ -378,6 +378,20 @@ namespace TPreservas
         public void ActualizarPrecioHoteles(double precio)
         {
             this.precioHotel = precio;
+            try
+            {
+                foreach (Alojamiento item in alojamientos)
+                {
+                    if (item is Hotel cs)
+                    {
+                        cs.Modificar(cs.Nombre, cs.Direccion, cs.Huesped, precio);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new MiException("Error al actualizar precio hotel >" + ex.Message);
+            }
         }
         #endregion
 
@@ -414,7 +428,8 @@ namespace TPreservas
             List<Reserva> lista = new List<Reserva>();
             foreach (Alojamiento item in alojamientos)
             {
-                lista.AddRange(item.ListarReservas());
+                if(item.ListarReservas() != null)
+                    lista.AddRange(item.ListarReservas());
             }
             return lista;
         }
