@@ -19,6 +19,7 @@ namespace TPreservas
         private bool modifier = true;
         private string codigo="";
         private double precioHotel;
+        FormDireccion direccion = new FormDireccion();
         private List<string> caracteristicas_list = new List<string>();
         private Alojamiento? alojamiento;
         private ITrasladarInfo? interfaz;
@@ -65,6 +66,7 @@ namespace TPreservas
             set { modifier = value; }
         }
 
+        #region Cargar Alojamiento
         private void CargarAlojamiento(Alojamiento alojamiento)
         {
             if (alojamiento is Hotel hs)
@@ -88,7 +90,8 @@ namespace TPreservas
                 txtCanPersona.Text = cs.Huesped.ToString();
             }
             txtNombre.Text = alojamiento.Nombre;
-            txtDireccion.Text = alojamiento.Direccion;
+            direccion.Valor = alojamiento.Direccion;
+            txtDireccion.Text = alojamiento.Direccion.ToString();
             txtPrecioXdia.Text = alojamiento.Costo.ToString();
             cbEstado.SelectedItem = alojamiento.Estado.ToString();
             checkHourMin1.TiempoCompleto = alojamiento.CheckIn;
@@ -96,6 +99,7 @@ namespace TPreservas
             btnCrear.Text = "Modificar";
             gbTipos.Enabled = false;
         }
+        #endregion
 
 
         #region boton crear/modificar
@@ -106,7 +110,6 @@ namespace TPreservas
                 try
                 {
                     string nombre = txtNombre.Text;
-                    string direccion = txtDireccion.Text;
                     double precio = Convert.ToDouble(txtPrecioXdia.Text);
                     string id_alojamiento;
 
@@ -116,7 +119,7 @@ namespace TPreservas
                         {
                             int huesped = Convert.ToInt32(txtCanPersona.Text);
                             int minDias = Convert.ToInt32(txtMinDias.Text);
-                            id_alojamiento = interfaz.CrearAlojamiento(nombre, direccion, huesped, precio, minDias);
+                            id_alojamiento = interfaz.CrearAlojamiento(nombre, direccion.Valor, huesped, precio, minDias);
                             interfaz.ModificarEstadoAlojamiento(id_alojamiento, (EEstado)cbEstado.SelectedIndex);
                             interfaz.AgregarCaracteristicas(id_alojamiento, ObtenerCaracteristicas());
                             interfaz.AgregarImagenes(id_alojamiento, filesImagenes.ToArray());
@@ -128,7 +131,7 @@ namespace TPreservas
                                 int estrella = item.Estrella;
                                 int numeroHab = item.Habitacion;
                                 int huesped = item.Huesped;
-                                id_alojamiento = interfaz.CrearAlojamiento(nombre, direccion, huesped, precio, estrella, numeroHab);
+                                id_alojamiento = interfaz.CrearAlojamiento(nombre, direccion.Valor, huesped, precio, estrella, numeroHab);
                                 interfaz.ModificarEstadoAlojamiento(id_alojamiento, (EEstado)cbEstado.SelectedIndex);
                                 interfaz.AgregarCaracteristicas(id_alojamiento, ObtenerCaracteristicas());
                                 interfaz.AgregarImagenes(id_alojamiento, filesImagenes.ToArray());
@@ -144,7 +147,7 @@ namespace TPreservas
                             {
                                 int huesped = Convert.ToInt32(txtCanPersona.Text);
                                 int minDias = Convert.ToInt32(txtMinDias.Text);
-                                interfaz.ModificarAlojamiento(alojamiento.IDs, nombre, direccion, huesped, precio, minDias);
+                                interfaz.ModificarAlojamiento(alojamiento.IDs, nombre, direccion.Valor, huesped, precio, minDias);
                             }
                             if (alojamiento is Hotel hs)
                             {
@@ -152,7 +155,7 @@ namespace TPreservas
                                 int estrella = item.Estrella;
                                 int numeroHab = item.Habitacion;
                                 int huesped = item.Huesped;
-                                interfaz.ModificarAlojamiento(alojamiento.IDs, nombre, direccion, huesped, precio, estrella, numeroHab);
+                                interfaz.ModificarAlojamiento(alojamiento.IDs, nombre, direccion.Valor, huesped, precio, estrella, numeroHab);
                             }
                             interfaz.ModificarEstadoAlojamiento(alojamiento.IDs, (EEstado)cbEstado.SelectedIndex);
                             interfaz.AgregarCaracteristicas(alojamiento.IDs, ObtenerCaracteristicas());
@@ -248,6 +251,7 @@ namespace TPreservas
         }
         #endregion
 
+        #region Ver imagenes
         private void btnVerImagenes_Click(object sender, EventArgs e)
         {
             FormImagenes formImagenes = new FormImagenes();
@@ -256,7 +260,9 @@ namespace TPreservas
                 filesImagenes = formImagenes.imagenes;
             }
         }
+        #endregion
 
+        #region Load Form
         private void FormAlojamiento_Load(object sender, EventArgs e)
         {
             if (this.MdiParent is ITrasladarInfo md)
@@ -277,12 +283,14 @@ namespace TPreservas
                 CargarAlojamiento(alojamiento);
             }
         }
+        #endregion
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        #region Cargar Caracteristicas
         private void CargarCaracteristicas()
         {
             List<string> lsit = new List<string>();
@@ -300,7 +308,9 @@ namespace TPreservas
                 gbCaracteristicas.Controls.Add(cb);
             }
         }
+        #endregion
 
+        #region Obtener caracteristicas
         private string[] ObtenerCaracteristicas()
         {
             List<string> caract = new List<string>();
@@ -315,6 +325,7 @@ namespace TPreservas
             
 
         }
+        #endregion
 
         #region Agregar Habitacion
         private void btnAgregarHab_Click(object sender, EventArgs e)
@@ -332,6 +343,17 @@ namespace TPreservas
             item.BorderStyle = BorderStyle.FixedSingle;
             item.Size = new Size(472, 51);
             flowHotel.Controls.Add(item);
+        }
+        #endregion
+
+
+        #region Boton crear direccion
+        private void btnDireccion_Click(object sender, EventArgs e)
+        {
+            if(direccion.ShowDialog() == DialogResult.OK)
+            {
+                txtDireccion.Text = direccion.Valor.ToString();
+            }
         }
         #endregion
     }

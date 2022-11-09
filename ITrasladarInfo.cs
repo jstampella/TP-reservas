@@ -8,12 +8,12 @@ namespace TPreservas
 {
     internal interface ITrasladarInfo
     {
-        string CrearAlojamiento(string nombre, string direccion, int huesped, double costo, int minD);
-        string CrearAlojamiento(string nombre, string direccion, int huesped, double costo, int estrellas, int nHab);
+        string CrearAlojamiento(string nombre, Direccion direccion, int huesped, double costo, int minD);
+        string CrearAlojamiento(string nombre, Direccion direccion, int huesped, double costo, int estrellas, int nHab);
 
-        bool ModificarAlojamiento(string ID, string nombre, string direccion, int huesped, double costo, int estrellas, int nHab);
+        bool ModificarAlojamiento(string ID, string nombre, Direccion direccion, int huesped, double costo, int estrellas, int nHab);
 
-        bool ModificarAlojamiento(string ID, string nombre, string direccion, int huesped, double costo, int minD);
+        bool ModificarAlojamiento(string ID, string nombre, Direccion direccion, int huesped, double costo, int minD);
 
         bool ModificarEstadoAlojamiento(string ID, EEstado estado);
 
@@ -22,6 +22,11 @@ namespace TPreservas
         bool AgregarImagenes(string ID, string[] imagenes);
 
         void ModificarAlojamiento(string ID, TimeSpan checkin, TimeSpan checkout);
+
+        void CargarPenalidad(int dias, double porcentaje);
+
+        public int DiasPenalidad { get; }
+        public double PorcentajePenalidad { get; }
 
         //void Alojamiento(Alojamiento alojamiento);
         //void ModificarAlojamiento(Alojamiento alojamiento);
@@ -54,5 +59,7 @@ namespace TPreservas
         void ActualizarPrecioCasas(double porcentaje);
 
         Double PrecioHotel { get; }
+
+        PageSetupDialog PagesSetup();
     }
 }

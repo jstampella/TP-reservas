@@ -59,7 +59,9 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Loading";
             this.TransparencyKey = System.Drawing.Color.Transparent;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Loading_FormClosing);
             this.Load += new System.EventHandler(this.Loading_Load);
+            this.Shown += new System.EventHandler(this.Loading_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.pxLoading)).EndInit();
             this.ResumeLayout(false);
 

@@ -11,7 +11,7 @@ namespace TPreservas
     {
         private int estrellas;
         private int nHabitacion;
-        public Hotel(int id, string nombre, string direccion, int huesped, ref double costo, int estrellas, int nHab) : base(id, nombre, direccion, huesped, ref costo)
+        public Hotel(int id, string nombre, Direccion direccion, int huesped, ref double costo, int estrellas, int nHab) : base(id, nombre, direccion, huesped, costo)
         {
             this.estrellas = estrellas;
             this.nHabitacion = nHab;
@@ -63,7 +63,7 @@ namespace TPreservas
             //throw new Exception("Error al calcular precio");
         }
 
-        public bool Modificar(string nombre, string direccion, int huesped, double costo, int estrellas, int nHab)
+        public bool Modificar(string nombre, Direccion direccion, int huesped, double costo, int estrellas, int nHab)
         {
             bool temp = base.Modificar(nombre, direccion, huesped, costo);
             if (!temp) return temp;

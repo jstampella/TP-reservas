@@ -10,7 +10,7 @@ namespace TPreservas
     internal class Casa:Alojamiento
     {
         private int mindias;
-        public Casa(int id, string nombre,string direccion, int huesped, double costo,int minD) : base(id,nombre, direccion, huesped, costo)
+        public Casa(int id, string nombre,Direccion direccion, int huesped, double costo,int minD) : base(id,nombre, direccion, huesped, costo)
         {
             this.mindias = minD;
         }
@@ -33,7 +33,7 @@ namespace TPreservas
             get { return ETipo.CASA; }
         }
 
-        public bool Modificar(string nombre, string direccion, int huesped, double costo, int minD)
+        public bool Modificar(string nombre, Direccion direccion, int huesped, double costo, int minD)
         {
             bool temp = base.Modificar(nombre, direccion, huesped, costo);
             if (!temp) return temp;

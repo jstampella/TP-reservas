@@ -38,6 +38,7 @@
             this.txtCanPersona = new System.Windows.Forms.TextBox();
             this.txtPrecioXdia = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnDireccion = new System.Windows.Forms.Button();
             this.checkHourMin2 = new TPreservas.controles.checkHourMin();
             this.checkHourMin1 = new TPreservas.controles.checkHourMin();
             this.gbHotel = new System.Windows.Forms.GroupBox();
@@ -128,10 +129,11 @@
             // 
             // txtDireccion
             // 
+            this.txtDireccion.Enabled = false;
             this.txtDireccion.Location = new System.Drawing.Point(87, 57);
             this.txtDireccion.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtDireccion.Name = "txtDireccion";
-            this.txtDireccion.Size = new System.Drawing.Size(253, 27);
+            this.txtDireccion.Size = new System.Drawing.Size(218, 27);
             this.txtDireccion.TabIndex = 1;
             // 
             // txtCanPersona
@@ -154,6 +156,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnDireccion);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.txtPrecioXdia);
             this.groupBox1.Controls.Add(this.txtNombre);
@@ -168,6 +171,17 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "General";
+            // 
+            // btnDireccion
+            // 
+            this.btnDireccion.BackgroundImage = global::TPreservas.Properties.Resources.eye;
+            this.btnDireccion.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnDireccion.Location = new System.Drawing.Point(311, 56);
+            this.btnDireccion.Name = "btnDireccion";
+            this.btnDireccion.Size = new System.Drawing.Size(30, 30);
+            this.btnDireccion.TabIndex = 6;
+            this.btnDireccion.UseVisualStyleBackColor = true;
+            this.btnDireccion.Click += new System.EventHandler(this.btnDireccion_Click);
             // 
             // checkHourMin2
             // 
@@ -494,5 +508,6 @@
         private FlowLayoutPanel flowHotel;
         private Button btnAgregarHab;
         private controles.ItemHotel itemHotel1;
+        private Button btnDireccion;
     }
 }

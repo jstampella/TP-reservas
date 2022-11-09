@@ -21,7 +21,8 @@ namespace TPreservas.controles
         public bool IsDeleted { get { return btnDelete.Enabled; } set { btnDelete.Enabled = value; } }
 
 
-        public int Estrella { get { return Convert.ToInt32(cmbEstrellas.SelectedValue); } set { cmbEstrellas.SelectedValue = value; } }
+        public int Estrella { get { return Convert.ToInt32(cmbEstrellas.SelectedItem); } 
+            set { cmbEstrellas.SelectedItem = value.ToString(); } }
 
         public int Habitacion { get { return Convert.ToInt32(txtNroHab.Text); } set { txtNroHab.Text = value.ToString(); } }
 

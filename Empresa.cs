@@ -12,17 +12,31 @@ namespace TPreservas
     [Serializable]
     internal class Empresa
     {
-        private double precioHotel = 1;
+        private int diasPenalidad = 3;
+        private double porcentajePenalidad = 0.20;
+        private double precioHotel = 100;
         private List<Alojamiento> alojamientos = new List<Alojamiento>();
-        private int cantidadReservas = 1;
+        private int cantidadReservas = 0;
         private List<Cliente> clientes = new List<Cliente>();
 
         public Empresa(){}
 
         public Double PrecioHotel { get { return precioHotel; } }
 
+        public int DiasPenalidad { get { return diasPenalidad; } }
+        public double PorcentajePenalidad { get { return porcentajePenalidad; } }
 
-    #region AREA ALOJAMIENTO
+        #region AREA ALOJAMIENTO
+
+        #region Penalidad
+        public void CargarPenalidad(int dias, double porcentaje)
+        {
+            if (dias < 1) throw new MiException("Error en el dia no puede ser menor que 1");
+            if (porcentaje < 0) throw new MiException("Error en el porcentaje no puede ser menor que 0");
+            diasPenalidad = dias;
+            porcentajePenalidad = porcentaje;
+        }
+        #endregion
 
         #region Obtener Ultimo ID de Alojamiento
         private int ObtenerUltimoID()
@@ -38,7 +52,7 @@ namespace TPreservas
         #endregion
 
         #region Crear Alojamiento Casa
-        public string CrearAlojamiento(string nombre, string direccion, int huesped, double costo, int minD)
+        public string CrearAlojamiento(string nombre, Direccion direccion, int huesped, double costo, int minD)
         {
             try
             {
@@ -57,7 +71,7 @@ namespace TPreservas
         #endregion
 
         #region Crear Alojamiento Hotel
-        public string CrearAlojamiento(string nombre, string direccion, int huesped, double costo, int estrellas, int nHab)
+        public string CrearAlojamiento(string nombre, Direccion direccion, int huesped, double costo, int estrellas, int nHab)
         {
             try
             {
@@ -76,7 +90,7 @@ namespace TPreservas
         #endregion
 
         #region Modificar Alojamiento Casa
-        public bool ModificarAlojamiento(string ID,string nombre, string direccion, int huesped, double costo, int minD)
+        public bool ModificarAlojamiento(string ID,string nombre, Direccion direccion, int huesped, double costo, int minD)
         {
             try
             {
@@ -127,7 +141,7 @@ namespace TPreservas
         #endregion
 
         #region Modificar Alojamiento Hotel
-        public bool ModificarAlojamiento(string ID, string nombre, string direccion, int huesped, double costo, int estrellas, int nHab)
+        public bool ModificarAlojamiento(string ID, string nombre, Direccion direccion, int huesped, double costo, int estrellas, int nHab)
         {
             try
             {
@@ -308,7 +322,7 @@ namespace TPreservas
                     alojamientosDisp = alojamientosDisp.FindAll(x => x.ID.ToString() == valor);
                     break;
                 case EBuscar.CIUDAD:
-                    alojamientosDisp = alojamientosDisp.FindAll(emp => emp.Direccion.ToUpper().Contains(valor.ToUpper())).ToList();
+                    alojamientosDisp = alojamientosDisp.FindAll(emp => emp.Direccion.Ciudad.ToUpper().Contains(valor.ToUpper())).ToList();
                     break;
                 default:
                     break;
@@ -358,7 +372,7 @@ namespace TPreservas
                             int huesped = Convert.ToInt32(linea[2]);
                             double costo = Convert.ToDouble(linea[3]);
                             int minDias = Convert.ToInt32(linea[4]);
-                            CrearAlojamiento(linea[0], linea[1], huesped, costo, minDias);
+                            //CrearAlojamiento(linea[0], linea[1], huesped, costo, minDias);
                         }
                         catch (Exception)
                         {
@@ -446,7 +460,8 @@ namespace TPreservas
                     int dias = difFechas.Days;
                     if (cs.Mindias > dias) throw new MiException("El alojamiento pide minimo " + cs.Mindias + " dias");
                 }
-                alojamiento.CrearReserva(cantidadReservas,cliente, checkin, checkout, huesped);
+                int idR = cantidadReservas + 1;
+                alojamiento.CrearReserva(idR, cliente, checkin, checkout, huesped);
                 cantidadReservas++;
             }
             catch (Exception ex)

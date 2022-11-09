@@ -75,10 +75,14 @@ namespace TPreservas.Reservas
         #region Cargar Usuario
         private void CargarUsuario()
         {
-            cbUsuario.Items.Clear();
-            foreach (Cliente item in usuarios)
+            if(interfaz!= null)
             {
-                cbUsuario.Items.Add(item.Nombre);
+                cbUsuario.Items.Clear();
+                usuarios = interfaz.ListarClientes().ToList();
+                foreach (Cliente item in usuarios)
+                {
+                    cbUsuario.Items.Add(item.Nombre);
+                }
             }
         }
         #endregion

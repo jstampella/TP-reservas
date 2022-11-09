@@ -28,6 +28,7 @@ namespace TPreservas.Alojamientos
                 {
                     lg.ShowDialog();
                 }
+                this.Close();
             }
 
         }
@@ -46,7 +47,7 @@ namespace TPreservas.Alojamientos
                     {
                         interfaz.ActualizarPrecioHoteles(Convert.ToDouble(numHotel.Value));
                     }
-                    Thread.Sleep(1000);
+                    
                 }
             }
             catch (Exception ex)

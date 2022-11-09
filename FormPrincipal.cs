@@ -202,7 +202,9 @@ namespace TPreservas
                 FileStream fs = new FileStream(file, FileMode.Open);
                 try
                 {
+#pragma warning disable SYSLIB0011 // El tipo o el miembro están obsoletos
                     empresa = (Empresa)format.Deserialize(fs);
+#pragma warning restore SYSLIB0011 // El tipo o el miembro están obsoletos
                 }
                 catch (SerializationException e)
                 {
@@ -220,11 +222,12 @@ namespace TPreservas
         {
             
             FileStream fs = new FileStream(file, FileMode.Create);
-
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
             try
             {
+                BinaryFormatter binaryFormatter = new BinaryFormatter();
+#pragma warning disable SYSLIB0011 // El tipo o el miembro están obsoletos
                 binaryFormatter.Serialize(fs, empresa);
+#pragma warning restore SYSLIB0011 // El tipo o el miembro están obsoletos
             }
             catch (SerializationException e)
             {
@@ -238,7 +241,16 @@ namespace TPreservas
 
         private void FormPrincipal_FormClosing(object sender, FormClosingEventArgs e)
         {
-            GuardarStage();
+            if (MessageBox.Show("Desea finalizar la aplicación?",
+                                "-Confirmación-",
+                                MessageBoxButtons.YesNo,
+                                MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                e.Cancel = false;
+                GuardarStage();
+            }
+            else
+                e.Cancel = true;
         }
 
 
@@ -273,22 +285,22 @@ namespace TPreservas
             empresa.ModificarReserva(alojamiento,reserva, Checkin, CheckOut,estado, huesped);
         }
 
-        public string CrearAlojamiento(string nombre, string direccion, int huesped, double costo, int minD)
+        public string CrearAlojamiento(string nombre, Direccion direccion, int huesped, double costo, int minD)
         {
             return empresa.CrearAlojamiento(nombre, direccion, huesped, costo, minD);
         }
 
-        public string CrearAlojamiento(string nombre, string direccion, int huesped, double costo, int estrellas, int nHab)
+        public string CrearAlojamiento(string nombre, Direccion direccion, int huesped, double costo, int estrellas, int nHab)
         {
             return empresa.CrearAlojamiento(nombre, direccion, huesped, costo, estrellas, nHab);
         }
 
-        public bool ModificarAlojamiento(string ID, string nombre, string direccion, int huesped, double costo, int estrellas, int nHab)
+        public bool ModificarAlojamiento(string ID, string nombre, Direccion direccion, int huesped, double costo, int estrellas, int nHab)
         {
             return empresa.ModificarAlojamiento(ID, nombre, direccion, huesped, costo, estrellas,nHab);
         }
 
-        public bool ModificarAlojamiento(string ID, string nombre, string direccion, int huesped, double costo, int minD)
+        public bool ModificarAlojamiento(string ID, string nombre, Direccion direccion, int huesped, double costo, int minD)
         {
             return empresa.ModificarAlojamiento(ID, nombre, direccion, huesped, costo, minD);
         }
@@ -321,7 +333,9 @@ namespace TPreservas
             {
                 FileStream fl = new FileStream(saveFile.FileName,FileMode.Create);
                 BinaryFormatter formatter = new BinaryFormatter();
+#pragma warning disable SYSLIB0011 // El tipo o el miembro están obsoletos
                 formatter.Serialize(fl, empresa);
+#pragma warning restore SYSLIB0011 // El tipo o el miembro están obsoletos
                 fl.Close();
             }
         }
@@ -392,6 +406,31 @@ namespace TPreservas
         public Double PrecioHotel
         {
             get { return empresa.PrecioHotel; }
+        }
+
+        private void penalidadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormExtra frmPrecio = new FormExtra();
+            frmPrecio.MdiParent = this;
+            frmPrecio.Show();
+        }
+
+        public void CargarPenalidad(int dias, double porcentaje)
+        {
+            empresa.CargarPenalidad(dias, porcentaje);
+        }
+
+        public int DiasPenalidad { get { return empresa.DiasPenalidad; } }
+        public double PorcentajePenalidad { get { return empresa.PorcentajePenalidad; } }
+
+        private void printSetupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            pageSetupDialog1.ShowDialog();
+        }
+
+        public PageSetupDialog PagesSetup()
+        {
+            return pageSetupDialog1;
         }
     }
 }

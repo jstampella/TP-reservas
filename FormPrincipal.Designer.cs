@@ -62,6 +62,8 @@
             this.statusBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.precioBaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.penalidadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowsMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.newWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cascadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,7 +81,10 @@
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.precioBaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.printDialog1 = new System.Windows.Forms.PrintDialog();
+            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
+            this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -191,10 +196,10 @@
             // 
             // printSetupToolStripMenuItem
             // 
-            this.printSetupToolStripMenuItem.Enabled = false;
             this.printSetupToolStripMenuItem.Name = "printSetupToolStripMenuItem";
             this.printSetupToolStripMenuItem.Size = new System.Drawing.Size(260, 26);
             this.printSetupToolStripMenuItem.Text = "Configurar impresión";
+            this.printSetupToolStripMenuItem.Click += new System.EventHandler(this.printSetupToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
@@ -284,34 +289,34 @@
             // crearToolStripMenuItem1
             // 
             this.crearToolStripMenuItem1.Name = "crearToolStripMenuItem1";
-            this.crearToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
+            this.crearToolStripMenuItem1.Size = new System.Drawing.Size(190, 26);
             this.crearToolStripMenuItem1.Text = "Crear";
             this.crearToolStripMenuItem1.Click += new System.EventHandler(this.crearToolStripMenuItem1_Click);
             // 
             // listarToolStripMenuItem1
             // 
             this.listarToolStripMenuItem1.Name = "listarToolStripMenuItem1";
-            this.listarToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
+            this.listarToolStripMenuItem1.Size = new System.Drawing.Size(190, 26);
             this.listarToolStripMenuItem1.Text = "Listar";
             this.listarToolStripMenuItem1.Click += new System.EventHandler(this.listarToolStripMenuItem1_Click);
             // 
             // disponibilidadToolStripMenuItem
             // 
             this.disponibilidadToolStripMenuItem.Name = "disponibilidadToolStripMenuItem";
-            this.disponibilidadToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.disponibilidadToolStripMenuItem.Size = new System.Drawing.Size(190, 26);
             this.disponibilidadToolStripMenuItem.Text = "Disponibilidad";
             this.disponibilidadToolStripMenuItem.Click += new System.EventHandler(this.disponibilidadToolStripMenuItem_Click);
             // 
             // exportarToolStripMenuItem
             // 
             this.exportarToolStripMenuItem.Name = "exportarToolStripMenuItem";
-            this.exportarToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.exportarToolStripMenuItem.Size = new System.Drawing.Size(190, 26);
             this.exportarToolStripMenuItem.Text = "Exportar";
             // 
             // importarToolStripMenuItem
             // 
             this.importarToolStripMenuItem.Name = "importarToolStripMenuItem";
-            this.importarToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.importarToolStripMenuItem.Size = new System.Drawing.Size(190, 26);
             this.importarToolStripMenuItem.Text = "Importar";
             this.importarToolStripMenuItem.Click += new System.EventHandler(this.importarToolStripMenuItem_Click);
             // 
@@ -347,7 +352,8 @@
             // 
             this.toolsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.optionsToolStripMenuItem,
-            this.precioBaseToolStripMenuItem});
+            this.precioBaseToolStripMenuItem,
+            this.penalidadToolStripMenuItem});
             this.toolsMenu.Name = "toolsMenu";
             this.toolsMenu.Size = new System.Drawing.Size(112, 24);
             this.toolsMenu.Text = "&Herramientas";
@@ -355,8 +361,22 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(168, 26);
             this.optionsToolStripMenuItem.Text = "&Opciones";
+            // 
+            // precioBaseToolStripMenuItem
+            // 
+            this.precioBaseToolStripMenuItem.Name = "precioBaseToolStripMenuItem";
+            this.precioBaseToolStripMenuItem.Size = new System.Drawing.Size(168, 26);
+            this.precioBaseToolStripMenuItem.Text = "Precio base";
+            this.precioBaseToolStripMenuItem.Click += new System.EventHandler(this.precioBaseToolStripMenuItem_Click);
+            // 
+            // penalidadToolStripMenuItem
+            // 
+            this.penalidadToolStripMenuItem.Name = "penalidadToolStripMenuItem";
+            this.penalidadToolStripMenuItem.Size = new System.Drawing.Size(168, 26);
+            this.penalidadToolStripMenuItem.Text = "Penalidad";
+            this.penalidadToolStripMenuItem.Click += new System.EventHandler(this.penalidadToolStripMenuItem_Click);
             // 
             // windowsMenu
             // 
@@ -482,12 +502,24 @@
             this.toolStripProgressBar1.Name = "toolStripProgressBar1";
             this.toolStripProgressBar1.Size = new System.Drawing.Size(114, 19);
             // 
-            // precioBaseToolStripMenuItem
+            // printDialog1
             // 
-            this.precioBaseToolStripMenuItem.Name = "precioBaseToolStripMenuItem";
-            this.precioBaseToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.precioBaseToolStripMenuItem.Text = "Precio base";
-            this.precioBaseToolStripMenuItem.Click += new System.EventHandler(this.precioBaseToolStripMenuItem_Click);
+            this.printDialog1.UseEXDialog = true;
+            // 
+            // pageSetupDialog1
+            // 
+            this.pageSetupDialog1.Document = this.printDocument1;
+            // 
+            // printPreviewDialog1
+            // 
+            this.printPreviewDialog1.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog1.ClientSize = new System.Drawing.Size(400, 300);
+            this.printPreviewDialog1.Document = this.printDocument1;
+            this.printPreviewDialog1.Enabled = true;
+            this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
+            this.printPreviewDialog1.Name = "printPreviewDialog1";
+            this.printPreviewDialog1.Visible = false;
             // 
             // FormPrincipal
             // 
@@ -565,6 +597,11 @@
         private ToolStripMenuItem exportarToolStripMenuItem;
         private ToolStripMenuItem importarToolStripMenuItem;
         private ToolStripMenuItem precioBaseToolStripMenuItem;
+        private ToolStripMenuItem penalidadToolStripMenuItem;
+        private PrintDialog printDialog1;
+        private System.Drawing.Printing.PrintDocument printDocument1;
+        private PageSetupDialog pageSetupDialog1;
+        private PrintPreviewDialog printPreviewDialog1;
     }
 }
 

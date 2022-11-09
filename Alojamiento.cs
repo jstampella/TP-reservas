@@ -13,7 +13,7 @@ namespace TPreservas
     {
         protected int id;
         private string nombre;
-        private string direccion;
+        private Direccion direccion;
         protected double costo;
         private int huesped;
         private List<int> camas = new List<int>();
@@ -25,18 +25,7 @@ namespace TPreservas
         private TimeSpan checkOut;
 
         #region Constructores
-        public Alojamiento(int id, string nombre, string direccion, int huesped, double costo)
-        {
-            this.nombre = nombre;
-            this.id = id;
-            this.direccion = direccion;
-            this.costo = costo;
-            this.huesped = huesped;
-            this.checkIn = new TimeSpan(12, 00, 00);
-            this.checkOut = new TimeSpan(10, 00, 00);
-        }
-
-        public Alojamiento(int id, string nombre, string direccion, int huesped, ref double costo)
+        public Alojamiento(int id, string nombre, Direccion direccion, int huesped, double costo)
         {
             this.nombre = nombre;
             this.id = id;
@@ -62,7 +51,7 @@ namespace TPreservas
             get { return nombre; }
         }
 
-        public string Direccion
+        public Direccion Direccion
         {
             get { return direccion; }
         }
@@ -119,7 +108,7 @@ namespace TPreservas
 
         #region Metodos propios
 
-        public bool Modificar(string nombre, string direccion, int huesped, double costo)
+        public bool Modificar(string nombre, Direccion direccion, int huesped, double costo)
         {
             this.nombre = nombre;
             this.direccion = direccion;
