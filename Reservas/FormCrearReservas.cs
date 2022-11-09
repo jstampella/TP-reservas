@@ -179,9 +179,34 @@ namespace TPreservas.Reservas
         #region Agregar No Disponible
         private void AgregarNoDisponible()
         {
+            List<Alojamiento> alojamientos = new List<Alojamiento>();
             if (interfaz != null)
             {
-                List<Alojamiento> alojamientos = interfaz.ListarAlojamiento();
+                if (txtBuscar.Text == "")
+                {
+                    alojamientos = interfaz.ListarAlojamiento();
+                }
+                else
+                {
+                    EBuscar ebuscar = EBuscar.ALL;
+                    switch (cbfiltro.SelectedItem)
+                    {
+                        case EBuscar.CIUDAD:
+                            ebuscar = EBuscar.CIUDAD;
+                            break;
+                        case EBuscar.NOMBRE:
+                            ebuscar = EBuscar.NOMBRE;
+                            break;
+                        case EBuscar.ID:
+                            ebuscar = EBuscar.ID;
+                            break;
+                        default:
+                            break;
+                    }
+                    alojamientos = interfaz.ListarAlojamiento(checkTipo(),ebuscar, txtBuscar.Text);
+                }
+
+                
                 foreach (Alojamiento item in listadoAlojamiento)
                 {
                     alojamientos = alojamientos.FindAll(x => x.IDs != item.IDs);
@@ -190,9 +215,9 @@ namespace TPreservas.Reservas
                 foreach (Alojamiento item in alojamientos)
                 {
                     ItemAlojamiento mm = AgregarItem(item);
+                    mm.seleccionar.Text = item.Estado.ToString();
                     if (item.Estado == EEstado.Activo)
                         mm.seleccionar.Text = "Reservado";
-                    else mm.seleccionar.Text = item.Estado.ToString();
                     if(item is Casa cs && cs.Mindias > numericHuesped.Value)
                     {
                         mm.seleccionar.Text = "Minimo dias Reservas.";

@@ -249,9 +249,8 @@ namespace TPreservas
             List<Alojamiento> listaFiltrada = new List<Alojamiento>();
             switch (parametro)
             {
-                case EBuscar.DNI:
-                    break;
-                case EBuscar.APELLIDO:
+                case EBuscar.CIUDAD:
+                    listaFiltrada = alojamientos.FindAll(emp => emp.Direccion.Ciudad.ToUpper().Contains(valor.ToUpper())).ToList();
                     break;
                 case EBuscar.NOMBRE:
                     listaFiltrada = alojamientos.FindAll(emp => emp.Nombre.ToUpper().Contains(valor.ToUpper())).ToList();
