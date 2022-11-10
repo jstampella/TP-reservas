@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace TPreservas
 {
     [Serializable]
-    internal class Reserva:IComparable<Reserva>
+    internal class Reserva:IComparable<Reserva> ,iExpimp
     {
         private int id;
         private Alojamiento alojamiento;
@@ -129,6 +129,17 @@ namespace TPreservas
         {
             if (other == null) return -1;
             return this.id.CompareTo(other.id);
+        }
+
+        public string exportar()
+        {
+            return id + ";" + cliente[0].Dni +";"+checkin+";"+checkout;
+        }
+
+        public void importar(string[] campos)
+        {
+            
+           // Reserva rr = new Reserva(2,)
         }
         #endregion
     }

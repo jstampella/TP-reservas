@@ -224,8 +224,28 @@ namespace TPreservas
                     }
 
                 }
+                else if (arg == "exportar")
+                {
+                    if (interfaz != null)
+                    {
+
+
+                        string? nro = dgLista.Rows[e.RowIndex].Cells[0].Value.ToString();
+                        if (nro != null)
+                        {
+                            Alojamiento? al1 = nAlojamiento.Find(x => x.IDs == nro);
+                            if (al1 != null)
+                            {
+                                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                                {
+                                    interfaz.exportarCalendario(al1.IDs, saveFileDialog.FileName);
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            
         }
 
         #endregion

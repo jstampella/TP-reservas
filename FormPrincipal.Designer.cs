@@ -257,22 +257,23 @@
             // crearToolStripMenuItem
             // 
             this.crearToolStripMenuItem.Name = "crearToolStripMenuItem";
-            this.crearToolStripMenuItem.Size = new System.Drawing.Size(148, 26);
+            this.crearToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.crearToolStripMenuItem.Text = "Crear";
             this.crearToolStripMenuItem.Click += new System.EventHandler(this.crearToolStripMenuItem_Click);
             // 
             // buscarToolStripMenuItem1
             // 
             this.buscarToolStripMenuItem1.Name = "buscarToolStripMenuItem1";
-            this.buscarToolStripMenuItem1.Size = new System.Drawing.Size(148, 26);
+            this.buscarToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
             this.buscarToolStripMenuItem1.Text = "Listar";
             this.buscarToolStripMenuItem1.Click += new System.EventHandler(this.buscarToolStripMenuItem1_Click);
             // 
             // informeToolStripMenuItem
             // 
             this.informeToolStripMenuItem.Name = "informeToolStripMenuItem";
-            this.informeToolStripMenuItem.Size = new System.Drawing.Size(148, 26);
+            this.informeToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.informeToolStripMenuItem.Text = "Exportar";
+            this.informeToolStripMenuItem.Click += new System.EventHandler(this.informeToolStripMenuItem_Click);
             // 
             // alojamientoToolStripMenuItem
             // 
@@ -289,34 +290,35 @@
             // crearToolStripMenuItem1
             // 
             this.crearToolStripMenuItem1.Name = "crearToolStripMenuItem1";
-            this.crearToolStripMenuItem1.Size = new System.Drawing.Size(190, 26);
+            this.crearToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
             this.crearToolStripMenuItem1.Text = "Crear";
             this.crearToolStripMenuItem1.Click += new System.EventHandler(this.crearToolStripMenuItem1_Click);
             // 
             // listarToolStripMenuItem1
             // 
             this.listarToolStripMenuItem1.Name = "listarToolStripMenuItem1";
-            this.listarToolStripMenuItem1.Size = new System.Drawing.Size(190, 26);
+            this.listarToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
             this.listarToolStripMenuItem1.Text = "Listar";
             this.listarToolStripMenuItem1.Click += new System.EventHandler(this.listarToolStripMenuItem1_Click);
             // 
             // disponibilidadToolStripMenuItem
             // 
             this.disponibilidadToolStripMenuItem.Name = "disponibilidadToolStripMenuItem";
-            this.disponibilidadToolStripMenuItem.Size = new System.Drawing.Size(190, 26);
+            this.disponibilidadToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.disponibilidadToolStripMenuItem.Text = "Disponibilidad";
             this.disponibilidadToolStripMenuItem.Click += new System.EventHandler(this.disponibilidadToolStripMenuItem_Click);
             // 
             // exportarToolStripMenuItem
             // 
             this.exportarToolStripMenuItem.Name = "exportarToolStripMenuItem";
-            this.exportarToolStripMenuItem.Size = new System.Drawing.Size(190, 26);
+            this.exportarToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.exportarToolStripMenuItem.Text = "Exportar";
+            this.exportarToolStripMenuItem.Click += new System.EventHandler(this.exportarToolStripMenuItem_Click);
             // 
             // importarToolStripMenuItem
             // 
             this.importarToolStripMenuItem.Name = "importarToolStripMenuItem";
-            this.importarToolStripMenuItem.Size = new System.Drawing.Size(190, 26);
+            this.importarToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.importarToolStripMenuItem.Text = "Importar";
             this.importarToolStripMenuItem.Click += new System.EventHandler(this.importarToolStripMenuItem_Click);
             // 

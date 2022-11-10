@@ -8,6 +8,7 @@ namespace TPreservas
 {
     internal interface ITrasladarInfo
     {
+        void exportarCalendario(string id, string namefile);
         string CrearAlojamiento(string nombre, Direccion direccion, int huesped, double costo, int minD);
         string CrearAlojamiento(string nombre, Direccion direccion, int huesped, double costo, int estrellas, int nHab);
 

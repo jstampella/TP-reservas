@@ -342,6 +342,7 @@ namespace TPreservas
 
         private void listarToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            
             try
             {
                 SaveFileDialog fileSave = new SaveFileDialog();
@@ -349,17 +350,18 @@ namespace TPreservas
                 fileSave.FileName = "Clientes";
                 if (fileSave.ShowDialog() == DialogResult.OK)
                 {
-                    FileStream fileStream = new FileStream(fileSave.FileName, FileMode.OpenOrCreate,FileAccess.ReadWrite);
-                    StreamWriter streamWriter = new StreamWriter(fileStream);
-                    IEnumerable<Cliente> clientes = empresa.ListarClientes();
-                    streamWriter.WriteLine("Nombre;Apellido;Email;CodArea;Telefono");
-                    foreach (Cliente cliente in clientes)
-                    {
-                        string line = cliente.Nombre + ";" + cliente.Apellido + ";" + cliente.Mail+";"+cliente.CodigoA+";"+cliente.Celular;
-                        streamWriter.WriteLine(line);
-                    }
-                    streamWriter.Close();
-                    fileStream.Close();
+                    empresa.Exportar<Cliente>(fileSave.FileName);
+                //    FileStream fileStream = new FileStream(fileSave.FileName, FileMode.OpenOrCreate,FileAccess.ReadWrite);
+                //    StreamWriter streamWriter = new StreamWriter(fileStream);
+                //    IEnumerable<Cliente> clientes = empresa.ListarClientes();
+                //    streamWriter.WriteLine("Nombre;Apellido;Email;CodArea;Telefono");
+                //    foreach (Cliente cliente in clientes)
+                //    {
+                //        string line = cliente.Nombre + ";" + cliente.Apellido + ";" + cliente.Mail+";"+cliente.CodigoA+";"+cliente.Celular;
+                //        streamWriter.WriteLine(line);
+                //    }
+                //    streamWriter.Close();
+                //    fileStream.Close();
                 }
 
 
@@ -431,6 +433,75 @@ namespace TPreservas
         public PageSetupDialog PagesSetup()
         {
             return pageSetupDialog1;
+        }
+
+        public void exportarCalendario(string id, string namefile)
+        {
+            empresa.exportarCal(id, namefile);
+        }
+
+        private void exportarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SaveFileDialog fileSave = new SaveFileDialog();
+                fileSave.Filter = "Archivo csv | *.csv";
+                fileSave.FileName = "alojamiento";
+                if (fileSave.ShowDialog() == DialogResult.OK)
+                {
+                    empresa.Exportar<Alojamiento>(fileSave.FileName);
+                    //    FileStream fileStream = new FileStream(fileSave.FileName, FileMode.OpenOrCreate,FileAccess.ReadWrite);
+                    //    StreamWriter streamWriter = new StreamWriter(fileStream);
+                    //    IEnumerable<Cliente> clientes = empresa.ListarClientes();
+                    //    streamWriter.WriteLine("Nombre;Apellido;Email;CodArea;Telefono");
+                    //    foreach (Cliente cliente in clientes)
+                    //    {
+                    //        string line = cliente.Nombre + ";" + cliente.Apellido + ";" + cliente.Mail+";"+cliente.CodigoA+";"+cliente.Celular;
+                    //        streamWriter.WriteLine(line);
+                    //    }
+                    //    streamWriter.Close();
+                    //    fileStream.Close();
+                }
+
+
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error al guardar");
+            }
+        }
+
+        private void informeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SaveFileDialog fileSave = new SaveFileDialog();
+                fileSave.Filter = "Archivo csv | *.csv";
+                fileSave.FileName = "Reservas";
+                if (fileSave.ShowDialog() == DialogResult.OK)
+                {
+                    empresa.Exportar<Reserva>(fileSave.FileName);
+                    //    FileStream fileStream = new FileStream(fileSave.FileName, FileMode.OpenOrCreate,FileAccess.ReadWrite);
+                    //    StreamWriter streamWriter = new StreamWriter(fileStream);
+                    //    IEnumerable<Cliente> clientes = empresa.ListarClientes();
+                    //    streamWriter.WriteLine("Nombre;Apellido;Email;CodArea;Telefono");
+                    //    foreach (Cliente cliente in clientes)
+                    //    {
+                    //        string line = cliente.Nombre + ";" + cliente.Apellido + ";" + cliente.Mail+";"+cliente.CodigoA+";"+cliente.Celular;
+                    //        streamWriter.WriteLine(line);
+                    //    }
+                    //    streamWriter.Close();
+                    //    fileStream.Close();
+                }
+
+
+
+            }
+            catch (Exception es)
+            {
+                MessageBox.Show("Error al guardar"+es.Message);
+            }
         }
     }
 }

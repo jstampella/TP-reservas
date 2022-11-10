@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace TPreservas
 {
     [Serializable]
-    abstract internal class Alojamiento : IComparable<Alojamiento>
+    abstract internal class Alojamiento : IComparable<Alojamiento> 
     {
         protected int id;
         private string nombre;
@@ -157,7 +157,18 @@ namespace TPreservas
             if (other == null) return -1;
             return this.nombre.CompareTo(other.nombre);
         }
+        public string[] exportarCalendario()
+        {
+            List<string> listado = new List<string>();
+            foreach (Reserva p in reservas)
+            {
+                string linea = p.Checkin.ToString("d") + ";" + p.CheckOut.ToString("d");
+                listado.Add(linea);
 
+            }
+            return listado.ToArray();
+
+        }
 
         #region AREA RESERVA
         public List<Reserva> ListarReservas()
@@ -233,7 +244,7 @@ namespace TPreservas
         {
             this.tipo = tipo;
         }
-
+       
         public int Compare(Alojamiento? x, Alojamiento? y)
         {
             if (x == null || y == null) return -1;

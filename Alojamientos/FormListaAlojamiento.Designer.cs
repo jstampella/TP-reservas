@@ -31,6 +31,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnBuscar = new System.Windows.Forms.Button();
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.btnActualizar = new System.Windows.Forms.Button();
@@ -50,6 +51,7 @@
             this.tipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ver = new System.Windows.Forms.DataGridViewButtonColumn();
             this.editar = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.exportar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgLista)).BeginInit();
@@ -188,7 +190,8 @@
             this.estado,
             this.tipo,
             this.ver,
-            this.editar});
+            this.editar,
+            this.exportar});
             this.dgLista.Location = new System.Drawing.Point(15, 108);
             this.dgLista.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dgLista.Name = "dgLista";
@@ -305,6 +308,25 @@
             this.editar.UseColumnTextForButtonValue = true;
             this.editar.Width = 80;
             // 
+            // exportar
+            // 
+            this.exportar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
+            this.exportar.DefaultCellStyle = dataGridViewCellStyle4;
+            this.exportar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.exportar.HeaderText = "Exportar";
+            this.exportar.MinimumWidth = 6;
+            this.exportar.Name = "exportar";
+            this.exportar.ReadOnly = true;
+            this.exportar.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.exportar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.exportar.Text = "exportar";
+            this.exportar.UseColumnTextForButtonValue = true;
+            this.exportar.Width = 102;
+            // 
             // FormListaAlojamiento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -347,5 +369,6 @@
         private DataGridViewTextBoxColumn tipo;
         private DataGridViewButtonColumn ver;
         private DataGridViewButtonColumn editar;
+        private DataGridViewButtonColumn exportar;
     }
 }

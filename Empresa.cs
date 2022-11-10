@@ -430,6 +430,55 @@ namespace TPreservas
         }
         #endregion
 
+        public void exportarCal(string id, string namefile)
+        {
+            Alojamiento? al = alojamientos.Find(x=>x.IDs==id);
+            if (al == null)
+            {
+                throw new MiException("el alojamiento no se encontro");
+            }
+            else
+            {
+                string[] va = al.exportarCalendario();
+                FileStream fs=new FileStream(namefile, FileMode.Create);
+                StreamWriter sw = new StreamWriter(fs);
+                sw.WriteLine("fecha de inicio;fecha final") ;
+                foreach (string item in va)
+                {
+                    sw.WriteLine(item);
+                }
+
+                sw.Close();
+                fs.Close();
+            }
+            
+
+        }
+
+        public void Exportar<T>(string fileName)
+        {
+            FileStream fs = new FileStream(fileName, FileMode.Create);
+            StreamWriter rr = new StreamWriter(fs);
+            List<T> listado;
+            if(clientes is List<T> dd)
+            {
+                listado = dd.Cast<T>().ToList();
+                rr.WriteLine("id;nombre;apellido;dni");
+            }
+            else
+            {
+                listado = ListarReservas().Cast<T>().ToList();
+                rr.WriteLine("id alojamiento;id cliente;checkin;checkout");
+            }
+            foreach(iExpimp? cc in listado)
+            {
+                if(cc!=null)
+                    rr.WriteLine(cc.exportar());
+            }
+            rr.Close();
+            fs.Close();
+        }
+
     #endregion
 
 
@@ -531,7 +580,7 @@ namespace TPreservas
             }
         }
 
-        public IEnumerable<Cliente> ListarClientes()
+        public List<Cliente> ListarClientes()
         {
             return clientes;
         }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace TPreservas
 {
     [Serializable]
-    internal class Cliente
+    internal class Cliente:iExpimp
     {
         string nombre;
         string apellido;
@@ -15,6 +15,7 @@ namespace TPreservas
         string mail;
         string celular;
         string codigoA;
+
         public Cliente(string nombre, string apellido, float dni, string mail, string codArea, string celular)
         {
             this.nombre = nombre;
@@ -59,5 +60,21 @@ namespace TPreservas
             return this.nombre +" "+ this.apellido;
         }
         #endregion
+        public string exportar()
+        { 
+            return dni+ " ;"+ nombre +";" +apellido+ ";"+dni;
+        }
+
+        public void importar(string[] campos)
+        {
+            string nombre=campos[0];
+            string apellido = campos[1];
+
+            float dni= Convert.ToSingle(campos[2]);
+            string mail= campos[3];
+            string celular = "";
+            string codigoA = "";
+            Cliente ee = new Cliente(nombre,apellido,dni,mail,codigoA,celular);
+        }
     }
 }
