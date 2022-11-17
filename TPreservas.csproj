@@ -39,6 +39,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Resource\images.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Resource\loading.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

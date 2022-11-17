@@ -56,6 +56,7 @@
             // 
             this.pxImagen.BackColor = System.Drawing.Color.Transparent;
             this.pxImagen.BackgroundImage = global::TPreservas.Properties.Resources.images;
+          
             this.pxImagen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pxImagen.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pxImagen.Location = new System.Drawing.Point(3, 3);
